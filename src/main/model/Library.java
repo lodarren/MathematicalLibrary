@@ -1,4 +1,4 @@
-package model.EntryTypes.*;
+package model.EntryTypes*;
 package model;
 
 import java.util.ArrayList;
@@ -43,9 +43,9 @@ public class Library {
     public void turnRequestIntoEntry(Request request) {
         if (request.isRequestCompleted()) {
             if (request.isItAnEquation()) {
-                listOfEquations.add(request.requestToEquation())
+                listOfEquations.add(request.requestToEquation());
             } else {
-                listOfTheorems.add(request.requestToTheorem())
+                listOfTheorems.add(request.requestToTheorem());
             }
         }
     }
@@ -57,7 +57,7 @@ public class Library {
     public int doesEquationExist(String nameOfEquation) {
         int counter = 0;
         for (Equation e: listOfEquations) {
-            if (nameOfEquation == e.getName()) {
+            if (nameOfEquation.equals(e.getName())) {
                 return counter;
             } else {
                 counter++;
@@ -74,14 +74,14 @@ public class Library {
     public int doesTheoremExist(String nameOfTheorem) {
         int counter = 0;
         for (Theorem t: listOfTheorems) {
-            if (nameOfTheorem == t.getName()) {
+            if (nameOfTheorem.equals(t.getName())) {
                 return counter;
             } else {
                 counter++;
             }
         }
 
-        return "Theorem does not exist!"
+        return "Theorem does not exist!";
     }
 
     //REQUIRES:
@@ -92,7 +92,7 @@ public class Library {
         int counter = 1;
         String text = "";
         for (Equation e: listOfEquations) {
-            text = Integer.toString(counter) + e.getName() + text;
+            text = counter + e.getName() + text;
         }
         return text;
     }
@@ -105,7 +105,7 @@ public class Library {
         int counter = 1;
         String text = "";
         for (Theorem t: listOfTheorems) {
-            text = Integer.toString(counter) + t.getName() + text;
+            text = counter + t.getName() + text;
         }
         return text;
     }
@@ -127,8 +127,7 @@ public class Library {
     //MODIFIES:
     //EFFECTS: shows all current theorems and lists in alphabetical order
 
-    public void sortTheorems() {
-        listOfTheorems.sort();
+    public
     }
 
     //REQUIRES:
@@ -138,5 +137,11 @@ public class Library {
     public void sortEquations() {
         listOfEquations.sort();
     }
+
+    //REQUIRES:
+    //MODIFIES:
+    //EFFECTS: Should let you add as many requests at once
+
+
 
 }

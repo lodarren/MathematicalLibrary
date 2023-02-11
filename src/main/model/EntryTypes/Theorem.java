@@ -8,8 +8,8 @@ import java.util.ArrayList;
 // the class it is for, the explaination for it, the proof, comments and practice questions.
 public class Theorem extends Entry {
 
-
-    public Theorem(String name, String theorem, String type, String course, String proof, String explainations) {
-        super(name, theorem, type, course, proof, explainations);
+    public Theorem(String name, String theorem, String course, String proof, String explainations) {
+        super(name, theorem, course, proof, explainations);
     }
+
 }
