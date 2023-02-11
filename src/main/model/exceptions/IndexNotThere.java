@@ -1,4 +1,4 @@
-package model.Exceptions;
+package model.exceptions;
 
 public class IndexNotThere extends Exception {
 }

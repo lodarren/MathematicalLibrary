@@ -1,7 +1,7 @@
 package model;
 
-import model.Exceptions.EmptyText;
-import model.Exceptions.IndexNotThere;
+import model.exceptions.EmptyText;
+import model.exceptions.IndexNotThere;
 
 import java.util.ArrayList;
 
@@ -26,65 +26,47 @@ public abstract class Entry {
     //MODIFIES: this
     //EFFECTS: Changes name of the entry, returns exception if name is empty.
 
-    public void changeName(String name) throws EmptyText {
-
-        if (name.equals("")) {
-            throw new EmptyText();
-        }
+    public void changeName(String name) {
         this.name = name;
     }
 
+    //REQUIRES:
     //MODIFIES: this
     //EFFECTS: Changes name of the theorem, returns exception if theorem text is empty.
 
-    public void changeTheorem(String theorem) throws EmptyText {
-        if (theorem.equals("")) {
-            throw new EmptyText();
-        }
+    public void changeTheorem(String theorem) {
         this.theorem = theorem;
     }
 
+    //REQUIRES:
     //MODIFIES: this
     //EFFECTS: changes the course that this entry is most relevant to
 
-    public void changeCourse(String course) throws EmptyText {
-        if (theorem.equals("")) {
-            throw new EmptyText();
-        }
-
+    public void changeCourse(String course) {
         this.course = course;
     }
 
+    //REQUIRES:
     //MODIFIES: this
     //EFFECTS: changes name of the proof, returns exception if proof text is empty.
 
-    public void changeProof(String proof) throws EmptyText{
-        if (proof.equals("")) {
-            throw new EmptyText();
-        }
+    public void changeProof(String proof) {
         this.proof = proof;
     }
 
-
+    //REQUIRES:
     //MODIFIES: this
     //EFFECTS: changes explaination of the math concept, returns exception if changes are empty
 
-    public void changeExplaination(String explaination) throws EmptyText{
-        if (explaination.equals("")) {
-            throw new EmptyText();
-        }
+    public void changeExplaination(String explaination) {
         this.explainations = explaination;
     }
 
+    //REQUIRES:
     //MODIFIES: this
     //EFFECTS: Changes the comment found on that index in the list.
 
-    public void changeComment(String comment, int i) throws IndexNotThere {
-
-        if (comments.size() <= i) {
-            throw new IndexNotThere();
-        }
-
+    public void changeComment(String comment, int i) {
         comments.add(i, comment);
     }
 
@@ -138,38 +120,32 @@ public abstract class Entry {
         return comments;
     }
 
+    //REQUIRES:
     //MODIFIES: this
     //EFFECTS: retrieves a specific comment from comments
 
-    public String getComment(int i) throws IndexNotThere {
+    public String getComment(int i) {
 
-        if (comments.size() <= i) {
-            throw new IndexNotThere();
-        }
         return comments.get(i);
     }
 
+    //REQUIRES:
     //MODIFIES: this
     //EFFECTS: adds a comment to comment
 
-    public void addComment(String comment) throws EmptyText{
-        if (comment.equals("")) {
-            throw new EmptyText();
-        }
-
+    public void addComment(String comment) {
         comments.add(comment);
     }
 
+    //REQUIRES:
     //MODIFIES: this
     //EFFECTS: Removes a comment from the entry
 
-    public void removeComment(int i) throws IndexNotThere{
-        if (i > comments.size()) {
-            throw new IndexNotThere();
-        }
+    public void removeComment(int i) {
 
         comments.remove(i);
     }
+
 
     //MODIFIES: this
     //EFFECTS: Returns list of all comments in text form in the form 1. text \\ 2. text \\

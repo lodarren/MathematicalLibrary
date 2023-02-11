@@ -1,8 +1,6 @@
-package model.EntryTypes;
+package model.entryTypes;
 
 import model.Entry;
-
-import java.util.ArrayList;
 
 // Represents math concepts that can be represented as a theorem, contains its name, its mathematical expression,
 // the class it is for, the explaination for it, the proof, comments and practice questions.

@@ -1,7 +1,7 @@
-package model.EntryTypes;
+package model.entryTypes;
 
 import model.Entry;
-import model.Exceptions.IndexNotThere;
+import model.exceptions.IndexNotThere;
 
 import java.util.ArrayList;
 
@@ -21,15 +21,12 @@ public class Equation extends Entry {
     //EFFECTS: change the practice problem on that entry, if there is no entry to change then leave the method leaves
     // the practice problem or the answer the same.
 
-    public void changePracticeProblem(String practiceProblem, String answer, int i)  throws IndexNotThere {
-        if (i > practiceProblems.size()) {
-            throw new IndexNotThere();
+    public void changePracticeProblem(String practiceProblem, String answer, int i) {
+        if (practiceProblem != "") {
+            practiceProblems.set(i, practiceProblem);
         }
-        if (practiceProblem != null) {
-            practiceProblems.add(i, practiceProblem);
-        }
-        if (answer != null) {
-            practiceProblemsAnswer.add(i, answer);
+        if (answer != "") {
+            practiceProblemsAnswer.set(i, answer);
         }
     }
 
@@ -44,14 +41,36 @@ public class Equation extends Entry {
     //MODIFIES: this
     //EFFECTS: delete practice problem and its associated solution
 
-    public void removePracticeProblem(int i) throws IndexNotThere {
-        if (i > practiceProblems.size()) {
-            throw new IndexNotThere();
-        }
+    public void removePracticeProblem(int i)  {
         practiceProblems.remove(i);
         practiceProblemsAnswer.remove(i);
     }
 
+    //MODIFIES: this
+    //EFFECTS: gets the following practice problem in that index in the form of Question: _  Answer: _:
+
+    public String getPracticeProblem(int i)  {
+        String output;
+        output = "Question: " + practiceProblems.get(i);
+        output = output + "\n";
+        output = output + "Answer: ";
+        output = output + practiceProblemsAnswer.get(i);
+        return output;
+    }
+
+    //MODIFIES: this
+    //EFFECTS: gets the practice problem given the index
+
+    public String getThePracticeProblem(int i) {
+        return practiceProblems.get(i);
+    }
+
+    //MODIFIES: this
+    //EFFECTS: gets the practice problem answer given the index
+
+    public String getThePracticeProblemAnswer(int i) {
+        return practiceProblemsAnswer.get(i);
+    }
 
     //MODIFIES: this
     //EFFECTS: get Practice Problems in a list

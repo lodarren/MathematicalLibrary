@@ -1,14 +1,13 @@
-package model.EntryTypes;
+package model.entryTypes;
 
 // Represents math concepts that users want to be covered, subject to updates before put into main library. Contains
 // the name wanted to be covered, the equation requested, the class information, the pending explaination, the
 // pending proof, the pending practice problems, and its estimated time for completion.
 
 import model.Entry;
-import model.Exceptions.NotValidCompletion;
-import model.Exceptions.NotValidType;
-
-import java.util.ArrayList;
+import model.exceptions.EmptyText;
+import model.exceptions.NotValidCompletion;
+import model.exceptions.NotValidType;
 
 public class Request extends Entry {
     int estimatedCompletion;
@@ -23,12 +22,12 @@ public class Request extends Entry {
         this.type = type;
     }
 
-    public changeType(String type) throws NotValidType {
-        if (type != "Equation" & type != "Theorem") {
-            throw new NotValidType;
-        }
-
+    public void changeType(String type) {
         this.type = type;
+    }
+
+    public String getType() {
+        return type;
     }
 
 
@@ -44,12 +43,7 @@ public class Request extends Entry {
     //MODIFIES: this
     //EFFECTS: updates completion
 
-    public void updateEstimatedCompletion(int completion) throws NotValidCompletion {
-        if (completion > 100) {
-            throw new NotValidCompletion;
-        } else if (completion < 0) {
-            throw new NotValidCompletion;
-        }
+    public void updateEstimatedCompletion(int completion) {
         this.estimatedCompletion = completion;
     }
 
@@ -87,7 +81,6 @@ public class Request extends Entry {
         for (String c: this.getCommentsRaw()) {
             newEquation.addComment(c);
         }
-
         return newEquation;
     }
 

@@ -1,5 +1,5 @@
-package model.EntryTypes*;
-package model;
+package model.entryTypes;
+
 
 import java.util.ArrayList;
 
@@ -81,7 +81,7 @@ public class Library {
             }
         }
 
-        return "Theorem does not exist!";
+        return -1;
     }
 
     //REQUIRES:
@@ -127,16 +127,10 @@ public class Library {
     //MODIFIES:
     //EFFECTS: shows all current theorems and lists in alphabetical order
 
-    public
-    }
-
     //REQUIRES:
     //MODIFIES:
     //EFFECTS: shows all current Equations and lists them in alphabetical order
 
-    public void sortEquations() {
-        listOfEquations.sort();
-    }
 
     //REQUIRES:
     //MODIFIES:
