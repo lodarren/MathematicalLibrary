@@ -108,17 +108,17 @@ public class Library {
 
     @SuppressWarnings("checkstyle:OperatorWrap")
     public void theoremMakeSelection(String command) {
-        if (doesTheoremExist(command.toLowerCase()) != -1) {
-            listOfTheorems.get(doesTheoremExist(command.toLowerCase())).viewEntry();
+        if (doesTheoremExist(command) != -1) {
+            listOfTheorems.get(doesTheoremExist(command)).viewEntry();
             System.out.print("\nPress y if you want to display extra info. Press another key to return to the main menu.\n");
             if (yesOrNo()) {
-                listOfTheorems.get(doesTheoremExist(command.toLowerCase())).viewTheorem();
+                listOfTheorems.get(doesTheoremExist(command)).viewTheorem();
                 System.out.print("\nPress y if you want to change this entry. Press another key to return to the main menu.\n");
                 if (yesOrNo()) {
                     System.out.print("Press 1 to change the name of the entry.\nPress 2 to change the theorem.\nPress 3" +
                             " to change the course it is most useful for.\nPress 4 to change the description.\nPress 5 to change" +
                             "the Proof.\n");
-                    doYouWantToChangeTheTheorem(listOfTheorems.get(doesTheoremExist(command.toLowerCase())));
+                    doYouWantToChangeTheTheorem(listOfTheorems.get(doesTheoremExist(command)));
                 }
             }
         } else {
@@ -128,7 +128,7 @@ public class Library {
 
     public boolean yesOrNo() {
         String command = input.next();
-        return command.toLowerCase().equals("y");
+        return command.equalsIgnoreCase("y");
     }
 
     public void doYouWantToChangeTheTheorem(Theorem theorem) {
@@ -155,7 +155,7 @@ public class Library {
 
     private String whatIsTheChange() {
         String command = input.next();
-        return command.toLowerCase();
+        return command;
     }
 
 
@@ -214,7 +214,7 @@ public class Library {
     public int doesEquationExist(String nameOfEquation) {
         int counter = 0;
         for (Equation e: listOfEquations) {
-            if (nameOfEquation.equals(e.getName())) {
+            if (nameOfEquation.equalsIgnoreCase(e.getName())) {
                 return counter;
             } else {
                 counter++;
@@ -231,7 +231,7 @@ public class Library {
     public int doesTheoremExist(String nameOfTheorem) {
         int counter = 0;
         for (Theorem t: listOfTheorems) {
-            if (nameOfTheorem.equals(t.getName())) {
+            if (nameOfTheorem.equalsIgnoreCase(t.getName())) {
                 return counter;
             } else {
                 counter++;
