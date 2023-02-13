@@ -78,9 +78,8 @@ public class Request extends Entry {
         newEquation = new Equation(this.getName(), this.getTheorem(), this.getCourse(), this.getProof(),
                 this.getExplainations());
 
-        for (String c: this.getCommentsRaw()) {
-            newEquation.addComment(c);
-        }
+        newEquation.transferComments(this.getCommentsRaw());
+
         return newEquation;
     }
 
@@ -92,9 +91,8 @@ public class Request extends Entry {
         newTheorem = new Theorem(this.getName(), this.getTheorem(), this.getCourse(), this.getProof(),
                 this.getExplainations());
 
-        for (String c: this.getCommentsRaw()) {
-            newTheorem.addComment(c);
-        }
+        newTheorem.transferComments(this.getCommentsRaw());
+
         return newTheorem;
     }
 

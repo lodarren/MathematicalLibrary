@@ -64,6 +64,14 @@ public abstract class Entry {
 
     //REQUIRES:
     //MODIFIES: this
+    //EFFECTS: Transfers all comments from a list to comments.
+
+    public void transferComments(ArrayList<String> newComments) {
+        this.comments = newComments;
+    }
+
+    //REQUIRES:
+    //MODIFIES: this
     //EFFECTS: Changes the comment found on that index in the list.
 
     public void changeComment(String comment, int i) {
@@ -144,6 +152,16 @@ public abstract class Entry {
     public void removeComment(int i) {
 
         comments.remove(i);
+    }
+
+    //REQUIRES:
+    //MODIFIES: this
+    //EFFECTS: Shows the entire theorem in the system
+    public void viewEntry() {
+        System.out.println("Name: " + this.getName());
+        System.out.println("Theorem: " + this.getTheorem());
+        System.out.println("Course this is most relevant to: " + this.getCourse());
+        System.out.println("Description: " + this.getExplainations());
     }
 
 

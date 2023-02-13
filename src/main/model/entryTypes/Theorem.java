@@ -10,4 +10,17 @@ public class Theorem extends Entry {
         super(name, theorem, course, proof, explainations);
     }
 
+    //REQUIRES:
+    //MODIFIES: this
+    //EFFECTS: Shows the entire theorem in the system
+
+    public void viewTheorem() {
+        System.out.println("Name: " + this.getName());
+        System.out.println("Theorem: " + this.getTheorem());
+        System.out.println("Course this is most relevant to: " + this.getCourse());
+        System.out.println("Description: " + this.getExplainations());
+        System.out.println("Proof: " + this.getProof() + "\n");
+    }
+
+
 }

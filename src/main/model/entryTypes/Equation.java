@@ -86,4 +86,26 @@ public class Equation extends Entry {
         return practiceProblemsAnswer;
     }
 
+    //REQUIRES:
+    //MODIFIES: this
+    //EFFECTS: Shows the entire Equation in the system
+    public void viewEquation() {
+        System.out.println("Name:" + this.getName());
+        System.out.println("Theorem:" + this.getTheorem());
+        System.out.println("Course this is most relevant to:" + this.getCourse());
+        System.out.println("Description: " + this.getExplainations());
+        showNumberOfPracticeProblems();
+    }
+
+    //REQUIRES:
+    //MODIFIES: this
+    //EFFECTS: Shows the number of practice problems in the entry:
+
+    public void showNumberOfPracticeProblems() {
+        int counter = 1;
+        for (String p : practiceProblems) {
+            System.out.print("Practice Problem" + counter);
+            counter++;
+        }
+    }
 }

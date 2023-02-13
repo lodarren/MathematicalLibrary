@@ -7,6 +7,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -141,22 +142,39 @@ public class RequestTest {
     @Test
     public void requestToTheoremTest() {
         Theorem compareTheorem;
-        compareTheorem = new Theorem("name", "theorem", "course",
-                "proof", "explaination");
-        assertEquals(compareTheorem, testRequestLetters.requestToTheorem());
+        Theorem convertedTheorem = testRequestLetters.requestToTheorem();
+        compareTheorem = new Theorem("A", "B", "C",
+                "D", "E");
+
+
+        assertEquals(convertedTheorem.getName(), compareTheorem.getName());
+        assertEquals(convertedTheorem.getTheorem(), compareTheorem.getTheorem());
+        assertEquals(convertedTheorem.getCourse(), compareTheorem.getCourse());
+        assertEquals(convertedTheorem.getProof(), compareTheorem.getProof());
+        assertEquals(convertedTheorem.getExplainations(), compareTheorem.getExplainations());
+
+        assertTrue(Objects.equals(convertedTheorem.getCommentsRaw(), compareTheorem.getCommentsRaw()));
 
     }
 
     @Test
     public void requestToEquationTest() {
         Equation compareEquation;
+        Equation convertedEquation = testRequestLetters.requestToEquation();
         compareEquation = new Equation("A", "B", "C",
                 "D", "E");
-        assertEquals(compareEquation, testRequestLetters.requestToTheorem());
+
+
+        assertEquals(convertedEquation.getName(), compareEquation.getName());
+        assertEquals(convertedEquation.getTheorem(), compareEquation.getTheorem());
+        assertEquals(convertedEquation.getCourse(), compareEquation.getCourse());
+        assertEquals(convertedEquation.getProof(), compareEquation.getProof());
+        assertEquals(convertedEquation.getExplainations(), compareEquation.getExplainations());
+
+        assertTrue(Objects.equals(convertedEquation.getCommentsRaw(), compareEquation.getCommentsRaw()));
 
     }
 
-    //Fix these two
     //Start on library
     //Proofread most of the methods and stuff
     //Double check styling
