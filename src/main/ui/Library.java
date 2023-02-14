@@ -3,7 +3,7 @@ package ui;
 import model.entryTypes.Equation;
 import model.entryTypes.Request;
 import model.entryTypes.Theorem;
-import model.Entry;
+import model.exceptions.IndexNotThere;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -17,6 +17,8 @@ public class Library {
 
     Theorem mockEntry;
     Theorem mockEntry2;
+    Equation mockEquation1;
+    Equation mockEquation2;
 
     private Scanner input;
 
@@ -35,8 +37,14 @@ public class Library {
         // MOCK lists, to be removed later
         mockEntry = new Theorem("a", "B", "C", "D", "E");
         mockEntry2 = new Theorem("a1", "B", "C", "D", "E");
+        mockEquation1 = new Equation("a", "B", "C", "D", "E");
+        mockEquation2 = new Equation("a1", "B", "C", "D", "E");
+
+        mockEquation1.addPracticeProblem("what is sine of x", "its x you dummy");
         listOfTheorems.add(0, mockEntry);
         listOfTheorems.add(1, mockEntry2);
+        listOfEquations.add(0, mockEquation1);
+        listOfEquations.add(1, mockEquation2);
 
 
         input = new Scanner(System.in);
@@ -106,7 +114,6 @@ public class Library {
 
     }
 
-    @SuppressWarnings("checkstyle:OperatorWrap")
     public void theoremMakeSelection(String command) {
         if (doesTheoremExist(command) != -1) {
             listOfTheorems.get(doesTheoremExist(command)).viewEntry();
@@ -117,7 +124,7 @@ public class Library {
                 if (yesOrNo()) {
                     System.out.print("Press 1 to change the name of the entry.\nPress 2 to change the theorem.\nPress 3" +
                             " to change the course it is most useful for.\nPress 4 to change the description.\nPress 5 to change" +
-                            "the Proof.\n");
+                            "the Proof.\nPress 6 to delete this entry.");
                     doYouWantToChangeTheTheorem(listOfTheorems.get(doesTheoremExist(command)));
                 }
             }
@@ -130,6 +137,7 @@ public class Library {
         String command = input.next();
         return command.equalsIgnoreCase("y");
     }
+
 
     public void doYouWantToChangeTheTheorem(Theorem theorem) {
         String command = input.next();
@@ -148,8 +156,20 @@ public class Library {
         } else if (command.equals("5")) {
             System.out.print("What were you planning to change the field to? Please type it in below.\n");
             theorem.changeProof(whatIsTheChange());
+        } else if (command.equals("6")) {
+            deleteTheoremPrompt(theorem);
         } else {
             System.out.print("Not one of the selected options! \n");
+        }
+    }
+
+    private void deleteTheoremPrompt(Theorem theorem) {
+        System.out.print("Are you sure you want to delete this entry? Press y to delete this entry.");
+        if (yesOrNo()) {
+            listOfTheorems.remove(theorem);
+            System.out.print("Entry deleted!");
+        } else {
+            System.out.print("Entry will remain in the library.");
         }
     }
 
@@ -158,8 +178,7 @@ public class Library {
         return command;
     }
 
-
-
+// Equation section
 
 
 
@@ -167,8 +186,129 @@ public class Library {
     //MODIFIES:
     //EFFECTS: Does the command in the Equation section of the library:
     public void mainListOfEquation() {
-        //STUB
+        welcomeToEquationSection();
+
+        String command = input.next();
+        command = command.toLowerCase();
+        equationMakeSelection(command);
     }
+
+
+    private void welcomeToEquationSection() {
+        System.out.print("Here are our Equation Entries So far! \n");
+        System.out.print(printAllEquations() + "\n");
+        System.out.print("Type in the name of the entry you want to view! \n");
+    }
+
+    private void equationMakeSelection(String command) {
+        if (doesEquationExist(command) != -1) {
+            listOfEquations.get(doesEquationExist(command)).viewEntry();
+            System.out.print("\nPress p if you want to view the practice problems. Press c to change the entry.\n");
+            viewPracticeOrChangeEntry(command);
+        } else {
+            System.out.println("That entry doesn't exist!");
+        }
+    }
+
+    private void viewPracticeOrChangeEntry(String previousCommand) {
+        String nextCommand = input.next();
+        if (nextCommand.equalsIgnoreCase("p")) {
+            showPracticeProblems(listOfEquations.get(doesEquationExist(previousCommand)));
+        } else if (nextCommand.equalsIgnoreCase("c")) {
+            System.out.print("Press 1 to change the name of the entry.\nPress 2 to change the theorem.\nPress 3" +
+                    " to change the course it is most useful for.\nPress 4 to change the description.\nPress 5 to change" +
+                    "the Proof.\nPress 6 to delete specific practice problems.\nPress 7 to delete this entry.");
+            changeEquationEntry(listOfEquations.get(doesEquationExist(previousCommand)));
+        } else {
+            System.out.print("\nNot a valid entry!\n");
+        }
+    }
+
+    private void changeEquationEntry(Equation equation) {
+        String command = input.next();
+        if (command.equals("1")) {
+            System.out.print("What were you planning to change the field to? Please type it in below.\n");
+            equation.changeName(whatIsTheChange());
+        } else if (command.equals("2")) {
+            System.out.print("What were you planning to change the field to? Please type it in below.\n");
+            equation.changeTheorem(whatIsTheChange());
+        } else if (command.equals("3")) {
+            System.out.print("What were you planning to change the field to? Please type it in below.\n");
+            equation.changeCourse(whatIsTheChange());
+        } else if (command.equals("4")) {
+            System.out.print("What were you planning to change the field to? Please type it in below.\n");
+            equation.changeExplaination(whatIsTheChange());
+        } else if (command.equals("5")) {
+            System.out.print("What were you planning to change the field to? Please type it in below.\n");
+            equation.changeProof(whatIsTheChange());
+        } else if (command.equals("6")) {
+            deleteQuestionsPrompt(equation);
+        } else if (command.equals("7")) {
+            deleteEntryPrompt(equation);
+        } else {
+            System.out.print("Not one of the selected options! \n");
+        }
+    }
+
+    public void deleteEntryPrompt(Equation equation) {
+        System.out.print("You are about to delete this entry. Press y to delete the entry.\n");
+        if (yesOrNo()) {
+            listOfEquations.remove(equation);
+        } else {
+            System.out.print("Entry will remain in the library.\n");
+        }
+    }
+
+
+    public void showPracticeProblems(Equation equation) throws IndexOutOfBoundsException {
+        System.out.print("Which practice problems do you want to view?\n");
+        try {
+            System.out.print(equation.showNumberOfPracticeProblems());
+            String command = input.next();
+            int newInput;
+            newInput = Integer.parseInt(command);
+            newInput = Integer.parseInt(command) - 1;
+            System.out.print(equation.getThePracticeProblem(newInput) + "\n");
+            System.out.print("After you're done finishing the problem, press any key to view the answer!\n");
+
+            String viewAnswerInput = input.next();
+            if (viewAnswerInput != null) {
+                System.out.print(equation.getThePracticeProblemAnswer(newInput) + "\n" + "\n");
+                doYouWantToChangeTheProblem(equation, newInput);
+            }
+        } catch (IndexNotThere e) {
+            System.out.print("There are no questions to show!");
+        }
+    }
+
+    private void deleteQuestionsPrompt(Equation equation) {
+        try {
+            System.out.print("What problems would you like to delete? Type the number below.\n");
+            System.out.print(equation.showNumberOfPracticeProblems() + "\n");
+            String command = input.next();
+            int newInput;
+            newInput = Integer.parseInt(command);
+            newInput = Integer.parseInt(command) - 1;
+            equation.removePracticeProblem(newInput);
+            System.out.print("Removed!\n");
+        } catch (IndexNotThere e) {
+            System.out.print("There are no questions to delete!");
+        }
+    }
+
+    private void doYouWantToChangeTheProblem(Equation equation, int index) {
+        System.out.print("Do you want to change the question? Press c to change the practice problem.\n");
+        String command = input.next();
+        if (command.equals("c")) {
+            System.out.print("What should the question be instead?\n");
+            String suggestedQuestion = input.next();
+            System.out.print("What is the answer to this question?\n");
+            String suggestedAnswer = input.next();
+            equation.changePracticeProblem(suggestedQuestion, suggestedAnswer, index);
+            System.out.print("Thank you for your feedback!\n");
+        }
+    }
+
 
     //REQUIRES:
     //MODIFIES:
@@ -212,15 +352,14 @@ public class Library {
     //EFFECTS: Searches if a certain entry exists in listofEquations and returns its index (and should open it up after)
 
     public int doesEquationExist(String nameOfEquation) {
-        int counter = 0;
-        for (Equation e: listOfEquations) {
-            if (nameOfEquation.equalsIgnoreCase(e.getName())) {
-                return counter;
-            } else {
-                counter++;
+            int counter = 0;
+            for (Equation e : listOfEquations) {
+                if (nameOfEquation.equalsIgnoreCase(e.getName())) {
+                    return counter;
+                } else {
+                    counter++;
+                }
             }
-        }
-
         return -1;
     }
 
@@ -245,10 +384,12 @@ public class Library {
     //EFFECTS: lists the names of the Equations so far
 
     public String printAllEquations() {
-        int counter = 1;
+        int counter = listOfEquations.size();
         String text = "";
-        for (Equation e: listOfEquations) {
-            text = counter + e.getName() + text;
+        for (Equation t: listOfEquations) {
+            text = t.getName() + text;
+            text = "\n" + counter + "." + text;
+            counter--;
         }
         return text;
     }

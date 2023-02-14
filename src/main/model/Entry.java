@@ -159,7 +159,7 @@ public abstract class Entry {
     //EFFECTS: Shows the entire theorem in the system
     public void viewEntry() {
         System.out.println("Name: " + this.getName());
-        System.out.println("Theorem: " + this.getTheorem());
+        System.out.println("Statement: " + this.getTheorem());
         System.out.println("Course this is most relevant to: " + this.getCourse());
         System.out.println("Description: " + this.getExplainations());
     }

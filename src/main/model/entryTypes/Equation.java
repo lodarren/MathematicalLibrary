@@ -94,18 +94,40 @@ public class Equation extends Entry {
         System.out.println("Theorem:" + this.getTheorem());
         System.out.println("Course this is most relevant to:" + this.getCourse());
         System.out.println("Description: " + this.getExplainations());
-        showNumberOfPracticeProblems();
+        try {
+            showNumberOfPracticeProblems();
+        } catch (IndexNotThere e) {
+            System.out.print("There are no practice problems!");
+        }
     }
 
     //REQUIRES:
     //MODIFIES: this
     //EFFECTS: Shows the number of practice problems in the entry:
 
-    public void showNumberOfPracticeProblems() {
-        int counter = 1;
-        for (String p : practiceProblems) {
-            System.out.print("Practice Problem" + counter);
-            counter++;
+    public String showNumberOfPracticeProblems() throws IndexNotThere{
+        if (practiceProblems.isEmpty()) {
+            throw new IndexNotThere();
+        } else {
+            int counter = practiceProblems.size();
+            String text = "";
+            for (String p : practiceProblems) {
+                text = "Practice Problem " + counter + "\n" + text;
+                counter--;
+            }
+            return text;
         }
     }
+
+    //REQUIRES:
+    //MODIFIES: this
+    //EFFECTS: Checks if the index of the practice problem is within the list of practice problems
+
+    public Boolean doesPracticeProblemExist(String i) {
+        int number = Integer.parseInt(i);
+        int size = practiceProblems.size() + 1;
+        return number <= size;
+    }
 }
+
+

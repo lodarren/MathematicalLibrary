@@ -3,26 +3,26 @@ package tests;
 import model.Entry;
 import model.entryTypes.*;
 
+import model.exceptions.IndexNotThere;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class EquationTest {
 
     Entry testEntryRequest;
 
-    Equation testRequest;
+    Equation testEquation;
 
     @BeforeEach
 
     public void setup() {
         testEntryRequest = new Equation("name", "theorem", "course", "proof",
                 "explaination");
-        testRequest = new Equation("name", "theorem", "course", "proof",
+        testEquation = new Equation("name", "theorem", "course", "proof",
                 "explaination");
     }
 
@@ -99,72 +99,72 @@ public class EquationTest {
 
     @Test
     public void addPracticeProblemTest() {
-        testRequest.addPracticeProblem("question1", "answer1");
-        assertEquals("Question: question1\nAnswer: answer1", testRequest.getPracticeProblem(0));
-        assertEquals("question1", testRequest.getThePracticeProblem(0));
-        assertEquals("answer1", testRequest.getThePracticeProblemAnswer(0));
-        testRequest.addPracticeProblem("question2", "answer3");
-        assertEquals("Question: question2\nAnswer: answer3", testRequest.getPracticeProblem(1));
-        assertEquals("question2", testRequest.getThePracticeProblem(1));
-        assertEquals("answer3", testRequest.getThePracticeProblemAnswer(1));
+        testEquation.addPracticeProblem("question1", "answer1");
+        assertEquals("Question: question1\nAnswer: answer1", testEquation.getPracticeProblem(0));
+        assertEquals("question1", testEquation.getThePracticeProblem(0));
+        assertEquals("answer1", testEquation.getThePracticeProblemAnswer(0));
+        testEquation.addPracticeProblem("question2", "answer3");
+        assertEquals("Question: question2\nAnswer: answer3", testEquation.getPracticeProblem(1));
+        assertEquals("question2", testEquation.getThePracticeProblem(1));
+        assertEquals("answer3", testEquation.getThePracticeProblemAnswer(1));
     }
 
     @Test
     public void removePracticeProblemsTest() {
-        testRequest.addPracticeProblem("question1", "answer1");
-        testRequest.addPracticeProblem("question2", "answer2");
-        testRequest.addPracticeProblem("question3", "answer3");
-        testRequest.removePracticeProblem(1);
-        assertEquals("question3", testRequest.getThePracticeProblem(1));
-        assertEquals("answer3", testRequest.getThePracticeProblemAnswer(1));
+        testEquation.addPracticeProblem("question1", "answer1");
+        testEquation.addPracticeProblem("question2", "answer2");
+        testEquation.addPracticeProblem("question3", "answer3");
+        testEquation.removePracticeProblem(1);
+        assertEquals("question3", testEquation.getThePracticeProblem(1));
+        assertEquals("answer3", testEquation.getThePracticeProblemAnswer(1));
     }
 
     @Test
     public void changePracticeProblemsTest() {
-        testRequest.addPracticeProblem("question1", "answer1");
-        testRequest.addPracticeProblem("question2", "answer2");
-        testRequest.changePracticeProblem("Changed Question 1", "Changed Answer 1", 1);
-        testRequest.changePracticeProblem("Changed Question 2", "Changed Answer 2", 0);
-        assertEquals("Changed Question 1", testRequest.getThePracticeProblem(1));
-        assertEquals("Changed Question 2", testRequest.getThePracticeProblem(0));
-        assertEquals("Changed Answer 1", testRequest.getThePracticeProblemAnswer(1));
-        assertEquals("Changed Answer 2", testRequest.getThePracticeProblemAnswer(0));
+        testEquation.addPracticeProblem("question1", "answer1");
+        testEquation.addPracticeProblem("question2", "answer2");
+        testEquation.changePracticeProblem("Changed Question 1", "Changed Answer 1", 1);
+        testEquation.changePracticeProblem("Changed Question 2", "Changed Answer 2", 0);
+        assertEquals("Changed Question 1", testEquation.getThePracticeProblem(1));
+        assertEquals("Changed Question 2", testEquation.getThePracticeProblem(0));
+        assertEquals("Changed Answer 1", testEquation.getThePracticeProblemAnswer(1));
+        assertEquals("Changed Answer 2", testEquation.getThePracticeProblemAnswer(0));
     }
 
     @Test
     public void changePracticeProblemsProblemVoidTest() {
-        testRequest.addPracticeProblem("question1", "answer1");
-        testRequest.addPracticeProblem("question2", "answer2");
-        testRequest.changePracticeProblem("", "Changed Answer 1", 1);
-        testRequest.changePracticeProblem("Changed Question 2", "Changed Answer 2", 0);
-        assertEquals("question2", testRequest.getThePracticeProblem(1));
-        assertEquals("Changed Question 2", testRequest.getThePracticeProblem(0));
-        assertEquals("Changed Answer 1", testRequest.getThePracticeProblemAnswer(1));
-        assertEquals("Changed Answer 2", testRequest.getThePracticeProblemAnswer(0));
+        testEquation.addPracticeProblem("question1", "answer1");
+        testEquation.addPracticeProblem("question2", "answer2");
+        testEquation.changePracticeProblem("", "Changed Answer 1", 1);
+        testEquation.changePracticeProblem("Changed Question 2", "Changed Answer 2", 0);
+        assertEquals("question2", testEquation.getThePracticeProblem(1));
+        assertEquals("Changed Question 2", testEquation.getThePracticeProblem(0));
+        assertEquals("Changed Answer 1", testEquation.getThePracticeProblemAnswer(1));
+        assertEquals("Changed Answer 2", testEquation.getThePracticeProblemAnswer(0));
     }
 
     @Test
     public void changePracticeProblemsProblemAnswerVoidTest() {
-        testRequest.addPracticeProblem("question1", "answer1");
-        testRequest.addPracticeProblem("question2", "answer2");
-        testRequest.changePracticeProblem("Changed Question 1", "" , 1);
-        testRequest.changePracticeProblem("Changed Question 2", "Changed Answer 2", 0);
-        assertEquals("Changed Question 1", testRequest.getThePracticeProblem(1));
-        assertEquals("Changed Question 2", testRequest.getThePracticeProblem(0));
-        assertEquals("answer2", testRequest.getThePracticeProblemAnswer(1));
-        assertEquals("Changed Answer 2", testRequest.getThePracticeProblemAnswer(0));
+        testEquation.addPracticeProblem("question1", "answer1");
+        testEquation.addPracticeProblem("question2", "answer2");
+        testEquation.changePracticeProblem("Changed Question 1", "" , 1);
+        testEquation.changePracticeProblem("Changed Question 2", "Changed Answer 2", 0);
+        assertEquals("Changed Question 1", testEquation.getThePracticeProblem(1));
+        assertEquals("Changed Question 2", testEquation.getThePracticeProblem(0));
+        assertEquals("answer2", testEquation.getThePracticeProblemAnswer(1));
+        assertEquals("Changed Answer 2", testEquation.getThePracticeProblemAnswer(0));
     }
 
     @Test
     public void changePracticeProblemsBothVoidTest() {
-        testRequest.addPracticeProblem("question1", "answer1");
-        testRequest.addPracticeProblem("question2", "answer2");
-        testRequest.changePracticeProblem("", "" , 1);
-        testRequest.changePracticeProblem("Changed Question 2", "Changed Answer 2", 0);
-        assertEquals("question2", testRequest.getThePracticeProblem(1));
-        assertEquals("Changed Question 2", testRequest.getThePracticeProblem(0));
-        assertEquals("answer2", testRequest.getThePracticeProblemAnswer(1));
-        assertEquals("Changed Answer 2", testRequest.getThePracticeProblemAnswer(0));
+        testEquation.addPracticeProblem("question1", "answer1");
+        testEquation.addPracticeProblem("question2", "answer2");
+        testEquation.changePracticeProblem("", "" , 1);
+        testEquation.changePracticeProblem("Changed Question 2", "Changed Answer 2", 0);
+        assertEquals("question2", testEquation.getThePracticeProblem(1));
+        assertEquals("Changed Question 2", testEquation.getThePracticeProblem(0));
+        assertEquals("answer2", testEquation.getThePracticeProblemAnswer(1));
+        assertEquals("Changed Answer 2", testEquation.getThePracticeProblemAnswer(0));
     }
 
     @Test
@@ -176,19 +176,26 @@ public class EquationTest {
         mockPracticeProblemList.add("question1");
         mockPracticeProblemAnswerList.add("answer1");
 
-        assertTrue(testRequest.getPracticeProblemsRaw().isEmpty());
-        assertTrue(testRequest.getPracticeProblemsAnswerRaw().isEmpty());
+        assertTrue(testEquation.getPracticeProblemsRaw().isEmpty());
+        assertTrue(testEquation.getPracticeProblemsAnswerRaw().isEmpty());
 
-        testRequest.addPracticeProblem("question1", "answer1");
-        assertEquals(mockPracticeProblemList, testRequest.getPracticeProblemsRaw());
-        assertEquals(mockPracticeProblemAnswerList, testRequest.getPracticeProblemsAnswerRaw());
+        testEquation.addPracticeProblem("question1", "answer1");
+        assertEquals(mockPracticeProblemList, testEquation.getPracticeProblemsRaw());
+        assertEquals(mockPracticeProblemAnswerList, testEquation.getPracticeProblemsAnswerRaw());
     }
 
+    @Test
+    public void showNumberOfPracticeProblemsTest() {
+        testEquation.addPracticeProblem("question1", "answer1");
+        testEquation.addPracticeProblem("question1", "answer1");
+        testEquation.addPracticeProblem("question1", "answer1");
 
-
-
-
-
-
+        try {
+            assertEquals(testEquation.showNumberOfPracticeProblems(),
+                    "Practice Problem 1\nPractice Problem 2\nPractice Problem 3\n");
+        } catch (IndexNotThere e) {
+            fail();
+        }
+    }
 
 }
