@@ -1,17 +1,11 @@
 package model;
 
-import model.exceptions.EmptyText;
-import model.exceptions.IndexNotThere;
-
-import java.util.ArrayList;
-
 public abstract class Entry {
     String name;
     String theorem;
     String course;
     String proof;
     String explainations;
-    ArrayList<String>  comments;
 
     //EFFECTS: Creates a new entry class
     public Entry(String name, String theorem, String course, String proof, String explainations){
@@ -20,7 +14,6 @@ public abstract class Entry {
         this.course = course;
         this.proof = proof;
         this.explainations = explainations;
-        this.comments = new ArrayList<>();
     }
 
     //MODIFIES: this
@@ -62,24 +55,6 @@ public abstract class Entry {
         this.explainations = explaination;
     }
 
-    //REQUIRES:
-    //MODIFIES: this
-    //EFFECTS: Transfers all comments from a list to comments.
-
-    public void transferComments(ArrayList<String> newComments) {
-        this.comments = newComments;
-    }
-
-    //REQUIRES:
-    //MODIFIES: this
-    //EFFECTS: Changes the comment found on that index in the list.
-
-    public void changeComment(String comment, int i) {
-        comments.add(i, comment);
-    }
-
-
-
     //MODIFIES: this
     //EFFECTS: returns name of the entry
 
@@ -120,40 +95,6 @@ public abstract class Entry {
         return explainations;
     }
 
-
-    //MODIFIES: this
-    //EFFECTS: returns the entire list of comments in ArrayList form
-
-    public ArrayList<String> getCommentsRaw() {
-        return comments;
-    }
-
-    //REQUIRES:
-    //MODIFIES: this
-    //EFFECTS: retrieves a specific comment from comments
-
-    public String getComment(int i) {
-
-        return comments.get(i);
-    }
-
-    //REQUIRES:
-    //MODIFIES: this
-    //EFFECTS: adds a comment to comment
-
-    public void addComment(String comment) {
-        comments.add(comment);
-    }
-
-    //REQUIRES:
-    //MODIFIES: this
-    //EFFECTS: Removes a comment from the entry
-
-    public void removeComment(int i) {
-
-        comments.remove(i);
-    }
-
     //REQUIRES:
     //MODIFIES: this
     //EFFECTS: Shows the entire theorem in the system
@@ -164,19 +105,6 @@ public abstract class Entry {
         System.out.println("Description: " + this.getExplainations());
     }
 
-
-    //MODIFIES: this
-    //EFFECTS: Returns list of all comments in text form in the form 1. text \\ 2. text \\
-
-    public String getAllComments() {
-        String fullListOfComments = "";
-
-        for (String c: comments) {
-            fullListOfComments = fullListOfComments + c + "\n";
-        }
-
-        return fullListOfComments;
-    }
 
 
 }

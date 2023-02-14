@@ -5,9 +5,7 @@ package model.entryTypes;
 // pending proof, the pending practice problems, and its estimated time for completion.
 
 import model.Entry;
-import model.exceptions.EmptyText;
 import model.exceptions.NotValidCompletion;
-import model.exceptions.NotValidType;
 
 public class Request extends Entry {
     int estimatedCompletion;
@@ -86,9 +84,6 @@ public class Request extends Entry {
         Equation newEquation;
         newEquation = new Equation(this.getName(), this.getTheorem(), this.getCourse(), this.getProof(),
                 this.getExplainations());
-
-        newEquation.transferComments(this.getCommentsRaw());
-
         return newEquation;
     }
 
@@ -99,9 +94,6 @@ public class Request extends Entry {
         Theorem newTheorem;
         newTheorem = new Theorem(this.getName(), this.getTheorem(), this.getCourse(), this.getProof(),
                 this.getExplainations());
-
-        newTheorem.transferComments(this.getCommentsRaw());
-
         return newTheorem;
     }
 

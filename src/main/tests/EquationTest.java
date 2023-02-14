@@ -81,21 +81,6 @@ public class EquationTest {
         assertEquals("this is something", testEntryRequest.getExplainations());
     }
 
-    @Test
-    public void addCommentTest() {
-        testEntryRequest.addComment("comment1");
-        testEntryRequest.addComment("comment2");
-        assertEquals("comment1", testEntryRequest.getComment(0));
-        assertEquals("comment2", testEntryRequest.getComment(1));
-    }
-
-    @Test
-    public void removeCommentTest() {
-        testEntryRequest.addComment("comment1");
-        testEntryRequest.removeComment(0);
-        testEntryRequest.addComment("newcomment1");
-        assertEquals("newcomment1", testEntryRequest.getComment(0));
-    }
 
     @Test
     public void addPracticeProblemTest() {

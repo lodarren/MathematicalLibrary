@@ -1,12 +1,9 @@
 package tests;
 
 import model.Entry;
-import model.entryTypes.*;
-
+import model.entryTypes.Theorem;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -79,22 +76,5 @@ public class TheoremTest {
         testEntryTheorem.changeExplaination("this is something");
         assertEquals("this is something", testEntryTheorem.getExplainations());
     }
-
-    @Test
-    public void addCommentTest() {
-        testEntryTheorem.addComment("comment1");
-        testEntryTheorem.addComment("comment2");
-        assertEquals("comment1", testEntryTheorem.getComment(0));
-        assertEquals("comment2", testEntryTheorem.getComment(1));
-    }
-
-    @Test
-    public void removeCommentTest() {
-        testEntryTheorem.addComment("comment1");
-        testEntryTheorem.removeComment(0);
-        testEntryTheorem.addComment("newcomment1");
-        assertEquals("newcomment1", testEntryTheorem.getComment(0));
-    }
-
 
 }

@@ -7,7 +7,6 @@ import model.exceptions.NotValidCompletion;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
 import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -87,22 +86,6 @@ public class RequestTest {
     }
 
     @Test
-    public void addCommentTest() {
-        testEntryRequest.addComment("comment1");
-        testEntryRequest.addComment("comment2");
-        assertEquals("comment1", testEntryRequest.getComment(0));
-        assertEquals("comment2", testEntryRequest.getComment(1));
-    }
-
-    @Test
-    public void removeCommentTest() {
-        testEntryRequest.addComment("comment1");
-        testEntryRequest.removeComment(0);
-        testEntryRequest.addComment("newcomment1");
-        assertEquals("newcomment1", testEntryRequest.getComment(0));
-    }
-
-    @Test
     public void getTypeTest() {
         assertEquals("Theorem", testRequest.getType());
         testRequest.changeType("Equation");
@@ -164,8 +147,6 @@ public class RequestTest {
         assertEquals(convertedTheorem.getProof(), compareTheorem.getProof());
         assertEquals(convertedTheorem.getExplainations(), compareTheorem.getExplainations());
 
-        assertTrue(Objects.equals(convertedTheorem.getCommentsRaw(), compareTheorem.getCommentsRaw()));
-
     }
 
     @Test
@@ -182,15 +163,6 @@ public class RequestTest {
         assertEquals(convertedEquation.getProof(), compareEquation.getProof());
         assertEquals(convertedEquation.getExplainations(), compareEquation.getExplainations());
 
-        assertTrue(Objects.equals(convertedEquation.getCommentsRaw(), compareEquation.getCommentsRaw()));
-
     }
-
-    //Start on library
-    //Proofread most of the methods and stuff
-    //Double check styling
-    //UI
-
-
 
 }
