@@ -10,19 +10,18 @@ obtain more information (such as its specific proof, some example problems, anal
 their needs in an intuitive way. 
 
 Some example features of the program include:
-- The ability to look up a list of theorems in alphabetical order
 - To interact with the UI to obtain more infomration about the formula (ex. proofs, practice problems etc. )
   (not all information will be shown at once in order to make things more concise and easy to read)
 - The ability to allow the user to contribute to the database by adding their own explainations and theorems
 - A request list for theorems/formulas that have not been convered yet
 - The ability to move a draft theorem entry into the main page
+- To avoid multiple types of theorems with the same name showing up on the main database
 
 This project is aimed towards anyone who is interested in studying mathematics, and will attempt to be made in a way
 to be as user friendly as possible. 
 
 
 **User Stories**
-- As a user, I want to be able to look up mathematical theorem entries in order
 - As a user, I want to be able to look up a theorem that matches the name I am looking for
 - As a user, I want to be able to access additional information about the theories, and hide those that are not 
 important to me

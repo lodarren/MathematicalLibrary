@@ -160,6 +160,7 @@ public class Library {
             if (checkIfTheoremExists(name)) {
                 throw new NameAlreadyExists();
             }
+            theorem.changeName(name);
         } else if (command.equals("2")) {
             System.out.print("What were you planning to change the field to? Please type it in below.\n");
             theorem.changeTheorem(whatIsTheChange());
@@ -252,6 +253,7 @@ public class Library {
             if (checkIfEquationExists(newName)) {
                 throw new NameAlreadyExists();
             }
+            equation.changeName(newName);
         } else if (command.equals("2")) {
             System.out.print("What were you planning to change the field to? Please type it in below.\n");
             equation.changeTheorem(whatIsTheChange());
@@ -659,15 +661,11 @@ public class Library {
     }
 
 
-
-
-    //REQUIRES:
-    //MODIFIES:
-    //EFFECTS: shows all current theorems and lists in alphabetical order
-
-    //REQUIRES:
-    //MODIFIES:
-    //EFFECTS: shows all current Equations and lists them in alphabetical order
-
-
 }
+
+//LEFT TO DO
+// Proper documentation, Remove comments list, add requires methods etc. Double check styling, Check if Lists have to be in its own class
+// Double check tests, I believe some of the ones involving print are not tested properly, fix \n typos, update the readme to reflect these changes.
+//
+//
+//
