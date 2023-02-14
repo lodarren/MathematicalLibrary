@@ -43,8 +43,17 @@ public class Request extends Entry {
     //MODIFIES: this
     //EFFECTS: updates completion
 
-    public void updateEstimatedCompletion(int completion) {
-        this.estimatedCompletion = completion;
+    public void updateEstimatedCompletion(String completion) throws NotValidCompletion{
+        completion = completion.replaceAll("\\D+", "");
+
+        int newCompletion = Integer.parseInt(completion);
+        if (newCompletion > 100) {
+            throw new NotValidCompletion();
+        } else if (newCompletion < 0){
+            throw new NotValidCompletion();
+        }
+
+        this.estimatedCompletion = newCompletion;
     }
 
 
@@ -94,6 +103,17 @@ public class Request extends Entry {
         newTheorem.transferComments(this.getCommentsRaw());
 
         return newTheorem;
+    }
+
+    public String viewRequest() {
+        String text;
+        text = "Name: " + this.getName() + "\n";
+        text = text + "Type" + this.getType() + "\n";
+        text = text + "Theorem: " + this.getTheorem() + "\n";
+        text = text + "Course this is most relevant to: " + this.getCourse() + "\n";
+        text = text + "Description: " + this.getExplainations() + "\n";
+        text = text + "Completion: " + this.getEstimatedCompletion() + "\n";
+        return text;
     }
 
 }
