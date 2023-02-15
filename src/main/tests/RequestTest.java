@@ -22,12 +22,12 @@ public class RequestTest {
 
     public void setup() {
         testEntryRequest = new Request("name", "theorem", "Theorem", "course",
-                "proof", "explaination");
+                "proof", "explanation");
 
         testRequest = new Request("name", "theorem", "Theorem", "course",
-                "proof", "explaination");
+                "proof", "explanation");
 
-        testRequestLetters = new Request ("A","B", "Theorem", "C", "D", "E");
+        testRequestLetters = new Request("A","B", "Theorem", "C", "D", "E");
     }
 
     @Test
@@ -51,8 +51,8 @@ public class RequestTest {
     }
 
     @Test
-    public void getExplainationTest() {
-        assertEquals("explaination", testEntryRequest.getExplainations());
+    public void getExplanationTest() {
+        assertEquals("explanation", testEntryRequest.getExplanations());
     }
 
     @Test
@@ -80,9 +80,9 @@ public class RequestTest {
     }
 
     @Test
-    public void changeExplainationTest() {
-        testEntryRequest.changeExplaination("this is something");
-        assertEquals("this is something", testEntryRequest.getExplainations());
+    public void changeExplanationTest() {
+        testEntryRequest.changeExplanation("this is something");
+        assertEquals("this is something", testEntryRequest.getExplanations());
     }
 
     @Test
@@ -153,7 +153,7 @@ public class RequestTest {
         assertEquals(convertedTheorem.getTheorem(), compareTheorem.getTheorem());
         assertEquals(convertedTheorem.getCourse(), compareTheorem.getCourse());
         assertEquals(convertedTheorem.getProof(), compareTheorem.getProof());
-        assertEquals(convertedTheorem.getExplainations(), compareTheorem.getExplainations());
+        assertEquals(convertedTheorem.getExplanations(), compareTheorem.getExplanations());
 
     }
 
@@ -169,7 +169,7 @@ public class RequestTest {
         assertEquals(convertedEquation.getTheorem(), compareEquation.getTheorem());
         assertEquals(convertedEquation.getCourse(), compareEquation.getCourse());
         assertEquals(convertedEquation.getProof(), compareEquation.getProof());
-        assertEquals(convertedEquation.getExplainations(), compareEquation.getExplainations());
+        assertEquals(convertedEquation.getExplanations(), compareEquation.getExplanations());
 
     }
 

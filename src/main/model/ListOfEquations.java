@@ -13,7 +13,7 @@ public class ListOfEquations {
     }
 
     //MODIFIES: this
-    //EFFECTS: returns -1 if the string inputted does not match the name of any of the Equations,
+    //EFFECTS: returns -1 if the string inputted does not match the name of the Equations,
     //         otherwise it returns the index it is located.
     public int doesEquationExist(String nameOfEquation) {
         int counter = 0;
@@ -47,24 +47,24 @@ public class ListOfEquations {
     }
 
     //MODIFIES: this
-    //EFFECTS: returns true if the equation exists. Otherwise false.
+    //EFFECTS: returns true if the equation exists. Otherwise, false.
     public Boolean checkIfEquationExists(String name) {
         return -1 != doesEquationExist(name);
     }
 
-    //MODFIIES: this
+    //MODIFIES: this
     //EFFECTS: adds the equation to the last index of the entries list.
     public void addEquation(Equation equation) {
         entries.add(equation);
     }
 
-    //MODFIIES: this
+    //MODIFIES: this
     //EFFECTS: removes the equation whose identity matches that in the list.
     public void removeEquation(Equation equation) {
         entries.remove(equation);
     }
 
-    //MODFIIES: this
+    //MODIFIES: this
     //EFFECTS: returns the Equation that is located on that index.
     public Equation getEquation(int i) {
         return entries.get(i);

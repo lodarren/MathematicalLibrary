@@ -1,6 +1,5 @@
 package model;
 
-import model.Entry;
 import model.exceptions.IndexNotThere;
 
 import java.util.ArrayList;
@@ -13,8 +12,8 @@ public class Equation extends Entry {
     ArrayList<String> practiceProblems;
     ArrayList<String> practiceProblemsAnswer;
 
-    public Equation(String name, String theorem, String course, String proof, String explainations) {
-        super(name, theorem, course, proof, explainations);
+    public Equation(String name, String theorem, String course, String proof, String explanation) {
+        super(name, theorem, course, proof, explanation);
         practiceProblems = new ArrayList<>();
         practiceProblemsAnswer = new ArrayList<>();
     }

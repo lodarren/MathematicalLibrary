@@ -36,7 +36,7 @@ public class Library {
 
     private void runLibrary() {
         boolean running = true;
-        String command = null;
+        String command;
 
         listOfEquations = new ListOfEquations();
         listOfTheorems = new ListOfTheorems();
@@ -47,7 +47,7 @@ public class Library {
                 "Calculus 4", "Grass = green", "The grass looks green to me");
         mockEntry2 = new Theorem("Pythagorean theorem", "a^2+b^2=c^2", "Pre-school",
                 "Proof by contradiction", "There is a relationship between the sides of a triangle");
-        mockEquation1 = new Equation("Fundimental theorem of engineering", "sin(x) = x",
+        mockEquation1 = new Equation("Fundamental theorem of engineering", "sin(x) = x",
                 "All of university", "sin(0) = 0 QED", "The most useful formula in engineering");
         mockEquation2 = new Equation("The cosine law", "cos(x) = 1", "Grade school",
                 "cos(0) = 1", "All cosines are equal to 1. ");
@@ -140,11 +140,11 @@ public class Library {
         if (listOfTheorems.doesTheoremExist(command) != -1) {
             listOfTheorems.getTheorem(listOfTheorems.doesTheoremExist(command)).viewEntry();
             System.out.print("\nPress y if you want to display extra info. Press another key to return to the main "
-                   + "menu.\n");
+                    + "menu.\n");
             if (yesOrNo()) {
                 listOfTheorems.getTheorem(listOfTheorems.doesTheoremExist(command)).viewTheorem();
                 System.out.print("\nPress y if you want to change this entry. Press another key to return to the "
-                      +  "main menu.\n");
+                            + "main menu.\n");
                 if (yesOrNo()) {
                     System.out.print("Press 1 to change the name of the entry.\nPress 2 to change the theorem.\nPress 3"
                             + " to change the course it is most useful for.\nPress 4 to change the description."
@@ -170,7 +170,7 @@ public class Library {
 
 
     //EFFECTS: Prompts the user to select the field that they want to change. Afterwards, it allows the user to
-    //         to change it. If the name shows up in listOfTheorem, it denies the suggestion.
+    //         change it. If the name shows up in listOfTheorem, it denies the suggestion.
     public void doYouWantToChangeTheTheorem(Theorem theorem) throws NameAlreadyExists {
         String command = input.next();
         if (command.equals("1")) {
@@ -188,7 +188,7 @@ public class Library {
             theorem.changeCourse(whatIsTheChange());
         } else if (command.equals("4")) {
             System.out.print("What were you planning to change the field to? Please type it in below.\n");
-            theorem.changeExplaination(whatIsTheChange());
+            theorem.changeExplanation(whatIsTheChange());
         } else if (command.equals("5")) {
             System.out.print("What were you planning to change the field to? Please type it in below.\n");
             theorem.changeProof(whatIsTheChange());
@@ -212,11 +212,10 @@ public class Library {
 
     //EFFECTS: Takes in a user input and returns it.
     private String whatIsTheChange() {
-        String command = input.next();
-        return command;
+        return input.next();
     }
 
-    //EFFECTS: Intoduces the user to the Equation section of the library and prompts them to select a choice.
+    //EFFECTS: Introduces the user to the Equation section of the library and prompts them to select a choice.
     public void mainListOfEquation() {
         welcomeToEquationSection();
 
@@ -287,7 +286,7 @@ public class Library {
             equation.changeCourse(whatIsTheChange());
         } else if (command.equals("4")) {
             System.out.print("What were you planning to change the field to? Please type it in below.\n");
-            equation.changeExplaination(whatIsTheChange());
+            equation.changeExplanation(whatIsTheChange());
         } else if (command.equals("5")) {
             System.out.print("What were you planning to change the field to? Please type it in below.\n");
             equation.changeProof(whatIsTheChange());
@@ -365,7 +364,8 @@ public class Library {
     //EFFECTS: Welcomes the user in the requests section of the library. Prompts them to make a selection to either
     //         view requests or to make a request.
     public void mainListOfRequests() {
-        System.out.print("Welcome to the requests section!\nPress A to make a request.\nPress B to view made requests.\n");
+        System.out.print("Welcome to the requests section!\nPress A to make a request.\nPress B to view made requests."
+                + "\n");
         String command = input.next();
 
         if (command.equalsIgnoreCase("A")) {
@@ -408,14 +408,14 @@ public class Library {
     //         Does nothing if none of the options are selected.
     public void updateDeleteOrSubmitRequest(Request request) {
         System.out.print("Press u to update this request, press d to delete this request.\n");
-        String newcommand = input.next();
-        if (newcommand.equalsIgnoreCase("u")) {
+        String newCommand = input.next();
+        if (newCommand.equalsIgnoreCase("u")) {
             try {
                 updateRequest(request);
             } catch (NameAlreadyExists e) {
                 System.out.print("Name already exists!\n");
             }
-        } else if (newcommand.equalsIgnoreCase("d")) {
+        } else if (newCommand.equalsIgnoreCase("d")) {
             deleteRequestPrompt(request);
         } else {
             System.out.println("Not one of the following options!\n");
@@ -447,7 +447,7 @@ public class Library {
             request.changeCourse(whatIsTheChange());
         } else if (command.equals("4")) {
             System.out.print("What were you planning to change the field to? Please type it in below.\n");
-            request.changeExplaination(whatIsTheChange());
+            request.changeExplanation(whatIsTheChange());
         } else if (command.equals("5")) {
             System.out.print("What were you planning to change the field to? Please type it in below.\n");
             request.changeProof(whatIsTheChange());
@@ -487,7 +487,7 @@ public class Library {
         }
     }
 
-    // EFFECTS: if the estimated completion is less tahn 100, then it prompts the user to click "y" again before
+    // EFFECTS: if the estimated completion is less than 100, then it prompts the user to click "y" again before
     //          moving the request to either listOfTheorem or listOfEquation.
     private Boolean checkToSubmitRequest(Request request) {
         if (request.getEstimatedCompletion() != 100) {
@@ -549,10 +549,10 @@ public class Library {
                 + "sure) \n");
         String course = input.next();
         System.out.print("What does this theorem state? (you can leave this blank if you are not sure)\n");
-        String explaination = input.next();
+        String explanation = input.next();
         System.out.print("What is the proof for this theorem? (you can leave this blank if you are not sure)\n");
         String proof = input.next();
-        newRequest = new Request(name, theorem, "Theorem", course, explaination, proof);
+        newRequest = new Request(name, theorem, "Theorem", course, explanation, proof);
         listOfRequests.addRequest(newRequest);
         System.out.print("Submitted request!\n");
     }
@@ -568,18 +568,20 @@ public class Library {
         }
         System.out.print("What does this Equation state? (you can leave this blank if you are not sure)\n");
         String theorem = input.next();
-        System.out.print("What course is this Equation most applicable for? (you can leave this blank if you are not sure) \n");
+        System.out.print("What course is this Equation most applicable for? (you can leave this blank if you are not"
+                + " sure) \n");
         String course = input.next();
         System.out.print("What does this Equation state? (you can leave this blank if you are not sure)\n");
-        String explaination = input.next();
+        String explanation = input.next();
         System.out.print("What is the derivation for this Equation? (you can leave this blank if you are not sure)\n");
         String proof = input.next();
-        newRequest = new Request(name, theorem, "Equation", course, explaination, proof);
+        newRequest = new Request(name, theorem, "Equation", course, explanation, proof);
         listOfRequests.addRequest(newRequest);
         System.out.print("Submitted request!\n");
     }
 }
 
 //LEFT TO DO
-// Proper documentation, Remove comments list, add requires methods etc. Double check styling, Check if Lists have to be in its own class
-// Double check tests, I believe some of the ones involving print are not tested properly, fix \n typos, update the readme to reflect these changes.
+// Double check styling,
+// Double check tests, I believe some of the ones involving print are not tested properly, fix \n typos,
+// update the readme to reflect these changes.

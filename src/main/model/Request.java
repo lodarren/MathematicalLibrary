@@ -1,7 +1,7 @@
 package model;
 
 // Represents math concepts that users want to be covered, subject to updates before put into main library. Contains
-// the name wanted to be covered, the equation requested, the class information, the pending explaination, the
+// the name wanted to be covered, the equation requested, the class information, the pending explanation, the
 // pending proof, the pending practice problems, and its estimated time for completion. The type of the equation can
 // only be "Equation" or "Theorem". estimatedCompletion can only be an integer between 0 and 100.
 
@@ -15,8 +15,8 @@ public class Request extends Entry {
     //MODIFIES:
     //EFFECTS: Creates a new request
 
-    public Request(String name, String theorem, String type, String course, String proof, String explainations) {
-        super(name, theorem, course, proof, explainations);
+    public Request(String name, String theorem, String type, String course, String proof, String explanation) {
+        super(name, theorem, course, proof, explanation);
         this.type = type;
     }
 
@@ -41,7 +41,7 @@ public class Request extends Entry {
     //MODIFIES: this
     //EFFECTS: updates completion
 
-    public void updateEstimatedCompletion(String completion) throws NotValidCompletion{
+    public void updateEstimatedCompletion(String completion) throws NotValidCompletion {
         int newCompletion = Integer.parseInt(completion);
         if (newCompletion > 100) {
             throw new NotValidCompletion();
@@ -62,14 +62,14 @@ public class Request extends Entry {
     //EFFECTS: checks if the following request is a Theorem
 
     public Boolean isItATheorem() {
-        return type == "Theorem";
+        return type.equals("Theorem");
     }
 
     //MODIFIES: this
     //EFFECTS: checks the following request if it is an equation
 
     public Boolean isItAnEquation() {
-        return type == "Equation";
+        return type.equals("Equation");
     }
 
     //MODIFIES: this
@@ -78,7 +78,7 @@ public class Request extends Entry {
     public Equation requestToEquation() {
         Equation newEquation;
         newEquation = new Equation(this.getName(), this.getTheorem(), this.getCourse(), this.getProof(),
-                this.getExplainations());
+                this.getExplanations());
         return newEquation;
     }
 
@@ -88,7 +88,7 @@ public class Request extends Entry {
     public Theorem requestToTheorem() {
         Theorem newTheorem;
         newTheorem = new Theorem(this.getName(), this.getTheorem(), this.getCourse(), this.getProof(),
-                this.getExplainations());
+                this.getExplanations());
         return newTheorem;
     }
 
@@ -98,7 +98,7 @@ public class Request extends Entry {
         text = text + "Type" + this.getType() + "\n";
         text = text + "Theorem: " + this.getTheorem() + "\n";
         text = text + "Course this is most relevant to: " + this.getCourse() + "\n";
-        text = text + "Description: " + this.getExplainations() + "\n";
+        text = text + "Description: " + this.getExplanations() + "\n";
         text = text + "Completion: " + this.getEstimatedCompletion() + "\n";
         return text;
     }

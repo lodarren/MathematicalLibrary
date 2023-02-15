@@ -46,7 +46,7 @@ public class ListOfTheoremsTest {
         listOfTheoremsTest.removeTheorem(theoremEntry2);
 
         assertEquals(theoremEntry1, listOfTheoremsTest.getTheorem(0));
-        assertEquals(-1 , listOfTheoremsTest.doesTheoremExist("F"));
+        assertEquals(-1, listOfTheoremsTest.doesTheoremExist("F"));
         assertEquals(theoremEntry3, listOfTheoremsTest.getTheorem(1));
     }
 

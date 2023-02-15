@@ -21,9 +21,9 @@ public class EquationTest {
 
     public void setup() {
         testEntryRequest = new Equation("name", "theorem", "course", "proof",
-                "explaination");
+                "explanation");
         testEquation = new Equation("name", "theorem", "course", "proof",
-                "explaination");
+                "explanation");
     }
 
     @Test
@@ -47,8 +47,8 @@ public class EquationTest {
     }
 
     @Test
-    public void getExplainationTest() {
-        assertEquals("explaination", testEntryRequest.getExplainations());
+    public void getExplanationTest() {
+        assertEquals("explanation", testEntryRequest.getExplanations());
     }
 
     @Test
@@ -76,9 +76,9 @@ public class EquationTest {
     }
 
     @Test
-    public void changeExplainationTest() {
-        testEntryRequest.changeExplaination("this is something");
-        assertEquals("this is something", testEntryRequest.getExplainations());
+    public void changeExplanationTest() {
+        testEntryRequest.changeExplanation("this is something");
+        assertEquals("this is something", testEntryRequest.getExplanations());
     }
 
 

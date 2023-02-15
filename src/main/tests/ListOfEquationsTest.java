@@ -47,7 +47,7 @@ public class ListOfEquationsTest {
         listOfEquationsTest.removeEquation(equationEntry2);
 
         assertEquals(equationEntry1, listOfEquationsTest.getEquation(0));
-        assertEquals(-1 , listOfEquationsTest.doesEquationExist("F"));
+        assertEquals(-1, listOfEquationsTest.doesEquationExist("F"));
         assertEquals(equationEntry3, listOfEquationsTest.getEquation(1));
     }
 

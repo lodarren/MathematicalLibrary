@@ -17,9 +17,9 @@ public class TheoremTest {
 
     public void setup() {
         testEntryTheorem = new Theorem("name", "theorem", "course", "proof",
-                "explaination");
+                "explanation");
         testTheorem = new Theorem("name", "theorem", "course", "proof",
-                "explaination");
+                "explanation");
     }
 
     @Test
@@ -43,8 +43,8 @@ public class TheoremTest {
     }
 
     @Test
-    public void getExplainationTest() {
-        assertEquals("explaination", testEntryTheorem.getExplainations());
+    public void getExplanationTest() {
+        assertEquals("explanation", testEntryTheorem.getExplanations());
     }
 
     @Test
@@ -72,9 +72,9 @@ public class TheoremTest {
     }
 
     @Test
-    public void changeExplainationTest() {
-        testEntryTheorem.changeExplaination("this is something");
-        assertEquals("this is something", testEntryTheorem.getExplainations());
+    public void changeExplanationTest() {
+        testEntryTheorem.changeExplanation("this is something");
+        assertEquals("this is something", testEntryTheorem.getExplanations());
     }
 
 }

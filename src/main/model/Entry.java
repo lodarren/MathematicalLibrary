@@ -9,15 +9,15 @@ public abstract class Entry {
     String theorem;
     String course;
     String proof;
-    String explainations;
+    String explanations;
 
     //EFFECTS: Creates a new entry class
-    public Entry(String name, String theorem, String course, String proof, String explainations){
+    public Entry(String name, String theorem, String course, String proof, String explanations) {
         this.name = name;
         this.theorem = theorem;
         this.course = course;
         this.proof = proof;
-        this.explainations = explainations;
+        this.explanations = explanations;
     }
 
     //MODIFIES: this
@@ -49,10 +49,10 @@ public abstract class Entry {
     }
 
     //MODIFIES: this
-    //EFFECTS: changes explaination of the math concept, returns exception if changes are empty
+    //EFFECTS: changes explanation of the math concept, returns exception if changes are empty
 
-    public void changeExplaination(String explaination) {
-        this.explainations = explaination;
+    public void changeExplanation(String explanation) {
+        this.explanations = explanation;
     }
 
     //MODIFIES: this
@@ -86,8 +86,8 @@ public abstract class Entry {
     //MODIFIES: this
     //EFFECTS: returns the explanation for the entry
 
-    public String getExplainations() {
-        return explainations;
+    public String getExplanations() {
+        return explanations;
     }
 
     //REQUIRES:
@@ -97,7 +97,7 @@ public abstract class Entry {
         System.out.println("Name: " + this.getName());
         System.out.println("Statement: " + this.getTheorem());
         System.out.println("Course this is most relevant to: " + this.getCourse());
-        System.out.println("Description: " + this.getExplainations());
+        System.out.println("Description: " + this.getExplanations());
     }
 
 }

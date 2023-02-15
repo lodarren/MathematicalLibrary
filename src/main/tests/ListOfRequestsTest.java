@@ -47,7 +47,7 @@ public class ListOfRequestsTest {
         listOfRequestsTest.removeRequest(requestEntry2);
 
         assertEquals(requestEntry1, listOfRequestsTest.getRequest(0));
-        assertEquals(-1 , listOfRequestsTest.doesRequestExist("F"));
+        assertEquals(-1, listOfRequestsTest.doesRequestExist("F"));
         assertEquals(requestEntry3, listOfRequestsTest.getRequest(1));
     }
 
@@ -76,7 +76,7 @@ public class ListOfRequestsTest {
         listOfRequestsTest.addRequest(requestEntry1);
         listOfRequestsTest.addRequest(requestEntry2);
 
-        assertEquals("\n1. F: Completion Status:  0  Type:Theorem\n" +
-                        "2. A: Completion Status:  0  Type:Theorem",listOfRequestsTest.printAllRequests());
+        assertEquals("\n1. F: Completion Status:  0  Type:Theorem\n"
+                       + "2. A: Completion Status:  0  Type:Theorem",listOfRequestsTest.printAllRequests());
     }
 }
