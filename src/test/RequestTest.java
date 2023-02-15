@@ -143,7 +143,12 @@ public class RequestTest {
         assertEquals(convertedEquation.getCourse(), compareEquation.getCourse());
         assertEquals(convertedEquation.getProof(), compareEquation.getProof());
         assertEquals(convertedEquation.getExplanations(), compareEquation.getExplanations());
+    }
 
+    @Test
+    void viewRequestTest() {
+        assertEquals("Name: name\nType: Theorem\nTheorem: theorem\nCourse this is most relevant to: course\n"
+                + "Description: explanation\nCompletion: 0\n", testRequest.viewRequest());
     }
 
 }

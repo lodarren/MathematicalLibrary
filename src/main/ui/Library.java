@@ -139,11 +139,11 @@ public class Library {
 
     public void theoremMakeSelection(String command) {
         if (listOfTheorems.doesTheoremExist(command) != -1) {
-            listOfTheorems.getTheorem(listOfTheorems.doesTheoremExist(command)).viewEntry();
+            System.out.print(listOfTheorems.getTheorem(listOfTheorems.doesTheoremExist(command)).viewEntry());
             System.out.print("\nPress y if you want to display extra info. Press another key to return to the main "
                     + "menu.\n");
             if (yesOrNo()) {
-                listOfTheorems.getTheorem(listOfTheorems.doesTheoremExist(command)).viewTheorem();
+                System.out.print(listOfTheorems.getTheorem(listOfTheorems.doesTheoremExist(command)).viewTheorem());
                 System.out.print("\nPress y if you want to change this entry. Press another key to return to the "
                             + "main menu.\n");
                 if (yesOrNo()) {
@@ -234,7 +234,7 @@ public class Library {
     //         to view. If the entry does not exist ten it returns "That entry doesn't exist".
     private void equationMakeSelection(String command) {
         if (listOfEquations.doesEquationExist(command) != -1) {
-            listOfEquations.getEquation(listOfEquations.doesEquationExist(command)).viewEntry();
+            System.out.print(listOfEquations.getEquation(listOfEquations.doesEquationExist(command)).viewEntry());
             System.out.print("\nPress p if you want to view the practice problems. Press c to change the entry.\n");
             viewPracticeOrChangeEntry(command);
         } else {

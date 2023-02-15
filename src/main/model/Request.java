@@ -90,7 +90,7 @@ public class Request extends Entry {
     public String viewRequest() {
         String text;
         text = "Name: " + this.getName() + "\n";
-        text = text + "Type" + this.getType() + "\n";
+        text = text + "Type: " + this.getType() + "\n";
         text = text + "Theorem: " + this.getTheorem() + "\n";
         text = text + "Course this is most relevant to: " + this.getCourse() + "\n";
         text = text + "Description: " + this.getExplanations() + "\n";

@@ -93,11 +93,13 @@ public abstract class Entry {
     //REQUIRES:
     //MODIFIES: this
     //EFFECTS: Shows the entire theorem in the system
-    public void viewEntry() {
-        System.out.println("Name: " + this.getName());
-        System.out.println("Statement: " + this.getTheorem());
-        System.out.println("Course this is most relevant to: " + this.getCourse());
-        System.out.println("Description: " + this.getExplanations());
+    public String viewEntry() {
+        String text;
+        text = "\nName: " + this.getName();
+        text = text + "\nStatement: " + this.getTheorem();
+        text = text + "\nCourse this is most relevant to: " + this.getCourse();
+        text = text + "\nDescription: " + this.getExplanations() + "\n";
+        return text;
     }
 
 }

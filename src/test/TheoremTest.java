@@ -75,4 +75,10 @@ public class TheoremTest {
         assertEquals("this is something", testEntryTheorem.getExplanations());
     }
 
+    @Test
+    void viewTheorem() {
+        assertEquals("Name: name\nTheorem: theorem\nCourse this is most relevant to: course\n"
+                + "Description: explanation\nProof: proof\n", testTheorem.viewTheorem());
+    }
+
 }

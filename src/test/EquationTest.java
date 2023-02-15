@@ -120,13 +120,30 @@ public class EquationTest {
     }
 
     @Test
-    public void showNumberOfPracticeProblemsTest() throws IndexNotThere {
+    public void showNumberOfPracticeProblemsTest(){
         testEquation.addPracticeProblem("question1", "answer1");
         testEquation.addPracticeProblem("question1", "answer1");
         testEquation.addPracticeProblem("question1", "answer1");
-        assertEquals(testEquation.showNumberOfPracticeProblems(),
-                "Practice Problem 1\nPractice Problem 2\nPractice Problem 3\n");
+        try {
+            assertEquals(testEquation.showNumberOfPracticeProblems(),
+                    "Practice Problem 1\nPractice Problem 2\nPractice Problem 3\n");
+        } catch (IndexNotThere e) {
+            fail();
+        }
     }
+
+    @Test
+    public void showNumberOfPracticeProblemsFailTest(){
+        try {
+            assertEquals(testEquation.showNumberOfPracticeProblems(),
+                    "Practice Problem 1\nPractice Problem 2\nPractice Problem 3\n");
+            fail();
+        } catch (IndexNotThere e) {
+            e.getMessage();
+        }
+    }
+
+
 
     @Test
     public void doesPracticeProblemExist() {
@@ -135,6 +152,12 @@ public class EquationTest {
         assertTrue(testEquation.doesPracticeProblemExist(String.valueOf(1)));
         assertTrue(testEquation.doesPracticeProblemExist(String.valueOf(2)));
         assertFalse(testEquation.doesPracticeProblemExist(String.valueOf(3)));
+    }
+
+    @Test
+    void viewEntry() {
+        assertEquals("\nName: name\nStatement: theorem\nCourse this is most relevant to: course\n"
+               + "Description: explanation\n", testEquation.viewEntry());
     }
 
 }

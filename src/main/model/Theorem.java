@@ -12,12 +12,14 @@ public class Theorem extends Entry {
     //MODIFIES: this
     //EFFECTS: Shows the entire theorem in the system
 
-    public void viewTheorem() {
-        System.out.println("Name: " + this.getName());
-        System.out.println("Theorem: " + this.getTheorem());
-        System.out.println("Course this is most relevant to: " + this.getCourse());
-        System.out.println("Description: " + this.getExplanations());
-        System.out.println("Proof: " + this.getProof() + "\n");
+    public String viewTheorem() {
+        String text;
+        text = "Name: " + this.getName();
+        text = text +  "\nTheorem: " + this.getTheorem();
+        text = text + "\nCourse this is most relevant to: " + this.getCourse();
+        text = text + "\nDescription: " + this.getExplanations();
+        text = text + "\nProof: " + this.getProof() + "\n";
+        return text;
     }
 
 
