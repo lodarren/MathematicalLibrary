@@ -1,5 +1,3 @@
-package tests;
-
 import model.ListOfTheorems;
 import model.Theorem;
 import org.junit.jupiter.api.BeforeEach;

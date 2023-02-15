@@ -1,5 +1,3 @@
-package tests;
-
 import model.Entry;
 import model.Equation;
 import model.Request;

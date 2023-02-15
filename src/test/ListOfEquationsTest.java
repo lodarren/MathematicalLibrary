@@ -1,5 +1,3 @@
-package tests;
-
 import model.ListOfEquations;
 import model.Equation;
 import org.junit.jupiter.api.BeforeEach;

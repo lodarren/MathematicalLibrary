@@ -1,5 +1,3 @@
-package tests;
-
 import model.ListOfRequests;
 import model.Request;
 import org.junit.jupiter.api.BeforeEach;
