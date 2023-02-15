@@ -1,10 +1,10 @@
-package model.entryTypes;
+package model;
 
 // Represents math concepts that users want to be covered, subject to updates before put into main library. Contains
 // the name wanted to be covered, the equation requested, the class information, the pending explaination, the
-// pending proof, the pending practice problems, and its estimated time for completion.
+// pending proof, the pending practice problems, and its estimated time for completion. The type of the equation can
+// only be "Equation" or "Theorem". estimatedCompletion can only be an integer between 0 and 100.
 
-import model.Entry;
 import model.exceptions.NotValidCompletion;
 
 public class Request extends Entry {
@@ -42,15 +42,10 @@ public class Request extends Entry {
     //EFFECTS: updates completion
 
     public void updateEstimatedCompletion(String completion) throws NotValidCompletion{
-        completion = completion.replaceAll("\\D+", "");
-
         int newCompletion = Integer.parseInt(completion);
         if (newCompletion > 100) {
             throw new NotValidCompletion();
-        } else if (newCompletion < 0){
-            throw new NotValidCompletion();
         }
-
         this.estimatedCompletion = newCompletion;
     }
 

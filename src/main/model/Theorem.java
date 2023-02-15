@@ -1,4 +1,4 @@
-package model.entryTypes;
+package model;
 
 import model.Entry;
 

@@ -3,22 +3,24 @@ package ui;
 import model.ListOfEquations;
 import model.ListOfRequests;
 import model.ListOfTheorems;
-import model.entryTypes.Equation;
-import model.entryTypes.Request;
-import model.entryTypes.Theorem;
+import model.Equation;
+import model.Request;
+import model.Theorem;
 import model.exceptions.IndexNotThere;
 import model.exceptions.NameAlreadyExists;
 import model.exceptions.NotValidCompletion;
 
 import java.util.Scanner;
 
-// Represents the full list of finished mathematical entries in the library, can either contain Equations or Theorems,
-// and has a section for Requests
+// Represents the full list of finished mathematical entries in the library. There are three sections of the library
+// That the user can explore, one containing equations, one containing theorems and the last one containing requests.
+
 public class Library {
     ListOfTheorems listOfTheorems;
     ListOfEquations listOfEquations;
     ListOfRequests listOfRequests;
 
+    // The following are mock entries to demonstrate functionality.
     Theorem mockEntry;
     Theorem mockEntry2;
     Equation mockEquation1;
@@ -40,15 +42,25 @@ public class Library {
         listOfTheorems = new ListOfTheorems();
         listOfRequests = new ListOfRequests();
 
-        // MOCK lists, to be removed later
-        mockEntry = new Theorem("a", "B", "C", "D", "E");
-        mockEntry2 = new Theorem("a1", "B", "C", "D", "E");
-        mockEquation1 = new Equation("a", "B", "C", "D", "E");
-        mockEquation2 = new Equation("a1", "B", "C", "D", "E");
-        mockRequest1 = new Request("a", "Theorem", "C", "D", "E", "F");
-        mockRequest2 = new Request("a1", "Equation", "C", "D", "E", "F");
+        // These are to instantiate the following dummy cases.
+        mockEntry = new Theorem("Green's theorem", "The grass is green",
+                "Calculus 4", "Grass = green", "The grass looks green to me");
+        mockEntry2 = new Theorem("Pythagorean theorem", "a^2+b^2=c^2", "Pre-school",
+                "Proof by contradiction", "There is a relationship between the sides of a triangle");
+        mockEquation1 = new Equation("Fundimental theorem of engineering", "sin(x) = x",
+                "All of university", "sin(0) = 0 QED", "The most useful formula in engineering");
+        mockEquation2 = new Equation("The cosine law", "cos(x) = 1", "Grade school",
+                "cos(0) = 1", "All cosines are equal to 1. ");
+        mockRequest1 = new Request("Riemann Hypothesis", "Something about prime numbers", "Theorem",
+                "???", "I would like to know this too. ",
+                "Relationship between the zeta function and the prime numbers");
+        mockRequest2 = new Request("The REAL law of cosines", "c^2 = a^2 + b^2 - 2abcos(C)",
+                "Equation", "Grade 11", "Use geometry.", "Relationship between sides of a "
+                 + "triangle that are not always right.");
 
-        mockEquation1.addPracticeProblem("what is sine of x", "its x you dummy");
+        mockEquation1.addPracticeProblem("What is sine of 11", "11");
+        mockEquation1.addPracticeProblem("What is sine of 30", "30");
+
         listOfTheorems.addTheorem(mockEntry);
         listOfTheorems.addTheorem(mockEntry2);
         listOfEquations.addEquation(mockEquation1);
@@ -56,6 +68,7 @@ public class Library {
         listOfRequests.addRequest(mockRequest1);
         listOfRequests.addRequest(mockRequest2);
 
+        //The program begins here.
 
         input = new Scanner(System.in);
         input.useDelimiter("\n");
@@ -74,9 +87,7 @@ public class Library {
         System.out.println("\nSee You Next Time!");
     }
 
-    //REQUIRES:
-    //MODIFIES:
-    //EFFECTS: Displays the options Theorem, Equation and Request:
+    //EFFECTS: Displays the options Theorem, Equation and Request and the option to leave for the user:
 
     public void mainMenu() {
         System.out.print("Welcome to the Library! \n");
@@ -88,7 +99,8 @@ public class Library {
 
     //REQUIRES:
     //MODIFIES:
-    //EFFECTS: Does the command in the main section of the library:
+    //EFFECTS: If 1 is pressed, the theorem section is opened. If 2, the Equation section. If 3, the request
+    //         of the library, and finally 0 is used to leave the library. Other inputs will result in nothing.
 
     private void mainDoCommand(String command) {
         if (command.equals("1")) {
@@ -102,9 +114,7 @@ public class Library {
         }
     }
 
-    //REQUIRES:
-    //MODIFIES:
-    //EFFECTS: Does the command in the Theorem section of the library:
+    //EFFECTS: Displays text welcoming readers into the theorem section and prompts them to decide what to do next.
     public void mainListOfTheorem() {
         welcomeToTheoremSection();
 
@@ -113,30 +123,35 @@ public class Library {
         theoremMakeSelection(command);
     }
 
-    //REQUIRES:
-    //MODIFIES:
     //EFFECTS: Displays lists of theorems so far and prompts user to type in the one they want to look at
 
     private void welcomeToTheoremSection() {
         System.out.print("Here are our Theorem Entries So far! \n");
         System.out.print(listOfTheorems.printAllTheorems() + "\n");
         System.out.print("Type in the name of the entry you want to view! \n");
-
     }
+
+    //EFFECTS: First checks if the theorem exists. If it does exist, it asks the reader if they want to see additional
+    //         info. If yes, it then asks the user if they want to change the entry, and finally if yes is selected
+    //         it prompts the reader if it wants to change the entry. If name already exists, it throws a
+    //         "Name already exists" exception.
 
     public void theoremMakeSelection(String command) {
         if (listOfTheorems.doesTheoremExist(command) != -1) {
             listOfTheorems.getTheorem(listOfTheorems.doesTheoremExist(command)).viewEntry();
-            System.out.print("\nPress y if you want to display extra info. Press another key to return to the main menu.\n");
+            System.out.print("\nPress y if you want to display extra info. Press another key to return to the main "
+                   + "menu.\n");
             if (yesOrNo()) {
                 listOfTheorems.getTheorem(listOfTheorems.doesTheoremExist(command)).viewTheorem();
-                System.out.print("\nPress y if you want to change this entry. Press another key to return to the main menu.\n");
+                System.out.print("\nPress y if you want to change this entry. Press another key to return to the "
+                      +  "main menu.\n");
                 if (yesOrNo()) {
-                    System.out.print("Press 1 to change the name of the entry.\nPress 2 to change the theorem.\nPress 3" +
-                            " to change the course it is most useful for.\nPress 4 to change the description.\nPress 5 to change" +
-                            "the Proof.\nPress 6 to delete this entry.");
+                    System.out.print("Press 1 to change the name of the entry.\nPress 2 to change the theorem.\nPress 3"
+                            + " to change the course it is most useful for.\nPress 4 to change the description."
+                            + "\nPress 5 to change the Proof.\nPress 6 to delete this entry.");
                     try {
-                        doYouWantToChangeTheTheorem(listOfTheorems.getTheorem(listOfTheorems.doesTheoremExist(command)));
+                        doYouWantToChangeTheTheorem(
+                                listOfTheorems.getTheorem(listOfTheorems.doesTheoremExist(command)));
                     } catch (NameAlreadyExists e) {
                         System.out.print("Name already exists!");
                     }
@@ -147,12 +162,15 @@ public class Library {
         }
     }
 
+    //EFFECTS: returns yes if the user types a lowercase or uppercase y.
     public boolean yesOrNo() {
         String command = input.next();
         return command.equalsIgnoreCase("y");
     }
 
 
+    //EFFECTS: Prompts the user to select the field that they want to change. Afterwards, it allows the user to
+    //         to change it. If the name shows up in listOfTheorem, it denies the suggestion.
     public void doYouWantToChangeTheTheorem(Theorem theorem) throws NameAlreadyExists {
         String command = input.next();
         if (command.equals("1")) {
@@ -181,27 +199,24 @@ public class Library {
         }
     }
 
+    //EFFECTS: prompts the user if they want to delete the entry.
     private void deleteTheoremPrompt(Theorem theorem) {
-        System.out.print("Are you sure you want to delete this entry? Press y to delete this entry.");
+        System.out.print("Are you sure you want to delete this entry? Press y to delete this entry.\n");
         if (yesOrNo()) {
             listOfTheorems.removeTheorem(theorem);
-            System.out.print("Entry deleted!");
+            System.out.print("Entry deleted!\n");
         } else {
-            System.out.print("Entry will remain in the library.");
+            System.out.print("Entry will remain in the library.\n");
         }
     }
 
+    //EFFECTS: Takes in a user input and returns it.
     private String whatIsTheChange() {
         String command = input.next();
         return command;
     }
 
-// Equation section
-
-
-    //REQUIRES:
-    //MODIFIES:
-    //EFFECTS: Does the command in the Equation section of the library:
+    //EFFECTS: Intoduces the user to the Equation section of the library and prompts them to select a choice.
     public void mainListOfEquation() {
         welcomeToEquationSection();
 
@@ -211,40 +226,50 @@ public class Library {
     }
 
 
+    //EFFECTS: Prints all the equations in a 1. name: style.
     private void welcomeToEquationSection() {
         System.out.print("Here are our Equation Entries So far! \n");
         System.out.print(listOfEquations.printAllEquations() + "\n");
         System.out.print("Type in the name of the entry you want to view! \n");
     }
 
+    //EFFECTS: prompts the user if they would like to view practice problems. If yes, the user can type in a number
+    //         to view. If the entry does not exist ten it returns "That entry doesn't exist".
     private void equationMakeSelection(String command) {
         if (listOfEquations.doesEquationExist(command) != -1) {
             listOfEquations.getEquation(listOfEquations.doesEquationExist(command)).viewEntry();
             System.out.print("\nPress p if you want to view the practice problems. Press c to change the entry.\n");
             viewPracticeOrChangeEntry(command);
         } else {
-            System.out.println("That entry doesn't exist!");
+            System.out.println("That entry doesn't exist!\n");
         }
     }
+
+    //EFFECTS: Prompts the user if they would like to view practice problems. It then prompts them to either change
+    //         the entry or to change the practice problems. Returns a NameAlreadyExists exception if the name of the
+    //         suggested name change already exists.
 
     private void viewPracticeOrChangeEntry(String previousCommand) {
         String nextCommand = input.next();
         if (nextCommand.equalsIgnoreCase("p")) {
             showPracticeProblems(listOfEquations.getEquation(listOfEquations.doesEquationExist(previousCommand)));
         } else if (nextCommand.equalsIgnoreCase("c")) {
-            System.out.print("Press 1 to change the name of the entry.\nPress 2 to change the theorem.\nPress 3" +
-                    " to change the course it is most useful for.\nPress 4 to change the description.\nPress 5 to change" +
-                    "the Proof.\nPress 6 to delete specific practice problems.\nPress 7 to delete this entry.");
+            System.out.print("Press 1 to change the name of the entry.\nPress 2 to change the theorem.\nPress 3"
+                    + " to change the course it is most useful for.\nPress 4 to change the description.\nPress 5 to"
+                    + " change the Proof.\nPress 6 to delete specific practice problems.\nPress 7 to delete this entry"
+                    + ".\n");
             try {
                 changeEquationEntry(listOfEquations.getEquation(listOfEquations.doesEquationExist(previousCommand)));
             } catch (NameAlreadyExists e) {
-                System.out.print("Name Already exists!");
+                System.out.print("Name Already exists!\n");
             }
         } else {
             System.out.print("\nNot a valid entry!\n");
         }
     }
 
+    //EFFECTS: Prompts the user to either change the fields of the equation or remove it from liftOfEquation.
+    //         Does nothing if the user does not choose a number from 1-7.
     public void changeEquationEntry(Equation equation) throws NameAlreadyExists {
         String command = input.next();
         if (command.equals("1")) {
@@ -275,6 +300,7 @@ public class Library {
         }
     }
 
+    //EFFECTS: prompts the user if they would like to delete the equation.
     public void deleteEntryPrompt(Equation equation) {
         System.out.print("You are about to delete this entry. Press y to delete the entry.\n");
         if (yesOrNo()) {
@@ -284,7 +310,8 @@ public class Library {
         }
     }
 
-
+    //EFFECTS: Prompts the user to select a practice problem they would like to view. Returns
+    //         "There are no questions to show" if the list of practice problems is empty.
     public void showPracticeProblems(Equation equation) throws IndexOutOfBoundsException {
         System.out.print("Which practice problems do you want to view?\n");
         try {
@@ -301,10 +328,11 @@ public class Library {
                 doYouWantToChangeTheProblem(equation, newInput);
             }
         } catch (IndexNotThere e) {
-            System.out.print("There are no questions to show!");
+            System.out.print("There are no questions to show!\n");
         }
     }
 
+    // EFFECTS: prompts the user if they would like to delete the following practice problems.
     private void deleteQuestionsPrompt(Equation equation) {
         try {
             System.out.print("What problems would you like to delete? Type the number below.\n");
@@ -315,10 +343,11 @@ public class Library {
             equation.removePracticeProblem(newInput);
             System.out.print("Removed!\n");
         } catch (IndexNotThere e) {
-            System.out.print("There are no questions to delete!");
+            System.out.print("There are no questions to delete!\n");
         }
     }
 
+    //EFFECTS: prompts the user if they would like to change the practice problem.
     private void doYouWantToChangeTheProblem(Equation equation, int index) {
         System.out.print("Do you want to change the question? Press c to change the practice problem.\n");
         String command = input.next();
@@ -333,9 +362,8 @@ public class Library {
     }
 
 
-    //REQUIRES:
-    //MODIFIES:
-    //EFFECTS: Does the command in the Request section of the library:
+    //EFFECTS: Welcomes the user in the requests section of the library. Prompts them to make a selection to either
+    //         view requests or to make a request.
     public void mainListOfRequests() {
         System.out.print("Welcome to the requests section!\nPress A to make a request.\nPress B to view made requests.\n");
         String command = input.next();
@@ -349,16 +377,21 @@ public class Library {
         }
     }
 
+    //EFFECTS: Shows the requests so far in text form. If "u" is selected, the user is then prompted to change requests.
+
     private void viewAllRequests() {
         System.out.print("Here are all the requests so far:\n");
         System.out.print(listOfRequests.printAllRequests() + "\n");
-        System.out.print("If you would like to update any of the requests, press u, otherwise press another key to return.\n");
+        System.out.print("If you would like to update any of the requests, press u, otherwise press another key to "
+                + "return.\n");
         String command = input.next();
         if (command.equals("u")) {
             promptToUpdateRequest();
         }
     }
 
+    //EFFECTS: prompts the user to select the request they would like to change. If that request does not exist,
+    //         prints "That entry doesn't exist!"
     private void promptToUpdateRequest() {
         System.out.print("Please put in the name of the request you would like to change.\n");
         String command = input.next();
@@ -370,6 +403,9 @@ public class Library {
         }
     }
 
+    //EFFECTS: Prompts the user if they would like to update the request or delete the request with "u" and "d"
+    //         respectively. If the name is changed and the name already exists, the request is rejected.
+    //         Does nothing if none of the options are selected.
     public void updateDeleteOrSubmitRequest(Request request) {
         System.out.print("Press u to update this request, press d to delete this request.\n");
         String newcommand = input.next();
@@ -386,11 +422,15 @@ public class Library {
         }
     }
 
+    //EFFECTS: prompts the user if they would like to update the request. If the user decides to change the completion
+    //         value to a value over 100, then it returns "Not a value between 0 and 100!". If a value between 1-7
+    //         is not selected, the method does nothing.
     public void updateRequest(Request request) throws NameAlreadyExists {
         String command;
-        System.out.print("Press 1 to change the name of the entry.\nPress 2 to change the theorem.\nPress 3" +
-                " to change the course it is most useful for.\nPress 4 to change the description.\nPress 5 to change" +
-                "the Proof.\n Press 6 to update the estimated completion \nPress 7 to submit the entry to its designated library\n");
+        System.out.print("Press 1 to change the name of the entry.\nPress 2 to change the theorem.\nPress 3"
+                + " to change the course it is most useful for.\nPress 4 to change the description.\nPress 5 to change"
+                + "the Proof.\n Press 6 to update the estimated completion \nPress 7 to submit the entry to its "
+                + "designated library\n");
         command = input.next();
         if (command.equals("1")) {
             System.out.print("What were you planning to change the field to? Please type it in below.\n");
@@ -422,20 +462,23 @@ public class Library {
         } else if (command.equals("7")) {
             prepareToSubmitRequest(request);
         } else {
-            System.out.print("Not one of the options!");
+            System.out.print("Not one of the options!\n");
         }
 
     }
 
+    //EFFECTS: prompts the user if they would like to submit to the main library.
     private void prepareToSubmitRequest(Request request) {
         if (checkToSubmitRequest(request)) {
             convertingRequest(request);
-            System.out.print("Submitted to main library!");
+            System.out.print("Submitted to main library!\n");
         } else {
-            System.out.print("Returning to main menu");
+            System.out.print("Returning to main menu\n");
         }
     }
 
+    //EFFECTS: checks if the request is a Theorem, if it is, then it adds it to theorem, otherwise adds it
+    //         to equation.
     private void convertingRequest(Request request) {
         if (request.getType().equals("Theorem")) {
             listOfTheorems.addTheorem(request.requestToTheorem());
@@ -444,6 +487,8 @@ public class Library {
         }
     }
 
+    // EFFECTS: if the estimated completion is less tahn 100, then it prompts the user to click "y" again before
+    //          moving the request to either listOfTheorem or listOfEquation.
     private Boolean checkToSubmitRequest(Request request) {
         if (request.getEstimatedCompletion() != 100) {
             System.out.print("This request is currently still not complete. Submit anyway (press y to accept)?\n");
@@ -452,9 +497,11 @@ public class Library {
         return true;
     }
 
-
+    //EFFECTS: prompts the user if they would like to delete the request. If "y" is pressed then the request is deleted.
+    //         Otherwise nothing changes.
     public void deleteRequestPrompt(Request request) {
-        System.out.print("You are about to delete this request. Press y to delete this request. Press any other key to go back. \n");
+        System.out.print("You are about to delete this request. Press y to delete this request. Press any other key "
+                + "to go back. \n");
         if (yesOrNo()) {
             listOfRequests.removeRequest(request);
             System.out.print("Request removed!\n");
@@ -463,6 +510,9 @@ public class Library {
         }
     }
 
+    //EFFECTS: prompts the user if they would like to make a request. If the request already exists in the
+    //         listOfRequest, then the suggestion is denied. Requests are also denied if it is neither "equation" or
+    //         "theorem".
     public void promptToMakeRequest() {
         System.out.print("You are now making a request. What is this request for an equation or theorem?\n");
         String command = input.next();
@@ -484,6 +534,8 @@ public class Library {
 
     }
 
+    //EFFECTS: prompts the user to make a new Theorem Request. Throws a NameAlreadyExists if the name already
+    //         shows up in listOFTheorem.
     public void userMakeTheoremRequest() throws NameAlreadyExists {
         Request newRequest;
         System.out.print("What is the name of this theorem?\n");
@@ -493,7 +545,8 @@ public class Library {
         }
         System.out.print("What does this theorem state? (you can leave this blank if you are not sure)\n");
         String theorem = input.next();
-        System.out.print("What course is this theorem most applicable for? (you can leave this blank if you are not sure) \n");
+        System.out.print("What course is this theorem most applicable for? (you can leave this blank if you are not "
+                + "sure) \n");
         String course = input.next();
         System.out.print("What does this theorem state? (you can leave this blank if you are not sure)\n");
         String explaination = input.next();
@@ -504,6 +557,8 @@ public class Library {
         System.out.print("Submitted request!\n");
     }
 
+    //EFFECTS: prompts the user to make a new Equation Request. Throws a NameAlreadyExists if the name already
+    //         shows up in listOfEquation.
     public void userMakeEquationRequest() throws NameAlreadyExists {
         Request newRequest;
         System.out.print("What is the name of this Equation?\n");
@@ -525,13 +580,6 @@ public class Library {
     }
 }
 
-
-    //Starting down here is where i have to make the new classes
-
-
 //LEFT TO DO
 // Proper documentation, Remove comments list, add requires methods etc. Double check styling, Check if Lists have to be in its own class
 // Double check tests, I believe some of the ones involving print are not tested properly, fix \n typos, update the readme to reflect these changes.
-//
-//
-//

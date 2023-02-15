@@ -1,7 +1,7 @@
 package tests;
 
 import model.ListOfRequests;
-import model.entryTypes.Request;
+import model.Request;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

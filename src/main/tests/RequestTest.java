@@ -1,13 +1,13 @@
 package tests;
 
 import model.Entry;
-import model.entryTypes.*;
+import model.Equation;
+import model.Request;
+import model.Theorem;
 
 import model.exceptions.NotValidCompletion;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -113,8 +113,7 @@ public class RequestTest {
         try {
             testRequest.updateEstimatedCompletion("76");
             assertEquals(76, testRequest.getEstimatedCompletion());
-        }
-        catch (NotValidCompletion e) {
+        } catch (NotValidCompletion e) {
             fail();
         }
     }
@@ -127,9 +126,18 @@ public class RequestTest {
             assertFalse(testRequest.isRequestCompleted());
             testRequest.updateEstimatedCompletion("100");
             assertTrue(testRequest.isRequestCompleted());
-        }
-        catch (NotValidCompletion e) {
+        } catch (NotValidCompletion e) {
             fail();
+        }
+    }
+
+    @Test
+    public void isRequestCompletedFail101() {
+        try {
+            testRequest.updateEstimatedCompletion("101");
+            fail("This should not work!");
+        } catch (NotValidCompletion e) {
+            return;
         }
     }
 

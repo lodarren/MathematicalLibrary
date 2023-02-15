@@ -1,7 +1,7 @@
 package tests;
 
 import model.Entry;
-import model.entryTypes.Theorem;
+import model.Theorem;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

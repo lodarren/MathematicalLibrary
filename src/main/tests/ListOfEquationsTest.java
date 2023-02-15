@@ -1,7 +1,7 @@
 package tests;
 
 import model.ListOfEquations;
-import model.entryTypes.Equation;
+import model.Equation;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

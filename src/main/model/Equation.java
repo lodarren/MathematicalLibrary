@@ -1,4 +1,4 @@
-package model.entryTypes;
+package model;
 
 import model.Entry;
 import model.exceptions.IndexNotThere;
@@ -6,7 +6,9 @@ import model.exceptions.IndexNotThere;
 import java.util.ArrayList;
 
 // Represents math concepts that can be represented as an Equation, contains its name, its mathematical expression,
-// the class it is for, the explaination for it, the proof, comments, and practice questions.
+// the class it is for, the description for it, the derivation for the equation, comments, and a
+// list of practice questions. The list of practice problem answers are in tandem with the practice problems.
+
 public class Equation extends Entry {
     ArrayList<String> practiceProblems;
     ArrayList<String> practiceProblemsAnswer;
@@ -18,16 +20,11 @@ public class Equation extends Entry {
     }
 
     //MODIFIES: this
-    //EFFECTS: change the practice problem on that entry, if there is no entry to change then leave the method leaves
-    // the practice problem or the answer the same.
+    //EFFECTS: change the practice problem and the answer on the specified index.
 
     public void changePracticeProblem(String practiceProblem, String answer, int i) {
-        if (practiceProblem != "") {
-            practiceProblems.set(i, practiceProblem);
-        }
-        if (answer != "") {
-            practiceProblemsAnswer.set(i, answer);
-        }
+        practiceProblems.set(i, practiceProblem);
+        practiceProblemsAnswer.set(i, answer);
     }
 
     //MODIFIES: this
@@ -39,23 +36,11 @@ public class Equation extends Entry {
     }
 
     //MODIFIES: this
-    //EFFECTS: delete practice problem and its associated solution
+    //EFFECTS: deletes practice problem and its associated solution
 
     public void removePracticeProblem(int i)  {
         practiceProblems.remove(i);
         practiceProblemsAnswer.remove(i);
-    }
-
-    //MODIFIES: this
-    //EFFECTS: gets the following practice problem in that index in the form of Question: _  Answer: _:
-
-    public String getPracticeProblem(int i)  {
-        String output;
-        output = "Question: " + practiceProblems.get(i);
-        output = output + "\n";
-        output = output + "Answer: ";
-        output = output + practiceProblemsAnswer.get(i);
-        return output;
     }
 
     //MODIFIES: this
@@ -88,24 +73,9 @@ public class Equation extends Entry {
 
     //REQUIRES:
     //MODIFIES: this
-    //EFFECTS: Shows the entire Equation in the system
-    public void viewEquation() {
-        System.out.println("Name:" + this.getName());
-        System.out.println("Theorem:" + this.getTheorem());
-        System.out.println("Course this is most relevant to:" + this.getCourse());
-        System.out.println("Description: " + this.getExplainations());
-        try {
-            showNumberOfPracticeProblems();
-        } catch (IndexNotThere e) {
-            System.out.print("There are no practice problems!");
-        }
-    }
-
-    //REQUIRES:
-    //MODIFIES: this
     //EFFECTS: Shows the number of practice problems in the entry:
 
-    public String showNumberOfPracticeProblems() throws IndexNotThere{
+    public String showNumberOfPracticeProblems() throws IndexNotThere {
         if (practiceProblems.isEmpty()) {
             throw new IndexNotThere();
         } else {

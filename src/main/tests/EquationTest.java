@@ -1,7 +1,7 @@
 package tests;
 
 import model.Entry;
-import model.entryTypes.*;
+import model.Equation;
 
 import model.exceptions.IndexNotThere;
 import org.junit.jupiter.api.BeforeEach;
@@ -83,18 +83,6 @@ public class EquationTest {
 
 
     @Test
-    public void addPracticeProblemTest() {
-        testEquation.addPracticeProblem("question1", "answer1");
-        assertEquals("Question: question1\nAnswer: answer1", testEquation.getPracticeProblem(0));
-        assertEquals("question1", testEquation.getThePracticeProblem(0));
-        assertEquals("answer1", testEquation.getThePracticeProblemAnswer(0));
-        testEquation.addPracticeProblem("question2", "answer3");
-        assertEquals("Question: question2\nAnswer: answer3", testEquation.getPracticeProblem(1));
-        assertEquals("question2", testEquation.getThePracticeProblem(1));
-        assertEquals("answer3", testEquation.getThePracticeProblemAnswer(1));
-    }
-
-    @Test
     public void removePracticeProblemsTest() {
         testEquation.addPracticeProblem("question1", "answer1");
         testEquation.addPracticeProblem("question2", "answer2");
@@ -113,42 +101,6 @@ public class EquationTest {
         assertEquals("Changed Question 1", testEquation.getThePracticeProblem(1));
         assertEquals("Changed Question 2", testEquation.getThePracticeProblem(0));
         assertEquals("Changed Answer 1", testEquation.getThePracticeProblemAnswer(1));
-        assertEquals("Changed Answer 2", testEquation.getThePracticeProblemAnswer(0));
-    }
-
-    @Test
-    public void changePracticeProblemsProblemVoidTest() {
-        testEquation.addPracticeProblem("question1", "answer1");
-        testEquation.addPracticeProblem("question2", "answer2");
-        testEquation.changePracticeProblem("", "Changed Answer 1", 1);
-        testEquation.changePracticeProblem("Changed Question 2", "Changed Answer 2", 0);
-        assertEquals("question2", testEquation.getThePracticeProblem(1));
-        assertEquals("Changed Question 2", testEquation.getThePracticeProblem(0));
-        assertEquals("Changed Answer 1", testEquation.getThePracticeProblemAnswer(1));
-        assertEquals("Changed Answer 2", testEquation.getThePracticeProblemAnswer(0));
-    }
-
-    @Test
-    public void changePracticeProblemsProblemAnswerVoidTest() {
-        testEquation.addPracticeProblem("question1", "answer1");
-        testEquation.addPracticeProblem("question2", "answer2");
-        testEquation.changePracticeProblem("Changed Question 1", "" , 1);
-        testEquation.changePracticeProblem("Changed Question 2", "Changed Answer 2", 0);
-        assertEquals("Changed Question 1", testEquation.getThePracticeProblem(1));
-        assertEquals("Changed Question 2", testEquation.getThePracticeProblem(0));
-        assertEquals("answer2", testEquation.getThePracticeProblemAnswer(1));
-        assertEquals("Changed Answer 2", testEquation.getThePracticeProblemAnswer(0));
-    }
-
-    @Test
-    public void changePracticeProblemsBothVoidTest() {
-        testEquation.addPracticeProblem("question1", "answer1");
-        testEquation.addPracticeProblem("question2", "answer2");
-        testEquation.changePracticeProblem("", "" , 1);
-        testEquation.changePracticeProblem("Changed Question 2", "Changed Answer 2", 0);
-        assertEquals("question2", testEquation.getThePracticeProblem(1));
-        assertEquals("Changed Question 2", testEquation.getThePracticeProblem(0));
-        assertEquals("answer2", testEquation.getThePracticeProblemAnswer(1));
         assertEquals("Changed Answer 2", testEquation.getThePracticeProblemAnswer(0));
     }
 
@@ -181,6 +133,15 @@ public class EquationTest {
         } catch (IndexNotThere e) {
             fail();
         }
+    }
+
+    @Test
+    public void doesPracticeProblemExist() {
+        testEquation.addPracticeProblem("question1", "answer1");
+
+        assertTrue(testEquation.doesPracticeProblemExist(String.valueOf(1)));
+        assertTrue(testEquation.doesPracticeProblemExist(String.valueOf(2)));
+        assertFalse(testEquation.doesPracticeProblemExist(String.valueOf(3)));
     }
 
 }
