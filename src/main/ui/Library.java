@@ -8,7 +8,6 @@ import model.Request;
 import model.Theorem;
 import model.exceptions.IndexNotThere;
 import model.exceptions.NameAlreadyExists;
-import model.exceptions.NotValidCompletion;
 
 import java.util.Scanner;
 
@@ -37,12 +36,32 @@ public class Library {
     private void runLibrary() {
         boolean running = true;
         String command;
+        setup();
+        dummySetup();
+        input = new Scanner(System.in);
+        input.useDelimiter("\n");
+        while (running) {
+            mainMenu();
+            command = input.next();
 
+            if (command.equals("0")) {
+                running = false;
+            } else {
+                mainDoCommand(command);
+            }
+        }
+        System.out.println("\nSee You Next Time!\n");
+    }
+
+    //EFFECTS: used to instantiate listOfEquation, listOfTheorem and listOfRequests
+    public void setup() {
         listOfEquations = new ListOfEquations();
         listOfTheorems = new ListOfTheorems();
         listOfRequests = new ListOfRequests();
+    }
 
-        // These are to instantiate the following dummy cases.
+    // EFFECTS: These are to instantiate the following dummy cases.
+    public void dummySetup() {
         mockEntry = new Theorem("Green's theorem", "The grass is green",
                 "Calculus 4", "Grass = green", "The grass looks green to me");
         mockEntry2 = new Theorem("Pythagorean theorem", "a^2+b^2=c^2", "Pre-school",
@@ -56,7 +75,7 @@ public class Library {
                 "Relationship between the zeta function and the prime numbers");
         mockRequest2 = new Request("The REAL law of cosines", "c^2 = a^2 + b^2 - 2abcos(C)",
                 "Equation", "Grade 11", "Use geometry.", "Relationship between sides of a "
-                 + "triangle that are not always right.");
+                + "triangle that are not always right.");
 
         mockEquation1.addPracticeProblem("What is sine of 11", "11");
         mockEquation1.addPracticeProblem("What is sine of 30", "30");
@@ -67,24 +86,6 @@ public class Library {
         listOfEquations.addEquation(mockEquation2);
         listOfRequests.addRequest(mockRequest1);
         listOfRequests.addRequest(mockRequest2);
-
-        //The program begins here.
-
-        input = new Scanner(System.in);
-        input.useDelimiter("\n");
-
-        while (running) {
-            mainMenu();
-            command = input.next();
-
-            if (command.equals("0")) {
-                running = false;
-            } else {
-                mainDoCommand(command);
-            }
-        }
-
-        System.out.println("\nSee You Next Time!");
     }
 
     //EFFECTS: Displays the options Theorem, Equation and Request and the option to leave for the user:
@@ -181,16 +182,12 @@ public class Library {
             }
             theorem.changeName(name);
         } else if (command.equals("2")) {
-            System.out.print("What were you planning to change the field to? Please type it in below.\n");
             theorem.changeTheorem(whatIsTheChange());
         } else if (command.equals("3")) {
-            System.out.print("What were you planning to change the field to? Please type it in below.\n");
             theorem.changeCourse(whatIsTheChange());
         } else if (command.equals("4")) {
-            System.out.print("What were you planning to change the field to? Please type it in below.\n");
             theorem.changeExplanation(whatIsTheChange());
         } else if (command.equals("5")) {
-            System.out.print("What were you planning to change the field to? Please type it in below.\n");
             theorem.changeProof(whatIsTheChange());
         } else if (command.equals("6")) {
             deleteTheoremPrompt(theorem);
@@ -212,6 +209,7 @@ public class Library {
 
     //EFFECTS: Takes in a user input and returns it.
     private String whatIsTheChange() {
+        System.out.print("What were you planning to change the field to? Please type it in below.\n");
         return input.next();
     }
 
@@ -279,16 +277,12 @@ public class Library {
             }
             equation.changeName(newName);
         } else if (command.equals("2")) {
-            System.out.print("What were you planning to change the field to? Please type it in below.\n");
             equation.changeTheorem(whatIsTheChange());
         } else if (command.equals("3")) {
-            System.out.print("What were you planning to change the field to? Please type it in below.\n");
             equation.changeCourse(whatIsTheChange());
         } else if (command.equals("4")) {
-            System.out.print("What were you planning to change the field to? Please type it in below.\n");
             equation.changeExplanation(whatIsTheChange());
         } else if (command.equals("5")) {
-            System.out.print("What were you planning to change the field to? Please type it in below.\n");
             equation.changeProof(whatIsTheChange());
         } else if (command.equals("6")) {
             deleteQuestionsPrompt(equation);
@@ -411,6 +405,10 @@ public class Library {
         String newCommand = input.next();
         if (newCommand.equalsIgnoreCase("u")) {
             try {
+                System.out.print("Press 1 to change the name of the entry.\nPress 2 to change the theorem.\nPress 3"
+                        + " to change the course it is most useful for.\nPress 4 to change the description.\nPress 5 to"
+                        + " change the Proof.\n Press 6 to update the estimated completion\nPress 7 to submit the"
+                        + " entry to its designated library\n");
                 updateRequest(request);
             } catch (NameAlreadyExists e) {
                 System.out.print("Name already exists!\n");
@@ -426,12 +424,7 @@ public class Library {
     //         value to a value over 100, then it returns "Not a value between 0 and 100!". If a value between 1-7
     //         is not selected, the method does nothing.
     public void updateRequest(Request request) throws NameAlreadyExists {
-        String command;
-        System.out.print("Press 1 to change the name of the entry.\nPress 2 to change the theorem.\nPress 3"
-                + " to change the course it is most useful for.\nPress 4 to change the description.\nPress 5 to change"
-                + "the Proof.\n Press 6 to update the estimated completion \nPress 7 to submit the entry to its "
-                + "designated library\n");
-        command = input.next();
+        String command = input.next();
         if (command.equals("1")) {
             System.out.print("What were you planning to change the field to? Please type it in below.\n");
             String name = input.next();
@@ -440,32 +433,29 @@ public class Library {
             }
             request.changeName(name);
         } else if (command.equals("2")) {
-            System.out.print("What were you planning to change the field to? Please type it in below.\n");
             request.changeTheorem(whatIsTheChange());
         } else if (command.equals("3")) {
-            System.out.print("What were you planning to change the field to? Please type it in below.\n");
             request.changeCourse(whatIsTheChange());
         } else if (command.equals("4")) {
-            System.out.print("What were you planning to change the field to? Please type it in below.\n");
             request.changeExplanation(whatIsTheChange());
         } else if (command.equals("5")) {
-            System.out.print("What were you planning to change the field to? Please type it in below.\n");
             request.changeProof(whatIsTheChange());
         } else if (command.equals("6")) {
-            System.out.print("What were you planning to change the field to? Please type it in below.\n");
-            String newEstimatedCompletion = input.next();
-            try {
-                request.updateEstimatedCompletion(newEstimatedCompletion);
-            } catch (NotValidCompletion e) {
-                System.out.print("Not a value between 1 and 100!\n");
-            }
+            updateEstimatedCompletionPrompt(request);
         } else if (command.equals("7")) {
             prepareToSubmitRequest(request);
         } else {
             System.out.print("Not one of the options!\n");
         }
-
     }
+
+    //MODIFIES: this, request
+    //EFFECTS: Updates estimatedCompletion with the integer inputted.
+    public void updateEstimatedCompletionPrompt(Request request) {
+        String newEstimatedCompletion = input.next();
+        request.updateEstimatedCompletion(newEstimatedCompletion);
+    }
+
 
     //EFFECTS: prompts the user if they would like to submit to the main library.
     private void prepareToSubmitRequest(Request request) {
@@ -583,5 +573,5 @@ public class Library {
 
 //LEFT TO DO
 // Double check styling,
-// Double check tests, I believe some of the ones involving print are not tested properly, fix \n typos,
+// Double check tests, I believe some of the ones involving print are not tested properly,
 // update the readme to reflect these changes.

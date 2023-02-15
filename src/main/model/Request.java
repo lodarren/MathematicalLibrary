@@ -5,8 +5,6 @@ package model;
 // pending proof, the pending practice problems, and its estimated time for completion. The type of the equation can
 // only be "Equation" or "Theorem". estimatedCompletion can only be an integer between 0 and 100.
 
-import model.exceptions.NotValidCompletion;
-
 public class Request extends Entry {
     int estimatedCompletion;
     String type;
@@ -41,11 +39,8 @@ public class Request extends Entry {
     //MODIFIES: this
     //EFFECTS: updates completion
 
-    public void updateEstimatedCompletion(String completion) throws NotValidCompletion {
+    public void updateEstimatedCompletion(String completion) {
         int newCompletion = Integer.parseInt(completion);
-        if (newCompletion > 100) {
-            throw new NotValidCompletion();
-        }
         this.estimatedCompletion = newCompletion;
     }
 

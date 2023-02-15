@@ -122,17 +122,12 @@ public class EquationTest {
     }
 
     @Test
-    public void showNumberOfPracticeProblemsTest() {
+    public void showNumberOfPracticeProblemsTest() throws IndexNotThere {
         testEquation.addPracticeProblem("question1", "answer1");
         testEquation.addPracticeProblem("question1", "answer1");
         testEquation.addPracticeProblem("question1", "answer1");
-
-        try {
-            assertEquals(testEquation.showNumberOfPracticeProblems(),
-                    "Practice Problem 1\nPractice Problem 2\nPractice Problem 3\n");
-        } catch (IndexNotThere e) {
-            fail();
-        }
+        assertEquals(testEquation.showNumberOfPracticeProblems(),
+                "Practice Problem 1\nPractice Problem 2\nPractice Problem 3\n");
     }
 
     @Test
