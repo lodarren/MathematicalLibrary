@@ -89,7 +89,6 @@ public class Library {
     }
 
     //EFFECTS: Displays the options Theorem, Equation and Request and the option to leave for the user:
-
     public void mainMenu() {
         System.out.print("Welcome to the Library! \n");
         System.out.print("Press 1 to enter the Theorem section of the library! \n");
@@ -98,11 +97,9 @@ public class Library {
         System.out.print("Press 0 to leave! \n");
     }
 
-    //REQUIRES:
-    //MODIFIES:
+
     //EFFECTS: If 1 is pressed, the theorem section is opened. If 2, the Equation section. If 3, the request
     //         of the library, and finally 0 is used to leave the library. Other inputs will result in nothing.
-
     private void mainDoCommand(String command) {
         if (command.equals("1")) {
             mainListOfTheorem();
@@ -134,12 +131,10 @@ public class Library {
 
     //EFFECTS: First checks if the theorem exists. If it does exist, it asks the reader if they want to see additional
     //         info. If yes, it then asks the user if they want to change the entry, and finally if yes is selected
-    //         it prompts the reader if it wants to change the entry. If name already exists, it throws a
-    //         "Name already exists" exception.
-
+    //         it prompts the reader if it wants to change the entry.
     public void theoremMakeSelection(String command) {
         if (listOfTheorems.doesTheoremExist(command) != -1) {
-            System.out.print(listOfTheorems.getTheorem(listOfTheorems.doesTheoremExist(command)).viewEntry());
+            System.out.print(listOfTheorems.getTheorem(listOfTheorems.doesTheoremExist(command)).viewTheoremLessInfo());
             System.out.print("\nPress y if you want to display extra info. Press another key to return to the main "
                     + "menu.\n");
             if (yesOrNo()) {
@@ -150,16 +145,11 @@ public class Library {
                     System.out.print("Press 1 to change the name of the entry.\nPress 2 to change the theorem.\nPress 3"
                             + " to change the course it is most useful for.\nPress 4 to change the description."
                             + "\nPress 5 to change the Proof.\nPress 6 to delete this entry.");
-                    try {
-                        doYouWantToChangeTheTheorem(
-                                listOfTheorems.getTheorem(listOfTheorems.doesTheoremExist(command)));
-                    } catch (NameAlreadyExists e) {
-                        System.out.print("Name already exists!");
-                    }
+                    doYouWantToChangeTheTheorem(listOfTheorems.getTheorem(listOfTheorems.doesTheoremExist(command)));
                 }
             }
         } else {
-            System.out.println("That entry doesn't exist!");
+            System.out.println("That entry doesn't exist!\n");
         }
     }
 
@@ -172,15 +162,16 @@ public class Library {
 
     //EFFECTS: Prompts the user to select the field that they want to change. Afterwards, it allows the user to
     //         change it. If the name shows up in listOfTheorem, it denies the suggestion.
-    public void doYouWantToChangeTheTheorem(Theorem theorem) throws NameAlreadyExists {
+    public void doYouWantToChangeTheTheorem(Theorem theorem) {
         String command = input.next();
         if (command.equals("1")) {
             System.out.print("What were you planning to change the field to? Please type it in below.\n");
             String name = input.next();
-            if (listOfTheorems.checkIfTheoremExists(name)) {
-                throw new NameAlreadyExists();
+            try {
+                listOfTheorems.changeTheoremNameAndCheckExistence(theorem, name);
+            } catch (NameAlreadyExists e) {
+                System.out.print("Name already exists in theorem entries!\n");
             }
-            theorem.changeName(name);
         } else if (command.equals("2")) {
             theorem.changeTheorem(whatIsTheChange());
         } else if (command.equals("3")) {
@@ -234,7 +225,7 @@ public class Library {
     //         to view. If the entry does not exist ten it returns "That entry doesn't exist".
     private void equationMakeSelection(String command) {
         if (listOfEquations.doesEquationExist(command) != -1) {
-            System.out.print(listOfEquations.getEquation(listOfEquations.doesEquationExist(command)).viewEntry());
+            System.out.print(listOfEquations.getEquation(listOfEquations.doesEquationExist(command)).viewEquation());
             System.out.print("\nPress p if you want to view the practice problems. Press c to change the entry.\n");
             viewPracticeOrChangeEntry(command);
         } else {
@@ -253,13 +244,9 @@ public class Library {
         } else if (nextCommand.equalsIgnoreCase("c")) {
             System.out.print("Press 1 to change the name of the entry.\nPress 2 to change the theorem.\nPress 3"
                     + " to change the course it is most useful for.\nPress 4 to change the description.\nPress 5 to"
-                    + " change the Proof.\nPress 6 to delete specific practice problems.\nPress 7 to delete this entry"
-                    + ".\n");
-            try {
-                changeEquationEntry(listOfEquations.getEquation(listOfEquations.doesEquationExist(previousCommand)));
-            } catch (NameAlreadyExists e) {
-                System.out.print("Name Already exists!\n");
-            }
+                    + " change the Proof.\nPress 6 to delete specific practice problems.\nPress 7 to delete this entry."
+                    + "\n");
+            changeEquationEntry(listOfEquations.getEquation(listOfEquations.doesEquationExist(previousCommand)));
         } else {
             System.out.print("\nNot a valid entry!\n");
         }
@@ -267,15 +254,10 @@ public class Library {
 
     //EFFECTS: Prompts the user to either change the fields of the equation or remove it from liftOfEquation.
     //         Does nothing if the user does not choose a number from 1-7.
-    public void changeEquationEntry(Equation equation) throws NameAlreadyExists {
+    public void changeEquationEntry(Equation equation) {
         String command = input.next();
         if (command.equals("1")) {
-            System.out.print("What were you planning to change the field to? Please type it in below.\n");
-            String newName = input.next();
-            if (listOfEquations.checkIfEquationExists(newName)) {
-                throw new NameAlreadyExists();
-            }
-            equation.changeName(newName);
+            changeEquationNamePrompt(equation);
         } else if (command.equals("2")) {
             equation.changeTheorem(whatIsTheChange());
         } else if (command.equals("3")) {
@@ -293,6 +275,18 @@ public class Library {
         }
     }
 
+    //EFFECTS: Prompts the user to change the name of the equation. If name already exists it prints a message informing
+    //         the user it already exists.
+    public void changeEquationNamePrompt(Equation equation) {
+        System.out.print("What were you planning to change the field to? Please type it in below.\n");
+        String newName = input.next();
+        try {
+            listOfEquations.changeEquationNameAndCheckExistence(equation, newName);
+        } catch (NameAlreadyExists e) {
+            System.out.print("Name already exists in equation entries!\n");
+        }
+    }
+
     //EFFECTS: prompts the user if they would like to delete the equation.
     public void deleteEntryPrompt(Equation equation) {
         System.out.print("You are about to delete this entry. Press y to delete the entry.\n");
@@ -305,10 +299,12 @@ public class Library {
 
     //EFFECTS: Prompts the user to select a practice problem they would like to view. Returns
     //         "There are no questions to show" if the list of practice problems is empty.
-    public void showPracticeProblems(Equation equation) throws IndexOutOfBoundsException {
-        System.out.print("Which practice problems do you want to view?\n");
+    public void showPracticeProblems(Equation equation) {
         try {
-            System.out.print(equation.showNumberOfPracticeProblems());
+            String text = equation.showNumberOfPracticeProblems();
+            System.out.print("Which practice problems do you want to view? Type the number of the practice problem that"
+                    + " you would like to view\n");
+            System.out.print(text);
             String command = input.next();
             int newInput;
             newInput = Integer.parseInt(command) - 1;
@@ -404,15 +400,11 @@ public class Library {
         System.out.print("Press u to update this request, press d to delete this request.\n");
         String newCommand = input.next();
         if (newCommand.equalsIgnoreCase("u")) {
-            try {
-                System.out.print("Press 1 to change the name of the entry.\nPress 2 to change the theorem.\nPress 3"
+            System.out.print("Press 1 to change the name of the entry.\nPress 2 to change the theorem.\nPress 3"
                         + " to change the course it is most useful for.\nPress 4 to change the description.\nPress 5 to"
-                        + " change the Proof.\n Press 6 to update the estimated completion\nPress 7 to submit the"
+                        + " change the Proof.\nPress 6 to update the estimated completion\nPress 7 to submit the"
                         + " entry to its designated library\n");
-                updateRequest(request);
-            } catch (NameAlreadyExists e) {
-                System.out.print("Name already exists!\n");
-            }
+            updateRequest(request);
         } else if (newCommand.equalsIgnoreCase("d")) {
             deleteRequestPrompt(request);
         } else {
@@ -423,15 +415,10 @@ public class Library {
     //EFFECTS: prompts the user if they would like to update the request. If the user decides to change the completion
     //         value to a value over 100, then it returns "Not a value between 0 and 100!". If a value between 1-7
     //         is not selected, the method does nothing.
-    public void updateRequest(Request request) throws NameAlreadyExists {
+    public void updateRequest(Request request) {
         String command = input.next();
         if (command.equals("1")) {
-            System.out.print("What were you planning to change the field to? Please type it in below.\n");
-            String name = input.next();
-            if (listOfRequests.checkIfRequestExists(name)) {
-                throw new NameAlreadyExists();
-            }
-            request.changeName(name);
+            changeRequestName(request);
         } else if (command.equals("2")) {
             request.changeTheorem(whatIsTheChange());
         } else if (command.equals("3")) {
@@ -449,9 +436,23 @@ public class Library {
         }
     }
 
+    //EFFECTS: prompts the user if they would like to change the name of the request. If name is changed to a request
+    //         that already exists, the method prints a message informing the user of that error.
+    public void changeRequestName(Request request) {
+        System.out.print("What were you planning to change the field to? Please type it in below.\n");
+        String name = input.next();
+        try {
+            listOfRequests.changeRequestNameAndCheckExistence(request, name);
+        } catch (NameAlreadyExists e) {
+            System.out.print("Name already exists in request entries!\n");
+        }
+        request.changeName(name);
+    }
+
     //MODIFIES: this, request
     //EFFECTS: Updates estimatedCompletion with the integer inputted.
     public void updateEstimatedCompletionPrompt(Request request) {
+        System.out.print("Please input a value between 0 and 100 to signify its completion status.\n");
         String newEstimatedCompletion = input.next();
         request.updateEstimatedCompletion(newEstimatedCompletion);
     }
@@ -470,6 +471,7 @@ public class Library {
     //EFFECTS: checks if the request is a Theorem, if it is, then it adds it to theorem, otherwise adds it
     //         to equation.
     private void convertingRequest(Request request) {
+        listOfRequests.removeRequest(request);
         if (request.getType().equals("Theorem")) {
             listOfTheorems.addTheorem(request.requestToTheorem());
         } else {
@@ -507,32 +509,19 @@ public class Library {
         System.out.print("You are now making a request. What is this request for an equation or theorem?\n");
         String command = input.next();
         if (command.equalsIgnoreCase("theorem")) {
-            try {
-                userMakeTheoremRequest();
-            } catch (NameAlreadyExists e) {
-                System.out.print("Name already exists!\n");
-            }
+            userMakeTheoremRequest();
         } else if (command.equalsIgnoreCase("equation")) {
-            try {
-                userMakeEquationRequest();
-            } catch (NameAlreadyExists e) {
-                System.out.print("Name already exists!\n");
-            }
+            userMakeEquationRequest();
         } else {
             System.out.print("Not one of the options!\n");
         }
-
     }
 
-    //EFFECTS: prompts the user to make a new Theorem Request. Throws a NameAlreadyExists if the name already
-    //         shows up in listOFTheorem.
-    public void userMakeTheoremRequest() throws NameAlreadyExists {
+    //EFFECTS: prompts the user to make a new Theorem Request.
+    public void userMakeTheoremRequest() {
         Request newRequest;
         System.out.print("What is the name of this theorem?\n");
         String name = input.next();
-        if (listOfTheorems.checkIfTheoremExists(name)) {
-            throw new NameAlreadyExists();
-        }
         System.out.print("What does this theorem state? (you can leave this blank if you are not sure)\n");
         String theorem = input.next();
         System.out.print("What course is this theorem most applicable for? (you can leave this blank if you are not "
@@ -543,19 +532,19 @@ public class Library {
         System.out.print("What is the proof for this theorem? (you can leave this blank if you are not sure)\n");
         String proof = input.next();
         newRequest = new Request(name, theorem, "Theorem", course, explanation, proof);
-        listOfRequests.addRequest(newRequest);
+        try {
+            listOfRequests.addRequestAndCheckExistence(newRequest);
+        } catch (NameAlreadyExists e) {
+            System.out.print("Name Already Exists!\n");
+        }
         System.out.print("Submitted request!\n");
     }
 
-    //EFFECTS: prompts the user to make a new Equation Request. Throws a NameAlreadyExists if the name already
-    //         shows up in listOfEquation.
-    public void userMakeEquationRequest() throws NameAlreadyExists {
+    //EFFECTS: prompts the user to make a new Equation Request.
+    public void userMakeEquationRequest() {
         Request newRequest;
         System.out.print("What is the name of this Equation?\n");
         String name = input.next();
-        if (listOfEquations.checkIfEquationExists(name)) {
-            throw new NameAlreadyExists();
-        }
         System.out.print("What does this Equation state? (you can leave this blank if you are not sure)\n");
         String theorem = input.next();
         System.out.print("What course is this Equation most applicable for? (you can leave this blank if you are not"
@@ -566,12 +555,11 @@ public class Library {
         System.out.print("What is the derivation for this Equation? (you can leave this blank if you are not sure)\n");
         String proof = input.next();
         newRequest = new Request(name, theorem, "Equation", course, explanation, proof);
-        listOfRequests.addRequest(newRequest);
+        try {
+            listOfRequests.addRequestAndCheckExistence(newRequest);
+        } catch (NameAlreadyExists e) {
+            System.out.print("Name already exists!\n");
+        }
         System.out.print("Submitted request!\n");
     }
 }
-
-//LEFT TO DO
-// Double check styling,
-// Double check tests, I believe some of the ones involving print are not tested properly,
-// update the readme to reflect these changes.

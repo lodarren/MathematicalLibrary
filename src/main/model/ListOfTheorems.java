@@ -1,12 +1,14 @@
 package model;
 
+import model.exceptions.NameAlreadyExists;
+
 import java.util.ArrayList;
 
 // A list of Theorems that is to be put in the library. No Theorems with the same name can show up
 // twice on this list.
 
 public class ListOfTheorems {
-    ArrayList<Theorem> entries;
+    ArrayList<Theorem> entries;     //A list of Theorem entries that are in the library.
 
     // EFFECTS: Constructs a new ListOfTheorems with an empty list.
     public ListOfTheorems() {
@@ -39,6 +41,26 @@ public class ListOfTheorems {
             counter--;
         }
         return text;
+    }
+
+    //MODIFIES: this, theorem
+    //EFFECTS: Checks if Theorem exists in entries, if so it changes the name of the request. If the entry exists, it
+    //         throws a NameAlreadyExists exception.
+    public void changeTheoremNameAndCheckExistence(Theorem theorem, String name) throws NameAlreadyExists {
+        if (checkIfTheoremExists(name)) {
+            throw new NameAlreadyExists();
+        }
+        theorem.changeName(name);
+    }
+
+    //MODIFIES: this, theorem
+    //EFFECTS: Checks if Theorem exists in entries, if so it adds request to entries. If the entry exists, it
+    //         throws a NameAlreadyExists exception.
+    public void addTheoremAndCheckExistence(Theorem theorem) throws NameAlreadyExists {
+        if (checkIfTheoremExists(theorem.getName())) {
+            throw new NameAlreadyExists();
+        }
+        entries.add(theorem);
     }
 
     //MODIFIES: this

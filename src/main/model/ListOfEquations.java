@@ -1,11 +1,14 @@
 package model;
 
+import model.exceptions.NameAlreadyExists;
+
 import java.util.ArrayList;
 
 public class ListOfEquations {
     // A list of equations that is to be put in the library. No Equation with the same name can show up
     // twice on this list.
-    ArrayList<Equation> entries;
+
+    ArrayList<Equation> entries;        //A list of equation entries that are in the library.
 
     //EFFECTS: constructs a new listOFEquations with an empty list.
     public ListOfEquations() {
@@ -38,6 +41,27 @@ public class ListOfEquations {
             counter--;
         }
         return text;
+    }
+
+    //MODIFIES: this, equation
+    //EFFECTS: Checks if Equation exists in entries, if so it changes the name of the request. If the entry exists, it
+    //         throws a NameAlreadyExists exception.
+    public void changeEquationNameAndCheckExistence(Equation equation, String name) throws NameAlreadyExists {
+        if (checkIfEquationExists(name)) {
+            throw new NameAlreadyExists();
+        }
+        equation.changeName(name);
+    }
+
+    //MODIFIES: this, equation
+    //EFFECTS: Checks if Equation exists in entries, if so it adds request to entries. If the entry exists, it
+    //         throws a NameAlreadyExists exception.
+
+    public void addEquationAndCheckExistence(Equation equation) throws NameAlreadyExists {
+        if (checkIfEquationExists(equation.getName())) {
+            throw new NameAlreadyExists();
+        }
+        entries.add(equation);
     }
 
     //MODIFIES: this

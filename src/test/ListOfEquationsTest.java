@@ -1,5 +1,6 @@
 import model.ListOfEquations;
 import model.Equation;
+import model.exceptions.NameAlreadyExists;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -14,7 +15,7 @@ public class ListOfEquationsTest {
 
 
     @BeforeEach
-    public void setup() {
+    void setup() {
         listOfEquationsTest = new ListOfEquations();
         equationEntry1 = new Equation("A", "B", "C", "D", "E");
         equationEntry2 = new Equation("F", "G", "H", "I", "J");
@@ -22,12 +23,12 @@ public class ListOfEquationsTest {
     }
 
     @Test
-    public void newListOfTheoremTest() {
+    void newListOfTheoremTest() {
         assertTrue(listOfEquationsTest.isListEmpty());
     }
 
     @Test
-    public void addTheoremTest() {
+    void addTheoremTest() {
         listOfEquationsTest.addEquation(equationEntry1);
         listOfEquationsTest.addEquation(equationEntry2);
         listOfEquationsTest.addEquation(equationEntry3);
@@ -38,7 +39,7 @@ public class ListOfEquationsTest {
     }
 
     @Test
-    public void removeTheoremTest() {
+    void removeTheoremTest() {
         listOfEquationsTest.addEquation(equationEntry1);
         listOfEquationsTest.addEquation(equationEntry2);
         listOfEquationsTest.addEquation(equationEntry3);
@@ -50,7 +51,7 @@ public class ListOfEquationsTest {
     }
 
     @Test
-    public void doesTheoremExistTest() {
+    void doesTheoremExistTest() {
         listOfEquationsTest.addEquation(equationEntry1);
         listOfEquationsTest.addEquation(equationEntry2);
 
@@ -60,7 +61,7 @@ public class ListOfEquationsTest {
     }
 
     @Test
-    public void checkIfTheoremExists() {
+    void checkIfTheoremExists() {
         listOfEquationsTest.addEquation(equationEntry1);
         listOfEquationsTest.addEquation(equationEntry2);
 
@@ -70,10 +71,55 @@ public class ListOfEquationsTest {
     }
 
     @Test
-    public void printAllTheoremsTest() {
+    void printAllTheoremsTest() {
         listOfEquationsTest.addEquation(equationEntry1);
         listOfEquationsTest.addEquation(equationEntry2);
 
         assertEquals("\n1.F\n" + "2.A",listOfEquationsTest.printAllEquations());
+    }
+
+    @Test
+    void addEquationAndCheckExistenceTest() {
+        try {
+            listOfEquationsTest.addEquationAndCheckExistence(equationEntry1);
+            assertTrue(listOfEquationsTest.checkIfEquationExists("A"));
+        } catch (NameAlreadyExists e) {
+            fail();
+        }
+    }
+
+    @Test
+    void addEquationAndCheckExistenceFailTest() {
+        try {
+            listOfEquationsTest.addEquationAndCheckExistence(equationEntry1);
+            listOfEquationsTest.addEquationAndCheckExistence(equationEntry1);
+            fail();
+        } catch (NameAlreadyExists e) {
+            e.getMessage();
+        }
+    }
+
+    @Test
+    void changeEquationAndCheckExistenceTest() {
+        try {
+            listOfEquationsTest.addEquation(equationEntry1);
+            listOfEquationsTest.addEquation(equationEntry2);
+            listOfEquationsTest.changeEquationNameAndCheckExistence(equationEntry1,"newname");
+            assertEquals("newname", listOfEquationsTest.getEquation(0).getName());
+        } catch (NameAlreadyExists e) {
+            fail();
+        }
+    }
+
+    @Test
+    void changeEquationAndCheckExistenceFailTest() {
+        try {
+            listOfEquationsTest.addEquation(equationEntry1);
+            listOfEquationsTest.addEquation(equationEntry2);
+            listOfEquationsTest.changeEquationNameAndCheckExistence(equationEntry1,"F");
+            fail();
+        } catch (NameAlreadyExists e) {
+            e.getMessage();
+        }
     }
 }

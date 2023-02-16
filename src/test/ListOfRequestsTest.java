@@ -1,5 +1,6 @@
 import model.ListOfRequests;
 import model.Request;
+import model.exceptions.NameAlreadyExists;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -14,7 +15,7 @@ public class ListOfRequestsTest {
 
 
     @BeforeEach
-    public void setup() {
+    void setup() {
         listOfRequestsTest = new ListOfRequests();
         requestEntry1 = new Request("A", "B","Theorem", "C", "D", "E");
         requestEntry2 = new Request("F", "G", "Theorem", "H", "I", "J");
@@ -22,12 +23,12 @@ public class ListOfRequestsTest {
     }
 
     @Test
-    public void newListOfRequestTest() {
+    void newListOfRequestTest() {
         assertTrue(listOfRequestsTest.isListEmpty());
     }
 
     @Test
-    public void addRequestTest() {
+    void addRequestTest() {
         listOfRequestsTest.addRequest(requestEntry1);
         listOfRequestsTest.addRequest(requestEntry2);
         listOfRequestsTest.addRequest(requestEntry3);
@@ -38,7 +39,7 @@ public class ListOfRequestsTest {
     }
 
     @Test
-    public void removeRequestTest() {
+    void removeRequestTest() {
         listOfRequestsTest.addRequest(requestEntry1);
         listOfRequestsTest.addRequest(requestEntry2);
         listOfRequestsTest.addRequest(requestEntry3);
@@ -50,7 +51,7 @@ public class ListOfRequestsTest {
     }
 
     @Test
-    public void doesRequestExistTest() {
+    void doesRequestExistTest() {
         listOfRequestsTest.addRequest(requestEntry1);
         listOfRequestsTest.addRequest(requestEntry2);
 
@@ -60,7 +61,7 @@ public class ListOfRequestsTest {
     }
 
     @Test
-    public void checkIfRequestExistsTest() {
+    void checkIfRequestExistsTest() {
         listOfRequestsTest.addRequest(requestEntry1);
         listOfRequestsTest.addRequest(requestEntry2);
 
@@ -70,11 +71,56 @@ public class ListOfRequestsTest {
     }
 
     @Test
-    public void printAllRequestsTest() {
+    void printAllRequestsTest() {
         listOfRequestsTest.addRequest(requestEntry1);
         listOfRequestsTest.addRequest(requestEntry2);
 
         assertEquals("\n1. F: Completion Status:  0  Type:Theorem\n"
                        + "2. A: Completion Status:  0  Type:Theorem",listOfRequestsTest.printAllRequests());
+    }
+
+    @Test
+    void addRequestAndCheckExistenceTest() {
+        try {
+            listOfRequestsTest.addRequestAndCheckExistence(requestEntry1);
+            assertTrue(listOfRequestsTest.checkIfRequestExists("A"));
+        } catch (NameAlreadyExists e) {
+            fail();
+        }
+    }
+
+    @Test
+    void addRequestAndCheckExistenceFailTest() {
+        try {
+            listOfRequestsTest.addRequestAndCheckExistence(requestEntry1);
+            listOfRequestsTest.addRequestAndCheckExistence(requestEntry1);
+            fail();
+        } catch (NameAlreadyExists e) {
+            e.getMessage();
+        }
+    }
+
+    @Test
+    void changeRequestAndCheckExistenceTest() {
+        try {
+            listOfRequestsTest.addRequest(requestEntry1);
+            listOfRequestsTest.addRequest(requestEntry2);
+            listOfRequestsTest.changeRequestNameAndCheckExistence(requestEntry1,"newname");
+            assertEquals("newname", listOfRequestsTest.getRequest(0).getName());
+        } catch (NameAlreadyExists e) {
+            fail();
+        }
+    }
+
+    @Test
+    void changeRequestAndCheckExistenceFailTest() {
+        try {
+            listOfRequestsTest.addRequest(requestEntry1);
+            listOfRequestsTest.addRequest(requestEntry2);
+            listOfRequestsTest.changeRequestNameAndCheckExistence(requestEntry1, "F");
+            fail();
+        } catch (NameAlreadyExists e) {
+            e.getMessage();
+        }
     }
 }

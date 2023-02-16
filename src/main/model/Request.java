@@ -6,39 +6,34 @@ package model;
 // only be "Equation" or "Theorem". estimatedCompletion can only be an integer between 0 and 100.
 
 public class Request extends Entry {
-    int estimatedCompletion;
-    String type;
+    int estimatedCompletion;        //An integer between 0 and 100 that signifies how much percent of the request
+                                    //is completed.
+    String type;                    //The type of request this request is for. Can either be "Theorem" or "Equation"
 
-    //REQUIRES:
-    //MODIFIES:
-    //EFFECTS: Creates a new request
 
+    //EFFECTS: Creates a new request object
     public Request(String name, String theorem, String type, String course, String proof, String explanation) {
         super(name, theorem, course, proof, explanation);
         this.type = type;
     }
 
-    public void changeType(String type) {
-        this.type = type;
-    }
-
+    //MODIFIES: this
+    //EFFECTS: returns the type of the request.
     public String getType() {
         return type;
     }
 
 
-
     //MODIFIES: this
     //EFFECTS: returns estimated completion of the request
-
     public int getEstimatedCompletion() {
         return estimatedCompletion;
     }
 
 
+    //REQUIRES: completion must be bewteen "0" and "100" in string format.
     //MODIFIES: this
     //EFFECTS: updates completion
-
     public void updateEstimatedCompletion(String completion) {
         int newCompletion = Integer.parseInt(completion);
         this.estimatedCompletion = newCompletion;
@@ -46,8 +41,7 @@ public class Request extends Entry {
 
 
     //MODIFIES: this
-    //EFFECTS: checks if the request is completed
-
+    //EFFECTS: checks if the estimated completion is equal to 100
     public Boolean isRequestCompleted() {
         return estimatedCompletion == 100;
     }
@@ -55,21 +49,19 @@ public class Request extends Entry {
 
     //MODIFIES: this
     //EFFECTS: checks if the following request is a Theorem
-
     public Boolean isItATheorem() {
         return type.equals("Theorem");
     }
 
     //MODIFIES: this
     //EFFECTS: checks the following request if it is an equation
-
     public Boolean isItAnEquation() {
         return type.equals("Equation");
     }
 
     //MODIFIES: this
-    //EFFECTS: turns request into equation with all its relevant fields transferred
-
+    //EFFECTS: turns request into equation with all its relevant fields (name, type, course, proof, explanation)
+    //         transferred
     public Equation requestToEquation() {
         Equation newEquation;
         newEquation = new Equation(this.getName(), this.getTheorem(), this.getCourse(), this.getProof(),
@@ -77,9 +69,9 @@ public class Request extends Entry {
         return newEquation;
     }
 
-
     //MODIFIES: this
-    //EFFECTS: turns request into Theorem with all its relevant fields transferred
+    //EFFECTS: turns request into theorem with all its relevant fields (name, type, course, proof, explanation)
+    //         transferred
     public Theorem requestToTheorem() {
         Theorem newTheorem;
         newTheorem = new Theorem(this.getName(), this.getTheorem(), this.getCourse(), this.getProof(),
@@ -87,6 +79,8 @@ public class Request extends Entry {
         return newTheorem;
     }
 
+    //MODIFIES: this
+    //EFFECTS: returns the fields of the request in text format in the form Field: field.
     public String viewRequest() {
         String text;
         text = "Name: " + this.getName() + "\n";
@@ -95,6 +89,7 @@ public class Request extends Entry {
         text = text + "Course this is most relevant to: " + this.getCourse() + "\n";
         text = text + "Description: " + this.getExplanations() + "\n";
         text = text + "Completion: " + this.getEstimatedCompletion() + "\n";
+        text = text + "Proof: " + this.getProof() + "\n";
         return text;
     }
 

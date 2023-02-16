@@ -4,14 +4,13 @@ package model;
 // the class it is for, the explanation for it, the proof, comments and practice questions.
 public class Theorem extends Entry {
 
+    //EFFECTS: creates a new theorem object.
     public Theorem(String name, String theorem, String course, String proof, String explanation) {
         super(name, theorem, course, proof, explanation);
     }
 
-    //REQUIRES:
     //MODIFIES: this
-    //EFFECTS: Shows the entire theorem in the system
-
+    //EFFECTS: returns the fields of the equation in text format in the form Field: field.
     public String viewTheorem() {
         String text;
         text = "Name: " + this.getName();
@@ -22,5 +21,14 @@ public class Theorem extends Entry {
         return text;
     }
 
-
+    //MODIFIES: this
+    //EFFECTS: returns the fields of the equation in text format in the form Field: field. without the proof
+    public String viewTheoremLessInfo() {
+        String text;
+        text = "Name: " + this.getName();
+        text = text +  "\nTheorem: " + this.getTheorem();
+        text = text + "\nCourse this is most relevant to: " + this.getCourse();
+        text = text + "\nDescription: " + this.getExplanations() + "\n";
+        return text;
+    }
 }

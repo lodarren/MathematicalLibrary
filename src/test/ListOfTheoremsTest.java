@@ -1,5 +1,6 @@
 import model.ListOfTheorems;
 import model.Theorem;
+import model.exceptions.NameAlreadyExists;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -13,7 +14,7 @@ public class ListOfTheoremsTest {
 
 
     @BeforeEach
-    public void setup() {
+    void setup() {
         listOfTheoremsTest = new ListOfTheorems();
         theoremEntry1 = new Theorem("A", "B", "C", "D", "E");
         theoremEntry2 = new Theorem("F", "G", "H", "I", "J");
@@ -21,12 +22,12 @@ public class ListOfTheoremsTest {
     }
 
     @Test
-    public void newListOfTheoremTest() {
+    void newListOfTheoremTest() {
         assertTrue(listOfTheoremsTest.isListEmpty());
     }
 
     @Test
-    public void addTheoremTest() {
+    void addTheoremTest() {
         listOfTheoremsTest.addTheorem(theoremEntry1);
         listOfTheoremsTest.addTheorem(theoremEntry2);
         listOfTheoremsTest.addTheorem(theoremEntry3);
@@ -37,7 +38,7 @@ public class ListOfTheoremsTest {
     }
 
     @Test
-    public void removeTheoremTest() {
+    void removeTheoremTest() {
         listOfTheoremsTest.addTheorem(theoremEntry1);
         listOfTheoremsTest.addTheorem(theoremEntry2);
         listOfTheoremsTest.addTheorem(theoremEntry3);
@@ -49,7 +50,7 @@ public class ListOfTheoremsTest {
     }
 
     @Test
-    public void doesTheoremExistTest() {
+    void doesTheoremExistTest() {
         listOfTheoremsTest.addTheorem(theoremEntry1);
         listOfTheoremsTest.addTheorem(theoremEntry2);
 
@@ -59,20 +60,63 @@ public class ListOfTheoremsTest {
     }
 
     @Test
-    public void checkIfTheoremExists() {
+    void checkIfTheoremExists() {
         listOfTheoremsTest.addTheorem(theoremEntry1);
         listOfTheoremsTest.addTheorem(theoremEntry2);
-
         assertTrue(listOfTheoremsTest.checkIfTheoremExists("A"));
         assertTrue(listOfTheoremsTest.checkIfTheoremExists("F"));
         assertFalse(listOfTheoremsTest.checkIfTheoremExists("K"));
     }
 
     @Test
-    public void printAllTheoremsTest() {
+    void printAllTheoremsTest() {
         listOfTheoremsTest.addTheorem(theoremEntry1);
         listOfTheoremsTest.addTheorem(theoremEntry2);
-
         assertEquals("\n1.F\n" + "2.A",listOfTheoremsTest.printAllTheorems());
+    }
+
+    @Test
+    void addTheoremAndCheckExistenceTest() {
+        try {
+            listOfTheoremsTest.addTheoremAndCheckExistence(theoremEntry1);
+            assertTrue(listOfTheoremsTest.checkIfTheoremExists("A"));
+        } catch (NameAlreadyExists e) {
+            fail();
+        }
+    }
+
+    @Test
+    void addTheoremAndCheckExistenceFailTest() {
+        try {
+            listOfTheoremsTest.addTheoremAndCheckExistence(theoremEntry1);
+            listOfTheoremsTest.addTheoremAndCheckExistence(theoremEntry1);
+            fail();
+        } catch (NameAlreadyExists e) {
+            e.getMessage();
+        }
+    }
+
+    @Test
+    void changeTheoremAndCheckExistenceTest() {
+        try {
+            listOfTheoremsTest.addTheorem(theoremEntry1);
+            listOfTheoremsTest.addTheorem(theoremEntry2);
+            listOfTheoremsTest.changeTheoremNameAndCheckExistence(theoremEntry1,"newname");
+            assertEquals("newname", listOfTheoremsTest.getTheorem(0).getName());
+        } catch (NameAlreadyExists e) {
+            fail();
+        }
+    }
+
+    @Test
+    void changeTheoremAndCheckExistenceFailTest() {
+        try {
+            listOfTheoremsTest.addTheorem(theoremEntry1);
+            listOfTheoremsTest.addTheorem(theoremEntry2);
+            listOfTheoremsTest.changeTheoremNameAndCheckExistence(theoremEntry1, "F");
+            fail();
+        } catch (NameAlreadyExists e) {
+            e.getMessage();
+        }
     }
 }

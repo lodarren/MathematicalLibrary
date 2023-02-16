@@ -10,15 +10,12 @@ import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class EquationTest {
-
-    Entry testEntryRequest;
-
+    Entry testEntry;
     Equation testEquation;
 
     @BeforeEach
-
     public void setup() {
-        testEntryRequest = new Equation("name", "theorem", "course", "proof",
+        testEntry = new Equation("name", "theorem", "course", "proof",
                 "explanation");
         testEquation = new Equation("name", "theorem", "course", "proof",
                 "explanation");
@@ -26,57 +23,57 @@ public class EquationTest {
 
     @Test
     public void getNameTest() {
-        assertEquals("name", testEntryRequest.getName());
+        assertEquals("name", testEntry.getName());
     }
 
     @Test
     public void getTheoremTest() {
-        assertEquals("theorem", testEntryRequest.getTheorem());
+        assertEquals("theorem", testEntry.getTheorem());
     }
 
     @Test
     public void getCourseTest() {
-        assertEquals("course", testEntryRequest.getCourse());
+        assertEquals("course", testEntry.getCourse());
     }
 
     @Test
     public void getProofTest() {
-        assertEquals("proof", testEntryRequest.getProof());
+        assertEquals("proof", testEntry.getProof());
     }
 
     @Test
     public void getExplanationTest() {
-        assertEquals("explanation", testEntryRequest.getExplanations());
+        assertEquals("explanation", testEntry.getExplanations());
     }
 
     @Test
     public void changeNameTest() {
-        testEntryRequest.changeName("new name");
-        assertEquals("new name", testEntryRequest.getName());
+        testEntry.changeName("new name");
+        assertEquals("new name", testEntry.getName());
     }
 
     @Test
     public void changeTheoremTest() {
-        testEntryRequest.changeTheorem("new theorem");
-        assertEquals("new theorem", testEntryRequest.getTheorem());
+        testEntry.changeTheorem("new theorem");
+        assertEquals("new theorem", testEntry.getTheorem());
     }
 
     @Test
     public void changeCourseTest() {
-        testEntryRequest.changeCourse("new course");
-        assertEquals("new course", testEntryRequest.getCourse());
+        testEntry.changeCourse("new course");
+        assertEquals("new course", testEntry.getCourse());
     }
 
     @Test
     public void changeProofTest() {
-        testEntryRequest.changeProof("new proof blah blah");
-        assertEquals("new proof blah blah", testEntryRequest.getProof());
+        testEntry.changeProof("new proof blah blah");
+        assertEquals("new proof blah blah", testEntry.getProof());
     }
 
     @Test
     public void changeExplanationTest() {
-        testEntryRequest.changeExplanation("this is something");
-        assertEquals("this is something", testEntryRequest.getExplanations());
+        testEntry.changeExplanation("this is something");
+        assertEquals("this is something", testEntry.getExplanations());
     }
 
 
@@ -110,10 +107,8 @@ public class EquationTest {
         mockPracticeProblemAnswerList = new ArrayList<>();
         mockPracticeProblemList.add("question1");
         mockPracticeProblemAnswerList.add("answer1");
-
         assertTrue(testEquation.getPracticeProblemsRaw().isEmpty());
         assertTrue(testEquation.getPracticeProblemsAnswerRaw().isEmpty());
-
         testEquation.addPracticeProblem("question1", "answer1");
         assertEquals(mockPracticeProblemList, testEquation.getPracticeProblemsRaw());
         assertEquals(mockPracticeProblemAnswerList, testEquation.getPracticeProblemsAnswerRaw());
@@ -143,21 +138,17 @@ public class EquationTest {
         }
     }
 
-
-
     @Test
     public void doesPracticeProblemExist() {
         testEquation.addPracticeProblem("question1", "answer1");
-
         assertTrue(testEquation.doesPracticeProblemExist(String.valueOf(1)));
         assertTrue(testEquation.doesPracticeProblemExist(String.valueOf(2)));
         assertFalse(testEquation.doesPracticeProblemExist(String.valueOf(3)));
     }
 
     @Test
-    void viewEntry() {
+    void viewEquationTest() {
         assertEquals("\nName: name\nStatement: theorem\nCourse this is most relevant to: course\n"
-               + "Description: explanation\n", testEquation.viewEntry());
+               + "Description: explanation\nDerivation: proof\n", testEquation.viewEquation());
     }
-
 }

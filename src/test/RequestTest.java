@@ -9,103 +9,90 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class RequestTest {
-
     Entry testEntryRequest;
-
     Request testRequest;
     Request testRequestLetters;
 
     @BeforeEach
-
-    public void setup() {
+    void setup() {
         testEntryRequest = new Request("name", "theorem", "Theorem", "course",
                 "proof", "explanation");
 
         testRequest = new Request("name", "theorem", "Theorem", "course",
                 "proof", "explanation");
 
-        testRequestLetters = new Request("A","B", "Theorem", "C", "D", "E");
+        testRequestLetters = new Request("A","B", "Equation", "C", "D", "E");
     }
 
     @Test
-    public void getNameTest() {
+    void getNameTest() {
         assertEquals("name", testEntryRequest.getName());
     }
 
     @Test
-    public void getTheoremTest() {
+    void getTheoremTest() {
         assertEquals("theorem", testEntryRequest.getTheorem());
     }
 
     @Test
-    public void getCourseTest() {
+    void getCourseTest() {
         assertEquals("course", testEntryRequest.getCourse());
     }
 
     @Test
-    public void getProofTest() {
+    void getProofTest() {
         assertEquals("proof", testEntryRequest.getProof());
     }
 
     @Test
-    public void getExplanationTest() {
+    void getExplanationTest() {
         assertEquals("explanation", testEntryRequest.getExplanations());
     }
 
     @Test
-    public void changeNameTest() {
+    void changeNameTest() {
         testEntryRequest.changeName("new name");
         assertEquals("new name", testEntryRequest.getName());
     }
 
     @Test
-    public void changeTheoremTest() {
+    void changeTheoremTest() {
         testEntryRequest.changeTheorem("new theorem");
         assertEquals("new theorem", testEntryRequest.getTheorem());
     }
 
     @Test
-    public void changeCourseTest() {
+    void changeCourseTest() {
         testEntryRequest.changeCourse("new course");
         assertEquals("new course", testEntryRequest.getCourse());
     }
 
     @Test
-    public void changeProofTest() {
+    void changeProofTest() {
         testEntryRequest.changeProof("new proof blah blah");
         assertEquals("new proof blah blah", testEntryRequest.getProof());
     }
 
     @Test
-    public void changeExplanationTest() {
+    void changeExplanationTest() {
         testEntryRequest.changeExplanation("this is something");
         assertEquals("this is something", testEntryRequest.getExplanations());
     }
 
     @Test
-    public void getTypeTest() {
-        assertEquals("Theorem", testRequest.getType());
-        testRequest.changeType("Equation");
-        assertEquals("Equation", testRequest.getType());
-
-    }
-
-    @Test
-    public void isItAnEquationTest() {
-        assertFalse(testRequest.isItAnEquation());
-        testRequest.changeType("Equation");
-        assertTrue(testRequest.isItAnEquation());
-    }
-
-    @Test
-    public void isItATheoremTest() {
+    void isItATheoremTest() {
         assertTrue(testRequest.isItATheorem());
-        testRequest.changeType("Equation");
-        assertFalse(testRequest.isItATheorem());
+        assertFalse(testRequestLetters.isItATheorem());
     }
 
     @Test
-    public void isRequestCompletedTest() {
+    void isItAnEquationTest() {
+        assertFalse(testRequest.isItAnEquation());
+        assertTrue(testRequestLetters.isItAnEquation());
+    }
+
+    @Test
+    void isRequestCompletedTest() {
         assertFalse(testRequest.isRequestCompleted());
         testRequest.updateEstimatedCompletion("99");
         assertFalse(testRequest.isRequestCompleted());
@@ -115,13 +102,11 @@ public class RequestTest {
 
 
     @Test
-    public void requestToTheoremTest() {
+    void requestToTheoremTest() {
         Theorem compareTheorem;
         Theorem convertedTheorem = testRequestLetters.requestToTheorem();
         compareTheorem = new Theorem("A", "B", "C",
                 "D", "E");
-
-
         assertEquals(convertedTheorem.getName(), compareTheorem.getName());
         assertEquals(convertedTheorem.getTheorem(), compareTheorem.getTheorem());
         assertEquals(convertedTheorem.getCourse(), compareTheorem.getCourse());
@@ -131,13 +116,11 @@ public class RequestTest {
     }
 
     @Test
-    public void requestToEquationTest() {
+    void requestToEquationTest() {
         Equation compareEquation;
         Equation convertedEquation = testRequestLetters.requestToEquation();
         compareEquation = new Equation("A", "B", "C",
                 "D", "E");
-
-
         assertEquals(convertedEquation.getName(), compareEquation.getName());
         assertEquals(convertedEquation.getTheorem(), compareEquation.getTheorem());
         assertEquals(convertedEquation.getCourse(), compareEquation.getCourse());
@@ -148,7 +131,6 @@ public class RequestTest {
     @Test
     void viewRequestTest() {
         assertEquals("Name: name\nType: Theorem\nTheorem: theorem\nCourse this is most relevant to: course\n"
-                + "Description: explanation\nCompletion: 0\n", testRequest.viewRequest());
+                + "Description: explanation\nCompletion: 0\nProof: proof\n", testRequest.viewRequest());
     }
-
 }

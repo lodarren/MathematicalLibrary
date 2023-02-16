@@ -1,15 +1,14 @@
 package model;
 
 public abstract class Entry {
-
     // A class that represents the general representation of an entry in the Library. Contains its name, its theorem,
     // the course it is most relevant for, the proof of the course and the description for the entry.
 
-    String name;
-    String theorem;
-    String course;
-    String proof;
-    String explanations;
+    String name;            //Name of the entry
+    String theorem;         //What the expression states
+    String course;          //What course this is most relevant to
+    String proof;           //The proof of the following entry
+    String explanations;    //A description to help the user understand the entry.
 
     //EFFECTS: Creates a new entry class
     public Entry(String name, String theorem, String course, String proof, String explanations) {
@@ -35,7 +34,7 @@ public abstract class Entry {
     }
 
     //MODIFIES: this
-    //EFFECTS: changes the course that this entry is most relevant to
+    //EFFECTS: changes the course that this entry is most relevant to.
 
     public void changeCourse(String course) {
         this.course = course;
@@ -57,49 +56,32 @@ public abstract class Entry {
 
     //MODIFIES: this
     //EFFECTS: returns name of the entry.
-
     public String getName() {
         return name;
     }
 
     //MODIFIES: this
     //EFFECTS: returns the theorem text.
-
     public String getTheorem() {
         return theorem;
     }
 
     //MODIFIES: this
     //EFFECTS: returns the course that this entry is most relevant to.
-
     public String getCourse() {
         return course;
     }
 
     //MODIFIES: this
     //EFFECTS: returns the proof for the entry.
-
     public String getProof() {
         return proof;
     }
 
     //MODIFIES: this
     //EFFECTS: returns the explanation for the entry
-
     public String getExplanations() {
         return explanations;
-    }
-
-    //REQUIRES:
-    //MODIFIES: this
-    //EFFECTS: Shows the entire theorem in the system
-    public String viewEntry() {
-        String text;
-        text = "\nName: " + this.getName();
-        text = text + "\nStatement: " + this.getTheorem();
-        text = text + "\nCourse this is most relevant to: " + this.getCourse();
-        text = text + "\nDescription: " + this.getExplanations() + "\n";
-        return text;
     }
 
 }

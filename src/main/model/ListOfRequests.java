@@ -1,12 +1,14 @@
 package model;
 
+import model.exceptions.NameAlreadyExists;
+
 import java.util.ArrayList;
 
 // A list of Requests that is to be put in the library. No Request with the same name can show up
 // twice on this list.
 
 public class ListOfRequests {
-    ArrayList<Request> entries;
+    ArrayList<Request> entries;     //A list of Request entries that are in the library.
 
     // EFFECTS: Constructs a new ListOfRequests with an empty list.
     public ListOfRequests() {
@@ -27,9 +29,9 @@ public class ListOfRequests {
         }
         return -1;
     }
+
     //MODIFIES: this
     //EFFECTS: prints all the equations in the format: #. (name of request)
-
     public String printAllRequests() {
         int counter = entries.size();
         String text = "";
@@ -40,6 +42,26 @@ public class ListOfRequests {
             counter--;
         }
         return text;
+    }
+
+    //MODIFIES: this, request
+    //EFFECTS: Checks if request exists in entries, if so it changes the name of the request. If the entry exists, it
+    //         throws a NameAlreadyExists exception.
+    public void changeRequestNameAndCheckExistence(Request request, String name) throws NameAlreadyExists {
+        if (checkIfRequestExists(name)) {
+            throw new NameAlreadyExists();
+        }
+        request.changeName(name);
+    }
+
+    //MODIFIES: this, request
+    //EFFECTS: Checks if request exists in entries, if so it adds request to entries. If the entry exists, it
+    //         throws a NameAlreadyExists exception.
+    public void addRequestAndCheckExistence(Request request) throws NameAlreadyExists {
+        if (checkIfRequestExists(request.getName())) {
+            throw new NameAlreadyExists();
+        }
+        entries.add(request);
     }
 
     //MODIFIES: this
