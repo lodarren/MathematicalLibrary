@@ -1,6 +1,7 @@
 package model;
 
 import model.exceptions.NameAlreadyExists;
+import org.json.JSONArray;
 
 import java.util.ArrayList;
 
@@ -91,5 +92,15 @@ public class ListOfTheorems {
     //EFFECTS: returns true if there are no Theorems in entries.
     public Boolean isListEmpty() {
         return entries.isEmpty();
+    }
+
+    public JSONArray listOfTheoremsToJson() {
+        JSONArray jsonArray = new JSONArray();
+
+        for (Theorem t : entries) {
+            jsonArray.put(t.theoremToJson());
+        }
+
+        return jsonArray;
     }
 }

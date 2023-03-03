@@ -1,6 +1,7 @@
 package model;
 
 import model.exceptions.NameAlreadyExists;
+import org.json.JSONArray;
 
 import java.util.ArrayList;
 
@@ -92,5 +93,15 @@ public class ListOfEquations {
     //EFFECTS: returns the Equation that is located on that index.
     public Equation getEquation(int i) {
         return entries.get(i);
+    }
+
+    public JSONArray listOfEquationsToJson() {
+        JSONArray jsonArray = new JSONArray();
+
+        for (Equation e : entries) {
+            jsonArray.put(e.equationToJson());
+        }
+
+        return jsonArray;
     }
 }

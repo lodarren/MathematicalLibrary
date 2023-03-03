@@ -1,6 +1,7 @@
 package model;
 
 import model.exceptions.IndexNotThere;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -100,6 +101,18 @@ public class Equation extends Entry {
         text = text + "\nDescription: " + this.getExplanations();
         text = text + "\nDerivation: " + this.getProof() + "\n";
         return text;
+    }
+
+    public JSONObject equationToJson() {
+        JSONObject json = new JSONObject();
+        json.put("name", name);
+        json.put("theorem", theorem);
+        json.put("course", course);
+        json.put("proof", proof);
+        json.put("explanation", explanations);
+        json.put("practice problems", practiceProblems.practiceProblemsToJson);
+        json.put("practice problem answers", practiceProblemsAnswer.practiceProblemAnswersToJson);
+        return json;
     }
 }
 

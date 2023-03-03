@@ -5,6 +5,8 @@ package model;
 // pending proof, the pending practice problems, and its estimated time for completion. The type of the equation can
 // only be "Equation" or "Theorem". estimatedCompletion can only be an integer between 0 and 100.
 
+import org.json.JSONObject;
+
 public class Request extends Entry {
     int estimatedCompletion;        //An integer between 0 and 100 that signifies how much percent of the request
                                     //is completed.
@@ -91,6 +93,18 @@ public class Request extends Entry {
         text = text + "Completion: " + this.getEstimatedCompletion() + "\n";
         text = text + "Proof: " + this.getProof() + "\n";
         return text;
+    }
+
+    public JSONObject requestToJson() {
+        JSONObject json = new JSONObject();
+        json.put("name", name);
+        json.put("theorem", theorem);
+        json.put("type", type);
+        json.put("estimated completion", estimatedCompletion);
+        json.put("course", course);
+        json.put("proof", proof);
+        json.put("explanation", explanations);
+        return json;
     }
 
 }

@@ -1,5 +1,7 @@
 package model;
 
+import org.json.JSONObject;
+
 // Represents math concepts that can be represented as a theorem, contains its name, its mathematical expression,
 // the class it is for, the explanation for it, the proof, comments and practice questions.
 public class Theorem extends Entry {
@@ -30,5 +32,15 @@ public class Theorem extends Entry {
         text = text + "\nCourse this is most relevant to: " + this.getCourse();
         text = text + "\nDescription: " + this.getExplanations() + "\n";
         return text;
+    }
+
+    public JSONObject theoremToJson() {
+        JSONObject json = new JSONObject();
+        json.put("name", name);
+        json.put("theorem", theorem);
+        json.put("course", course);
+        json.put("proof", proof);
+        json.put("explanation", explanations);
+        return json;
     }
 }

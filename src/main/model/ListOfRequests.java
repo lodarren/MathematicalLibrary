@@ -1,6 +1,7 @@
 package model;
 
 import model.exceptions.NameAlreadyExists;
+import org.json.JSONArray;
 
 import java.util.ArrayList;
 
@@ -93,4 +94,15 @@ public class ListOfRequests {
     public Boolean isListEmpty() {
         return entries.isEmpty();
     }
+
+    public JSONArray listOfRequestsToJson() {
+        JSONArray jsonArray = new JSONArray();
+
+        for (Request r : entries) {
+            jsonArray.put(r.requestToJson());
+        }
+
+        return jsonArray;
+    }
+
 }
