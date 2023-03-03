@@ -29,3 +29,6 @@ when I am ready.
 moment. 
 - As a user, I want to be able to contribute to the database adding a request to one of the main lists of equation 
 entries or to the main list of theorems depending on the request that is being submitted. 
+- As a user, I want to be able to save my to-do list to file. 
+- A a user, I want to be prompted to save my request entries, my equation entries and my theorem entries when I attempt
+to quit the program. 

@@ -18,6 +18,7 @@ public class Library {
     ListOfTheorems listOfTheorems;
     ListOfEquations listOfEquations;
     ListOfRequests listOfRequests;
+    private static final String JSON_STORE = "./data/library.json";
 
     // The following are mock entries to demonstrate functionality.
     Theorem mockEntry;
