@@ -22,37 +22,18 @@ public class JsonReader {
         this.location = location;
     }
 
-
-
-
     //Cite this piece of code
-    private String readFile(String location) throws JsonNotFound, IOException {
+    private String readFile(String location) throws IOException {
         StringBuilder contentBuilder = new StringBuilder();
-        Stream<String> stream = Files.lines(Paths.get(location), StandardCharsets.UTF_8);
 
-        try {
-            stream.forEach((s) -> {
-                contentBuilder.append(s);
-            });
-        } catch (Throwable var7) {
-            if (stream != null) {
-                try {
-                    stream.close();
-                } catch (Throwable var6) {
-                    var7.addSuppressed(var6);
-                }
-            }
-            throw var7;
-        }
-
-        if (stream != null) {
-            stream.close();
+        try (Stream<String> stream = Files.lines(Paths.get(location), StandardCharsets.UTF_8)) {
+            stream.forEach(s -> contentBuilder.append(s));
         }
 
         return contentBuilder.toString();
     }
 
-    public ListOfTheorems readTheorems() throws JsonNotFound, IOException {
+    public ListOfTheorems readTheorems() throws IOException {
         String jsonData = readFile(location);
         JSONObject jsonObject = new JSONObject(jsonData);
         return parseListOfTheorems(jsonObject);
@@ -87,7 +68,7 @@ public class JsonReader {
         lot.addTheorem(theorem);
     }
 
-    public ListOfEquations readEquations() throws JsonNotFound, IOException {
+    public ListOfEquations readEquations() throws IOException {
         String jsonData = readFile(location);
         JSONObject jsonObject = new JSONObject(jsonData);
         return parseListOfEquations(jsonObject);
@@ -178,7 +159,7 @@ public class JsonReader {
     }
 
 
-    public ListOfRequests readRequests() throws JsonNotFound, IOException {
+    public ListOfRequests readRequests() throws IOException {
         String jsonData = readFile(location);
         JSONObject jsonObject = new JSONObject(jsonData);
         return parseListOfRequests(jsonObject);

@@ -8,7 +8,11 @@ import model.Request;
 import model.Theorem;
 import model.exceptions.IndexNotThere;
 import model.exceptions.NameAlreadyExists;
+import persistence.JsonReader;
+import persistence.JsonWriter;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Scanner;
 
 // Represents the full list of finished mathematical entries in the library. There are three sections of the library
@@ -18,6 +22,8 @@ public class Library {
     ListOfTheorems listOfTheorems;
     ListOfEquations listOfEquations;
     ListOfRequests listOfRequests;
+    private JsonWriter jsonWriter;
+    private JsonReader jsonReader;
     private static final String JSON_STORE = "./data/library.json";
 
     // The following are mock entries to demonstrate functionality.
@@ -46,6 +52,7 @@ public class Library {
             command = input.next();
 
             if (command.equals("0")) {
+                doYouWantToSaveLibrary();
                 running = false;
             } else {
                 mainDoCommand(command);
@@ -59,6 +66,8 @@ public class Library {
         listOfEquations = new ListOfEquations();
         listOfTheorems = new ListOfTheorems();
         listOfRequests = new ListOfRequests();
+        jsonWriter = new JsonWriter(JSON_STORE);
+        jsonReader = new JsonReader(JSON_STORE);
     }
 
     // EFFECTS: These are to instantiate the following dummy cases.
@@ -91,11 +100,44 @@ public class Library {
 
     //EFFECTS: Displays the options Theorem, Equation and Request and the option to leave for the user:
     public void mainMenu() {
+        doYouWantToLoadLibrary();
         System.out.print("Welcome to the Library! \n");
         System.out.print("Press 1 to enter the Theorem section of the library! \n");
         System.out.print("Press 2 to enter the Equation section of the library! \n");
         System.out.print("Press 3 to enter the Requests section of the library! \n");
         System.out.print("Press 0 to leave! \n");
+    }
+
+    //EFFECTS: loads the JSON file if the user selects a key other than n
+    private void doYouWantToLoadLibrary() {
+        System.out.print("Do you want to load the library save? Click any key for yes, and n for no.\n");
+        String command = input.next();
+        if (!command.equals("n")) {
+            try {
+                listOfTheorems = jsonReader.readTheorems();
+                listOfEquations = jsonReader.readEquations();
+                listOfRequests = jsonReader.readRequests();
+                System.out.print("Loaded the library!\n");
+            } catch (IOException e) {
+                System.out.print("Unable to read from file!");
+            }
+        }
+    }
+
+    private void doYouWantToSaveLibrary() {
+        System.out.print("Before you leave, do you want to save the library? Click any key for yes, and n for no. \n");
+        String command = input.next();
+        if (!command.equals("n")) {
+            try {
+                jsonWriter.open();
+                jsonWriter.writeListOfTheorem(listOfTheorems);
+                jsonWriter.writeListOfEquation(listOfEquations);
+                jsonWriter.writeListOfRequests(listOfRequests);
+                System.out.print("Saved the library!");
+            } catch (FileNotFoundException e) {
+                System.out.print("Unable to write to file: " + JSON_STORE);
+            }
+        }
     }
 
 

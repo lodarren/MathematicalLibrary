@@ -15,7 +15,7 @@ public class JsonWriter {
         this.location = location;
     }
 
-    public void open() throws JsonNotFound, FileNotFoundException {
+    public void open() throws FileNotFoundException {
         writer = new PrintWriter(new File(location));
     }
 
@@ -29,7 +29,7 @@ public class JsonWriter {
         saveToFile(json.toString(TAB));
     }
 
-    public void writeListOfEquation(ListOfRequests lor) {
+    public void writeListOfRequests(ListOfRequests lor) {
         JSONArray json = lor.listOfRequestsToJson();
         saveToFile(json.toString(TAB));
     }
