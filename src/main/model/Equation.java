@@ -1,6 +1,7 @@
 package model;
 
 import model.exceptions.IndexNotThere;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -103,6 +104,17 @@ public class Equation extends Entry {
         return text;
     }
 
+    //REQUIRES: Both lists must be of equal size.
+    //MODIFIES: this
+    //EFFECTS: adds the first list into practice problems, adds the second list into practice problem answers
+    public void addAllPracticeAndAnswers(ArrayList<String> practiceProblems, ArrayList<String> practiceProblemsAnswer) {
+        int counter = 0;
+        for (String s : practiceProblems) {
+            addPracticeProblem(practiceProblems.get(counter), practiceProblemsAnswer.get(counter));
+            counter++;
+        }
+    }
+
     public JSONObject equationToJson() {
         JSONObject json = new JSONObject();
         json.put("name", name);
@@ -110,9 +122,29 @@ public class Equation extends Entry {
         json.put("course", course);
         json.put("proof", proof);
         json.put("explanation", explanations);
-        json.put("practice problems", practiceProblems.practiceProblemsToJson);
-        json.put("practice problem answers", practiceProblemsAnswer.practiceProblemAnswersToJson);
+        json.put("practice problems", this.practiceProblemsToJson(practiceProblems));
+        json.put("practice problem answers", this.practiceProblemAnswersToJson(practiceProblemsAnswer));
         return json;
+    }
+
+    public JSONArray practiceProblemsToJson(ArrayList<String> practiceProblems) {
+        JSONArray jsonArray = new JSONArray();
+
+        for (String p : practiceProblems) {
+            jsonArray.put(p);
+        }
+
+        return jsonArray;
+    }
+
+    public JSONArray practiceProblemAnswersToJson(ArrayList<String> practiceProblemsAnswer) {
+        JSONArray jsonArray = new JSONArray();
+
+        for (String p : practiceProblemsAnswer) {
+            jsonArray.put(p);
+        }
+
+        return jsonArray;
     }
 }
 

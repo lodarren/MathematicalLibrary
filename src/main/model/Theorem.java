@@ -36,11 +36,11 @@ public class Theorem extends Entry {
 
     public JSONObject theoremToJson() {
         JSONObject json = new JSONObject();
-        json.put("name", name);
-        json.put("theorem", theorem);
-        json.put("course", course);
-        json.put("proof", proof);
-        json.put("explanation", explanations);
+        json.put("theoremname", name);
+        json.put("theoremtheorem", theorem);
+        json.put("theoremcourse", course);
+        json.put("theoremproof", proof);
+        json.put("theoremexplanation", explanations);
         return json;
     }
 }

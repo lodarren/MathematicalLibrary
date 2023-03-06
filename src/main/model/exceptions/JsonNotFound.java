@@ -1,4 +1,4 @@
 package model.exceptions;
 
-public class JsonNotFound {
+public class JsonNotFound extends Throwable {
 }

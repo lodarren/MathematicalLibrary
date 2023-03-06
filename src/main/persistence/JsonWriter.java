@@ -1,9 +1,11 @@
 package persistence;
+
 import model.*;
 import model.exceptions.JsonNotFound;
 import org.json.JSONArray;
 
 import java.io.*;
+
 public class JsonWriter {
     private static final int TAB = 4;
     private PrintWriter writer;
@@ -13,8 +15,8 @@ public class JsonWriter {
         this.location = location;
     }
 
-    public void open() throws JsonNotFound {
-        writer = new PrintWriter(new File (location));
+    public void open() throws JsonNotFound, FileNotFoundException {
+        writer = new PrintWriter(new File(location));
     }
 
     public void writeListOfTheorem(ListOfTheorems lot) {
