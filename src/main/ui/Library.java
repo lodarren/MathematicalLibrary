@@ -31,28 +31,21 @@ public class Library {
     private static final String JSON_STORE_THEOREM = "./data/ListOfTheoremSave.json";
     private static final String JSON_STORE_EQUATION = "./data/ListOfEquationSave.json";
     private static final String JSON_STORE_REQUEST = "./data/ListOfRequestSave.json";
-
-    // The following are mock entries to demonstrate functionality.
-    Theorem mockEntry;
-    Theorem mockEntry2;
-    Equation mockEquation1;
-    Equation mockEquation2;
-    Request mockRequest1;
-    Request mockRequest2;
-
     private Scanner input;
 
+    //EFFECTS: Creates a new library object, throws the FileNotFoundException if it occurs
     public Library() throws FileNotFoundException {
         runLibrary();
     }
 
+    //EFFECTS: Runs the library and boots up the main menu for the user
     private void runLibrary() {
         boolean running = true;
         String command;
         setup();
-        dummySetup();
         input = new Scanner(System.in);
         input.useDelimiter("\n");
+        doYouWantToLoadLibrary();
         while (running) {
             mainMenu();
             command = input.next();
@@ -80,38 +73,8 @@ public class Library {
         jsonReaderRequest = new JsonReader(JSON_STORE_REQUEST);
     }
 
-    // EFFECTS: These are to instantiate the following dummy cases.
-    //TO BE REMOVED THIS PATCH
-    public void dummySetup() {
-        mockEntry = new Theorem("Green's theorem", "The grass is green",
-                "Calculus 4", "Grass = green", "The grass looks green to me");
-        mockEntry2 = new Theorem("Pythagorean theorem", "a^2+b^2=c^2", "Pre-school",
-                "Proof by contradiction", "There is a relationship between the sides of a triangle");
-        mockEquation1 = new Equation("Fundamental theorem of engineering", "sin(x) = x",
-                "All of university", "sin(0) = 0 QED", "The most useful formula in engineering");
-        mockEquation2 = new Equation("The cosine law", "cos(x) = 1", "Grade school",
-                "cos(0) = 1", "All cosines are equal to 1. ");
-        mockRequest1 = new Request("Riemann Hypothesis", "Something about prime numbers", "Theorem",
-                "???", "I would like to know this too. ",
-                "Relationship between the zeta function and the prime numbers");
-        mockRequest2 = new Request("The REAL law of cosines", "c^2 = a^2 + b^2 - 2abcos(C)",
-                "Equation", "Grade 11", "Use geometry.", "Relationship between sides of a "
-                + "triangle that are not always right.");
-
-        mockEquation1.addPracticeProblem("What is sine of 11", "11");
-        mockEquation1.addPracticeProblem("What is sine of 30", "30");
-
-        listOfTheorems.addTheorem(mockEntry);
-        listOfTheorems.addTheorem(mockEntry2);
-        listOfEquations.addEquation(mockEquation1);
-        listOfEquations.addEquation(mockEquation2);
-        listOfRequests.addRequest(mockRequest1);
-        listOfRequests.addRequest(mockRequest2);
-    }
-
     //EFFECTS: Displays the options Theorem, Equation and Request and the option to leave for the user:
     public void mainMenu() {
-        doYouWantToLoadLibrary();
         System.out.print("Welcome to the Library! \n");
         System.out.print("Press 1 to enter the Theorem section of the library! \n");
         System.out.print("Press 2 to enter the Equation section of the library! \n");
@@ -135,6 +98,7 @@ public class Library {
         }
     }
 
+    //EFFECTS: saves the JSON file if the user selects a key other than n
     private void doYouWantToSaveLibrary() {
         System.out.print("Before you leave, do you want to save the library? Click any key for yes, and n for no. \n");
         String command = input.next();
@@ -146,13 +110,15 @@ public class Library {
                 jsonWriterTheorem.writeListOfTheorem(listOfTheorems);
                 jsonWriterEquation.writeListOfEquation(listOfEquations);
                 jsonWriterRequest.writeListOfRequests(listOfRequests);
+                jsonWriterTheorem.close();
+                jsonWriterEquation.close();
+                jsonWriterRequest.close();
                 System.out.print("Saved the library!");
             } catch (FileNotFoundException e) {
                 System.out.print("Unable to write to file: ");
             }
         }
     }
-
 
     //EFFECTS: If 1 is pressed, the theorem section is opened. If 2, the Equation section. If 3, the request
     //         of the library, and finally 0 is used to leave the library. Other inputs will result in nothing.
@@ -200,7 +166,7 @@ public class Library {
                 if (yesOrNo()) {
                     System.out.print("Press 1 to change the name of the entry.\nPress 2 to change the theorem.\nPress 3"
                             + " to change the course it is most useful for.\nPress 4 to change the description."
-                            + "\nPress 5 to change the Proof.\nPress 6 to delete this entry.");
+                            + "\nPress 5 to change the Proof.\nPress 6 to delete this entry.\n");
                     doYouWantToChangeTheTheorem(listOfTheorems.getTheorem(listOfTheorems.doesTheoremExist(command)));
                 }
             }
@@ -300,8 +266,8 @@ public class Library {
         } else if (nextCommand.equalsIgnoreCase("c")) {
             System.out.print("Press 1 to change the name of the entry.\nPress 2 to change the theorem.\nPress 3"
                     + " to change the course it is most useful for.\nPress 4 to change the description.\nPress 5 to"
-                    + " change the Proof.\nPress 6 to delete specific practice problems.\nPress 7 to delete this entry."
-                    + "\n");
+                    + " change the Proof.\nPress 6 to add practice problems.\nPress 7 to delete specific practice "
+                    + "problems.\nPress 8 to delete this entry.\n");
             changeEquationEntry(listOfEquations.getEquation(listOfEquations.doesEquationExist(previousCommand)));
         } else {
             System.out.print("\nNot a valid entry!\n");
@@ -323,8 +289,10 @@ public class Library {
         } else if (command.equals("5")) {
             equation.changeProof(whatIsTheChange());
         } else if (command.equals("6")) {
-            deleteQuestionsPrompt(equation);
+            addQuestionPrompt(equation);
         } else if (command.equals("7")) {
+            deleteQuestionsPrompt(equation);
+        } else if (command.equals("8")) {
             deleteEntryPrompt(equation);
         } else {
             System.out.print("Not one of the selected options! \n");
@@ -359,7 +327,7 @@ public class Library {
         try {
             String text = equation.showNumberOfPracticeProblems();
             System.out.print("Which practice problems do you want to view? Type the number of the practice problem that"
-                    + " you would like to view\n");
+                    + " you would like to view.\n");
             System.out.print(text);
             String command = input.next();
             int newInput;
@@ -376,6 +344,17 @@ public class Library {
             System.out.print("There are no questions to show!\n");
         }
     }
+
+    //EFFECTS: prompts the user if they would like to add a practice problem to the following equation:
+    private void addQuestionPrompt(Equation equation) {
+        System.out.print("What is your example practice problem?\n");
+        String question = input.next();
+        System.out.print("What is the answer to your example practice problem?\n");
+        String answer = input.next();
+        equation.addPracticeProblem(question, answer);
+        System.out.print("Added question and answer, thank you!\n");
+    }
+
 
     // EFFECTS: prompts the user if they would like to delete the following practice problems.
     private void deleteQuestionsPrompt(Equation equation) {
@@ -583,7 +562,7 @@ public class Library {
         System.out.print("What course is this theorem most applicable for? (you can leave this blank if you are not "
                 + "sure) \n");
         String course = input.next();
-        System.out.print("What does this theorem state? (you can leave this blank if you are not sure)\n");
+        System.out.print("You can leave any explanations if you so desire. \n");
         String explanation = input.next();
         System.out.print("What is the proof for this theorem? (you can leave this blank if you are not sure)\n");
         String proof = input.next();
@@ -606,7 +585,7 @@ public class Library {
         System.out.print("What course is this Equation most applicable for? (you can leave this blank if you are not"
                 + " sure) \n");
         String course = input.next();
-        System.out.print("What does this Equation state? (you can leave this blank if you are not sure)\n");
+        System.out.print("You can leave any extra explanations if you so desire. \n");
         String explanation = input.next();
         System.out.print("What is the derivation for this Equation? (you can leave this blank if you are not sure)\n");
         String proof = input.next();

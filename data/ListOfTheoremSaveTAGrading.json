@@ -10,14 +10,7 @@
         "theoremproof": "Proof by contradiction",
         "theoremcourse": "Pre-school",
         "theoremexplanation": "There is a relationship between the sides of a triangle",
-        "theoremname": "My favourite theorem",
+        "theoremname": "Pythagorean theorem",
         "theoremtheorem": "a^2+b^2=c^2"
-    },
-    {
-        "theoremproof": "I would like to know this too. ",
-        "theoremcourse": "???",
-        "theoremexplanation": "Relationship between the zeta function and the prime numbers",
-        "theoremname": "Riemann Hypothesis",
-        "theoremtheorem": "Something about prime numbers"
     }
 ]}

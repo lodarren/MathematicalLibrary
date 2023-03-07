@@ -1,3 +1,29 @@
-{
-  "requests": []
-}
+{"requests": [
+    {
+        "request estimated completion": 0,
+        "theorem": "c^2 = a^2 + b^2 - 2abcos(C)",
+        "name": "The REAL law of cosines",
+        "course": "Grade 11",
+        "proof": "Use geometry.",
+        "type": "Equation",
+        "explanation": "Relationship between sides of a triangle that are not always right."
+    },
+    {
+        "request estimated completion": 0,
+        "theorem": "prime numbers are odd",
+        "name": "riemann hypothesis v2",
+        "course": "idk grade school",
+        "proof": "no comment",
+        "type": "Theorem",
+        "explanation": "i need to know this proof please"
+    },
+    {
+        "request estimated completion": 100,
+        "theorem": "tan(A) = a/b",
+        "name": "tangent law",
+        "course": "grade 10",
+        "proof": "sin(x)/cos(x) = tan(x)",
+        "type": "Equation",
+        "explanation": "t times a times a times ( times x times )"
+    }
+]}

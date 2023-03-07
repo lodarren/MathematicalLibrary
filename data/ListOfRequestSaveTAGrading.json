@@ -1,0 +1,20 @@
+{"requests": [
+    {
+        "request estimated completion": 0,
+        "theorem": "Something about prime numbers",
+        "name": "Riemann Hypothesis",
+        "course": "???",
+        "proof": "I would like to know this too. ",
+        "type": "Theorem",
+        "explanation": "Relationship between the zeta function and the prime numbers"
+    },
+    {
+        "request estimated completion": 0,
+        "theorem": "c^2 = a^2 + b^2 - 2abcos(C)",
+        "name": "The REAL law of cosines",
+        "course": "Grade 11",
+        "proof": "Use geometry.",
+        "type": "Equation",
+        "explanation": "Relationship between sides of a triangle that are not always right."
+    }
+]}

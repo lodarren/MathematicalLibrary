@@ -32,3 +32,5 @@ entries or to the main list of theorems depending on the request that is being s
 - As a user, I want to be able to save my to-do list to file. 
 - A a user, I want to be prompted to save my request entries, my equation entries and my theorem entries when I attempt
 to quit the program. 
+- As a user, I want to be able to load my previous theorems, equations and requests when opening up the program, as well
+as given the option to start from an empty library. 

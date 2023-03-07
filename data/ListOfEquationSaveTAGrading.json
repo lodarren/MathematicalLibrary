@@ -2,18 +2,16 @@
     {
         "theorem": "sin(x) = x",
         "practice problems": [
-            {"question": "what is sine of 100"},
-            {"question": "What is sine of 30"},
-            {"question": "sin(9)"}
+            {"question": "What is sine of 11"},
+            {"question": "What is sine of 30"}
         ],
         "practice problem answers": [
-            {"answer": "100"},
-            {"answer": "30"},
-            {"answer": "9"}
+            {"answer": "11"},
+            {"answer": "30"}
         ],
         "name": "Fundamental theorem of engineering",
         "course": "All of university",
-        "proof": "trivial",
+        "proof": "sin(0) = 0 QED",
         "explanation": "The most useful formula in engineering"
     },
     {
