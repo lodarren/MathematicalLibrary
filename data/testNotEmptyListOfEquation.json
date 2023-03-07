@@ -2,12 +2,12 @@
     {
         "theorem": "sin(x) = x",
         "practice problems": [
-            "What is sine of 11",
-            "What is sine of 30"
+            {"question": "What is sine of 11"},
+            {"question": "What is sine of 30"}
         ],
         "practice problem answers": [
-            "11",
-            "30"
+            {"answer": "11"},
+            {"answer": "30"}
         ],
         "name": "Fundamental theorem of engineering",
         "course": "All of university",

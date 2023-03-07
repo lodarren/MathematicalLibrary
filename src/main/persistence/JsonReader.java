@@ -5,6 +5,7 @@ import model.*;
 import org.json.*;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -86,76 +87,54 @@ public class JsonReader {
         while (var4.hasNext()) {
             Object json = var4.next();
             JSONObject nextEquation = (JSONObject)json;
-            this.addEquation(loe, nextEquation);
+            this.addEquation(loe, nextEquation, jsonObject);
         }
     }
 
-    private void addEquation(ListOfEquations loe, JSONObject jsonObject) {
-        String name = jsonObject.getString("name");
-        String theoremstatement = jsonObject.getString("theorem");
-        String proof = jsonObject.getString("proof");
-        String explanation = jsonObject.getString("explanation");
-        String course = jsonObject.getString("course");
+    private void addEquation(ListOfEquations loe, JSONObject nextEquation, JSONObject jsonObject) {
+        ArrayList<String> practiceProblems;
+        ArrayList<String> practiceProblemAnswers;
+
+        String name = nextEquation.getString("name");
+        String theoremstatement = nextEquation.getString("theorem");
+        String proof = nextEquation.getString("proof");
+        String explanation = nextEquation.getString("explanation");
+        String course = nextEquation.getString("course");
         Equation equation;
         equation = new Equation(name, theoremstatement, course, proof, explanation);
 
-        ArrayList<String> practiceProblems;
-        ArrayList<String> practiceProblemAnswers;
-        JSONArray jsonArray = new JSONArray();
-        //might duplicate problems and answers
-
-        practiceProblems = parsePracticeProblems(jsonArray);
-        practiceProblemAnswers = parsePracticeProblemAnswers(jsonArray);
+        practiceProblems = parsePracticeProblems(nextEquation);
+        practiceProblemAnswers = parsePracticeProblemAnswers(nextEquation);
         equation.addAllPracticeAndAnswers(practiceProblems, practiceProblemAnswers);
 
         loe.addEquation(equation);
     }
 
-    private ArrayList<String> parsePracticeProblems(JSONArray jsonArray) {
-        ArrayList<String> practiceProblems;
-        practiceProblems = new ArrayList<>();
-        this.addPracticeProblems(practiceProblems, jsonArray);
+    private ArrayList<String> parsePracticeProblems(JSONObject equation) {
+        JSONArray jsonArray = equation.getJSONArray("practice problems");
+        ArrayList<String> practiceProblems = new ArrayList<>();
+        Iterator var4 = jsonArray.iterator();
+
+        while (var4.hasNext()) {
+            Object json = var4.next();
+            JSONObject nextQuestion = (JSONObject)json;
+            practiceProblems.add(nextQuestion.getString("question"));
+        }
         return practiceProblems;
     }
 
-
-    private void addPracticeProblems(ArrayList<String> practiceProblems, JSONArray jsonArray) {
+    private ArrayList<String> parsePracticeProblemAnswers(JSONObject equation) {
+        JSONArray jsonArray = equation.getJSONArray("practice problem answers");
+        ArrayList<String> practiceProblemsAnswers = new ArrayList<>();
         Iterator var4 = jsonArray.iterator();
 
         while (var4.hasNext()) {
             Object json = var4.next();
-            JSONObject nextProblem = (JSONObject)json;
-            this.addPracticeProblem(practiceProblems, nextProblem);
+            JSONObject nextQuestion = (JSONObject)json;
+            practiceProblemsAnswers.add(nextQuestion.getString("answer"));
         }
-    }
-
-    private void addPracticeProblem(ArrayList<String> practiceProblems, JSONObject jsonObject) {
-        String practiceProblem = jsonObject.getString("practice problems");
-        practiceProblems.add(practiceProblem);
-    }
-
-    private ArrayList<String> parsePracticeProblemAnswers(JSONArray jsonArray) {
-        ArrayList<String> practiceProblemsAnswers;
-        practiceProblemsAnswers = new ArrayList<>();
-        this.addPracticeProblemAnswers(practiceProblemsAnswers, jsonArray);
         return practiceProblemsAnswers;
     }
-
-    private void addPracticeProblemAnswers(ArrayList<String> practiceProblemsAnswers, JSONArray jsonArray) {
-        Iterator var4 = jsonArray.iterator();
-
-        while (var4.hasNext()) {
-            Object json = var4.next();
-            JSONObject nextProblem = (JSONObject)json;
-            this.addPracticeProblemAnswer(practiceProblemsAnswers, nextProblem);
-        }
-    }
-
-    private void addPracticeProblemAnswer(ArrayList<String> practiceProblemsAnswers, JSONObject jsonObject) {
-        String practiceProblemAnswer = jsonObject.getString("practice problem answers");
-        practiceProblemsAnswers.add(practiceProblemAnswer);
-    }
-
 
     public ListOfRequests readRequests() throws IOException {
         String jsonData = readFile(location);

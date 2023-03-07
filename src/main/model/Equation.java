@@ -144,20 +144,30 @@ public class Equation extends Entry {
         JSONArray jsonArray = new JSONArray();
 
         for (String p : practiceProblems) {
-            jsonArray.put(p);
+            jsonArray.put(this.practiceProblemToJson(p));
         }
-
         return jsonArray;
+    }
+
+    public JSONObject practiceProblemToJson(String problem) {
+        JSONObject json = new JSONObject();
+        json.put("question", problem);
+        return json;
     }
 
     public JSONArray practiceProblemAnswersToJson(ArrayList<String> practiceProblemsAnswer) {
         JSONArray jsonArray = new JSONArray();
 
-        for (String p : practiceProblemsAnswer) {
-            jsonArray.put(p);
+        for (String a : practiceProblemsAnswer) {
+            jsonArray.put(this.answerToJson(a));
         }
-
         return jsonArray;
+    }
+
+    public JSONObject answerToJson(String answer) {
+        JSONObject json = new JSONObject();
+        json.put("answer", answer);
+        return json;
     }
 }
 
