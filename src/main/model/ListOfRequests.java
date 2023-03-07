@@ -102,19 +102,22 @@ public class ListOfRequests {
         return entries.size();
     }
 
+    //MODIFIES: this
+    //EFFECTS: turns the ListOfRequests object into a JSONObject
     public JSONObject listOfRequestsToJson() {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("requests", requestsToJson());
         return jsonObject;
     }
 
+    //MODIFIES: this
+    //EFFECTS: turns the entries in ListOfRequests into a JSONArraylist
     public JSONArray requestsToJson() {
         JSONArray jsonArray = new JSONArray();
 
         for (Request e : entries) {
             jsonArray.put(e.requestToJson());
         }
-
         return jsonArray;
     }
 }

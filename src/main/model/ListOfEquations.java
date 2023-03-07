@@ -14,7 +14,7 @@ public class ListOfEquations {
 
     //EFFECTS: constructs a new listOFEquations with an empty list.
     public ListOfEquations() {
-        entries = new ArrayList();
+        entries = new ArrayList<>();
     }
 
     //MODIFIES: this
@@ -103,14 +103,16 @@ public class ListOfEquations {
     }
 
 
-
-
+    //MODIFIES: this
+    //EFFECTS: turns the ListOfEquations class into a JSONObject
     public JSONObject listOfEquationsToJson() {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("equations", equationsToJson());
         return jsonObject;
     }
 
+    //MODIFIES: this
+    //EFFECTS: turns all the equations in entries into a JSONArraylist
     public JSONArray equationsToJson() {
         JSONArray jsonArray = new JSONArray();
 

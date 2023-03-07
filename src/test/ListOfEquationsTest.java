@@ -95,7 +95,7 @@ public class ListOfEquationsTest {
             listOfEquationsTest.addEquationAndCheckExistence(equationEntry1);
             fail();
         } catch (NameAlreadyExists e) {
-            e.getMessage();
+            //Pass!
         }
     }
 
@@ -119,7 +119,16 @@ public class ListOfEquationsTest {
             listOfEquationsTest.changeEquationNameAndCheckExistence(equationEntry1,"F");
             fail();
         } catch (NameAlreadyExists e) {
-            e.getMessage();
+            //Pass!
         }
+    }
+
+    @Test
+    void numberOfEquationsTest() {
+        assertEquals(0, listOfEquationsTest.numberOfEquations());
+        listOfEquationsTest.addEquation(equationEntry1);
+        assertEquals(1, listOfEquationsTest.numberOfEquations());
+        listOfEquationsTest.addEquation(equationEntry2);
+        assertEquals(2, listOfEquationsTest.numberOfEquations());
     }
 }

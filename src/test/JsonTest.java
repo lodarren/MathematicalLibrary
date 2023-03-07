@@ -4,6 +4,7 @@ import model.Theorem;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+//A class that exists to help the aiding of testing the JSONReaderTest and JSONWriterTest classes
 public class JsonTest {
     protected void checkTheorem(String name, String theorem, String course, String proof, String explanation, Theorem t) {
         assertEquals(name, t.getName());

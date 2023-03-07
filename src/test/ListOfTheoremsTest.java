@@ -92,7 +92,7 @@ public class ListOfTheoremsTest {
             listOfTheoremsTest.addTheoremAndCheckExistence(theoremEntry1);
             fail();
         } catch (NameAlreadyExists e) {
-            e.getMessage();
+            //Pass!
         }
     }
 
@@ -116,7 +116,16 @@ public class ListOfTheoremsTest {
             listOfTheoremsTest.changeTheoremNameAndCheckExistence(theoremEntry1, "F");
             fail();
         } catch (NameAlreadyExists e) {
-            e.getMessage();
+            //Pass!
         }
+    }
+
+    @Test
+    void numberOfTheoremsTest() {
+        assertEquals(0, listOfTheoremsTest.numberOfTheorems());
+        listOfTheoremsTest.addTheorem(theoremEntry1);
+        assertEquals(1, listOfTheoremsTest.numberOfTheorems());
+        listOfTheoremsTest.addTheorem(theoremEntry2);
+        assertEquals(2, listOfTheoremsTest.numberOfTheorems());
     }
 }

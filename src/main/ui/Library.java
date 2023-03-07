@@ -28,9 +28,9 @@ public class Library {
     private JsonReader jsonReaderEquation;
     private JsonWriter jsonWriterRequest;
     private JsonReader jsonReaderRequest;
-    private static final String JSON_STORE_THEOREM = "./data/testNotEmptyListOfTheorem.json";
-    private static final String JSON_STORE_EQUATION = "./data/testNotEmptyListOfEquation.json";
-    private static final String JSON_STORE_REQUEST = "./data/testNotEmptyListOfRequest.json";
+    private static final String JSON_STORE_THEOREM = "./data/ListOfTheoremSave.json";
+    private static final String JSON_STORE_EQUATION = "./data/ListOfEquationSave.json";
+    private static final String JSON_STORE_REQUEST = "./data/ListOfRequestSave.json";
 
     // The following are mock entries to demonstrate functionality.
     Theorem mockEntry;
@@ -46,7 +46,7 @@ public class Library {
         runLibrary();
     }
 
-    private void runLibrary() throws FileNotFoundException {
+    private void runLibrary() {
         boolean running = true;
         String command;
         setup();
@@ -81,6 +81,7 @@ public class Library {
     }
 
     // EFFECTS: These are to instantiate the following dummy cases.
+    //TO BE REMOVED THIS PATCH
     public void dummySetup() {
         mockEntry = new Theorem("Green's theorem", "The grass is green",
                 "Calculus 4", "Grass = green", "The grass looks green to me");

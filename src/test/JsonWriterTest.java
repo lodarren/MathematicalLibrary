@@ -10,25 +10,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
 public class JsonWriterTest extends JsonTest {
-    /*
-            mockEntry = new Theorem("Green's theorem", "The grass is green",
-                "Calculus 4", "Grass = green", "The grass looks green to me");
-        mockEntry2 = new Theorem("Pythagorean theorem", "a^2+b^2=c^2", "Pre-school",
-                "Proof by contradiction", "There is a relationship between the sides of a triangle");
-        mockEquation1 = new Equation("Fundamental theorem of engineering", "sin(x) = x",
-                "All of university", "sin(0) = 0 QED", "The most useful formula in engineering");
-        mockEquation2 = new Equation("The cosine law", "cos(x) = 1", "Grade school",
-                "cos(0) = 1", "All cosines are equal to 1. ");
-        mockRequest1 = new Request("Riemann Hypothesis", "Something about prime numbers", "Theorem",
-                "???", "I would like to know this too. ",
-                "Relationship between the zeta function and the prime numbers");
-        mockRequest2 = new Request("The REAL law of cosines", "c^2 = a^2 + b^2 - 2abcos(C)",
-                "Equation", "Grade 11", "Use geometry.", "Relationship between sides of a "
-                + "triangle that are not always right.");
-
-        mockEquation1.addPracticeProblem("What is sine of 11", "11");
-        mockEquation1.addPracticeProblem("What is sine of 30", "30");
-     */
 
     @Test
     void testWriterTheoremInvalidFile() {
@@ -101,8 +82,6 @@ public class JsonWriterTest extends JsonTest {
             JsonReader reader = new JsonReader("./data/testEmptyListOfTheorem.json");
             listOfTheorems = reader.readTheorems();
             assertEquals(0, listOfTheorems.numberOfTheorems());
-
-            writer.open();
         } catch (IOException e) {
             fail("Exception should not have been thrown");
         }
@@ -112,16 +91,14 @@ public class JsonWriterTest extends JsonTest {
     void testWriterEquationEmptyWorkroom() {
         try {
             ListOfEquations listOfEquations = new ListOfEquations();
-            JsonWriter writer = new JsonWriter("./data/testEmptyListOfTheorem.json");
+            JsonWriter writer = new JsonWriter("./data/testEmptyListOfEquation.json");
             writer.open();
             writer.writeListOfEquation(listOfEquations);
             writer.close();
 
-            JsonReader reader = new JsonReader("./data/testEmptyListOfTheorem.json");
+            JsonReader reader = new JsonReader("./data/testEmptyListOfEquation.json");
             listOfEquations = reader.readEquations();
             assertEquals(0, listOfEquations.numberOfEquations());
-
-            writer.open();
         } catch (IOException e) {
             fail("Exception should not have been thrown");
         }
@@ -139,8 +116,6 @@ public class JsonWriterTest extends JsonTest {
             JsonReader reader = new JsonReader("./data/testEmptyListOfRequest.json");
             listOfRequests = reader.readRequests();
             assertEquals(0, listOfRequests.numberOfRequests());
-
-            writer.open();
         } catch (IOException e) {
             fail("Exception should not have been thrown");
         }
@@ -250,5 +225,4 @@ public class JsonWriterTest extends JsonTest {
             fail("Exception should not have been thrown");
         }
     }
-
 }

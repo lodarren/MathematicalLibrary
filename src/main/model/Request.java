@@ -41,7 +41,6 @@ public class Request extends Entry {
         this.estimatedCompletion = newCompletion;
     }
 
-
     //MODIFIES: this
     //EFFECTS: checks if the estimated completion is equal to 100
     public Boolean isRequestCompleted() {
@@ -95,6 +94,8 @@ public class Request extends Entry {
         return text;
     }
 
+    //MODIFIES: this
+    //EFFECTS: turns the following request into a JSON file with all its specified fields.
     public JSONObject requestToJson() {
         JSONObject json = new JSONObject();
         json.put("name", name);
@@ -106,5 +107,4 @@ public class Request extends Entry {
         json.put("explanation", explanations);
         return json;
     }
-
 }

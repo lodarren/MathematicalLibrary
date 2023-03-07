@@ -96,7 +96,7 @@ public class ListOfRequestsTest {
             listOfRequestsTest.addRequestAndCheckExistence(requestEntry1);
             fail();
         } catch (NameAlreadyExists e) {
-            e.getMessage();
+            //Pass!
         }
     }
 
@@ -120,7 +120,16 @@ public class ListOfRequestsTest {
             listOfRequestsTest.changeRequestNameAndCheckExistence(requestEntry1, "F");
             fail();
         } catch (NameAlreadyExists e) {
-            e.getMessage();
+            //Pass!
         }
+    }
+
+    @Test
+    void numberOfRequestsTest() {
+        assertEquals(0, listOfRequestsTest.numberOfRequests());
+        listOfRequestsTest.addRequest(requestEntry1);
+        assertEquals(1, listOfRequestsTest.numberOfRequests());
+        listOfRequestsTest.addRequest(requestEntry2);
+        assertEquals(2, listOfRequestsTest.numberOfRequests());
     }
 }

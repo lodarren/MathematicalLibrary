@@ -134,7 +134,7 @@ public class EquationTest {
                     "Practice Problem 1\nPractice Problem 2\nPractice Problem 3\n");
             fail();
         } catch (IndexNotThere e) {
-            e.getMessage();
+            //Pass!
         }
     }
 
@@ -151,4 +151,33 @@ public class EquationTest {
         assertEquals("\nName: name\nStatement: theorem\nCourse this is most relevant to: course\n"
                + "Description: explanation\nDerivation: proof\n", testEquation.viewEquation());
     }
+
+    @Test
+    void viewNumberOfProblems(){
+        assertEquals(0, testEquation.numberOfPracticeProblems());
+        assertEquals(0, testEquation.numberOfAnswers());
+        testEquation.addPracticeProblem("A", "A");
+        assertEquals(1, testEquation.numberOfPracticeProblems());
+        assertEquals(1, testEquation.numberOfAnswers());
+    }
+
+    @Test
+    void addAllThePracticeProblemsAndAnswersTest(){
+        ArrayList<String> problems;
+        ArrayList<String> answers;
+        problems = new ArrayList<>();
+        answers = new ArrayList<>();
+        testEquation.addAllPracticeAndAnswers(problems, answers);
+        assertEquals(0, testEquation.numberOfPracticeProblems());
+        assertEquals(0, testEquation.numberOfAnswers());
+        problems.add("A");
+        problems.add("B");
+        answers.add("C");
+        answers.add("D");
+        testEquation.addAllPracticeAndAnswers(problems, answers);
+        assertEquals(2, testEquation.numberOfPracticeProblems());
+        assertEquals(2, testEquation.numberOfAnswers());
+    }
+
+
 }

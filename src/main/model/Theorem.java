@@ -34,6 +34,8 @@ public class Theorem extends Entry {
         return text;
     }
 
+    //MODIFIES: this
+    //EFFECTS: turns the theorem into a JSONObject, with all its fields specified.
     public JSONObject theoremToJson() {
         JSONObject json = new JSONObject();
         json.put("theoremname", name);

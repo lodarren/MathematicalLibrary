@@ -128,6 +128,8 @@ public class Equation extends Entry {
         return practiceProblemsAnswer.size();
     }
 
+    //MODIFIES: this
+    //EFFECTS: turns the following equation into a JSONObject, with all its fields specified.
     public JSONObject equationToJson() {
         JSONObject json = new JSONObject();
         json.put("name", name);
@@ -140,6 +142,8 @@ public class Equation extends Entry {
         return json;
     }
 
+    //MODIFIES: this
+    //EFFECTS: turns all the practice problems in this equation into a JSONarray
     public JSONArray practiceProblemsToJson(ArrayList<String> practiceProblems) {
         JSONArray jsonArray = new JSONArray();
 
@@ -149,12 +153,16 @@ public class Equation extends Entry {
         return jsonArray;
     }
 
+    //MODIFIES: this
+    //EFFECTS: turns a single practice problem string into a JSONObject
     public JSONObject practiceProblemToJson(String problem) {
         JSONObject json = new JSONObject();
         json.put("question", problem);
         return json;
     }
 
+    //MODIFIES: this
+    //EFFECTS: turns all the practice problem answers into a JSONArraylist
     public JSONArray practiceProblemAnswersToJson(ArrayList<String> practiceProblemsAnswer) {
         JSONArray jsonArray = new JSONArray();
 
@@ -163,6 +171,9 @@ public class Equation extends Entry {
         }
         return jsonArray;
     }
+
+    //MODIFIES: this
+    //EFFECTS: turns a single practice problem string into a JSONObject
 
     public JSONObject answerToJson(String answer) {
         JSONObject json = new JSONObject();

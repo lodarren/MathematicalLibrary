@@ -101,13 +101,16 @@ public class ListOfTheorems {
         return entries.size();
     }
 
-
+    //MODIFIES: this
+    //EFFECTS: returns the number of practiceProblemAnswers in this list
     public JSONObject listOfTheoremsToJson() {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("theorems", theoremsToJson());
         return jsonObject;
     }
 
+    //MODIFIES: this
+    //EFFECTS: turns the entries in ListOfRequests into a JSONArraylist
     public JSONArray theoremsToJson() {
         JSONArray jsonArray = new JSONArray();
 

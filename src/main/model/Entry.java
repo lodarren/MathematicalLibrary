@@ -83,5 +83,4 @@ public abstract class Entry {
     public String getExplanations() {
         return explanations;
     }
-
 }
