@@ -22,9 +22,15 @@ public class Library {
     ListOfTheorems listOfTheorems;
     ListOfEquations listOfEquations;
     ListOfRequests listOfRequests;
-    private JsonWriter jsonWriter;
-    private JsonReader jsonReader;
-    private static final String JSON_STORE = "./data/library.json";
+    private JsonWriter jsonWriterTheorem;
+    private JsonReader jsonReaderTheorem;
+    private JsonWriter jsonWriterEquation;
+    private JsonReader jsonReaderEquation;
+    private JsonWriter jsonWriterRequest;
+    private JsonReader jsonReaderRequest;
+    private static final String JSON_STORE_THEOREM = "./data/testNotEmptyListOfTheorem.json";
+    private static final String JSON_STORE_EQUATION = "./data/testNotEmptyListOfEquation.json";
+    private static final String JSON_STORE_REQUEST = "./data/testNotEmptyListOfRequest.json";
 
     // The following are mock entries to demonstrate functionality.
     Theorem mockEntry;
@@ -36,11 +42,11 @@ public class Library {
 
     private Scanner input;
 
-    public Library() {
+    public Library() throws FileNotFoundException {
         runLibrary();
     }
 
-    private void runLibrary() {
+    private void runLibrary() throws FileNotFoundException {
         boolean running = true;
         String command;
         setup();
@@ -66,8 +72,12 @@ public class Library {
         listOfEquations = new ListOfEquations();
         listOfTheorems = new ListOfTheorems();
         listOfRequests = new ListOfRequests();
-        jsonWriter = new JsonWriter(JSON_STORE);
-        jsonReader = new JsonReader(JSON_STORE);
+        jsonWriterTheorem = new JsonWriter(JSON_STORE_THEOREM);
+        jsonReaderTheorem = new JsonReader(JSON_STORE_THEOREM);
+        jsonWriterEquation = new JsonWriter(JSON_STORE_EQUATION);
+        jsonReaderEquation = new JsonReader(JSON_STORE_EQUATION);
+        jsonWriterRequest = new JsonWriter(JSON_STORE_REQUEST);
+        jsonReaderRequest = new JsonReader(JSON_STORE_REQUEST);
     }
 
     // EFFECTS: These are to instantiate the following dummy cases.
@@ -114,9 +124,9 @@ public class Library {
         String command = input.next();
         if (!command.equals("n")) {
             try {
-                listOfTheorems = jsonReader.readTheorems();
-                listOfEquations = jsonReader.readEquations();
-                listOfRequests = jsonReader.readRequests();
+                listOfTheorems = jsonReaderTheorem.readTheorems();
+                listOfEquations = jsonReaderEquation.readEquations();
+                listOfRequests = jsonReaderRequest.readRequests();
                 System.out.print("Loaded the library!\n");
             } catch (IOException e) {
                 System.out.print("Unable to read from file!");
@@ -129,13 +139,15 @@ public class Library {
         String command = input.next();
         if (!command.equals("n")) {
             try {
-                jsonWriter.open();
-                jsonWriter.writeListOfTheorem(listOfTheorems);
-                jsonWriter.writeListOfEquation(listOfEquations);
-                jsonWriter.writeListOfRequests(listOfRequests);
+                jsonWriterTheorem.open();
+                jsonWriterEquation.open();
+                jsonWriterRequest.open();
+                jsonWriterTheorem.writeListOfTheorem(listOfTheorems);
+                jsonWriterEquation.writeListOfEquation(listOfEquations);
+                jsonWriterRequest.writeListOfRequests(listOfRequests);
                 System.out.print("Saved the library!");
             } catch (FileNotFoundException e) {
-                System.out.print("Unable to write to file: " + JSON_STORE);
+                System.out.print("Unable to write to file: ");
             }
         }
     }

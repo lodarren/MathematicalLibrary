@@ -94,6 +94,13 @@ public class ListOfTheorems {
         return entries.isEmpty();
     }
 
+    //MODIFIES: this
+    //EFFECTS: returns the number of entries in this list
+    public int numberOfTheorems() {
+        return entries.size();
+    }
+
+
     public JSONArray listOfTheoremsToJson() {
         JSONArray jsonArray = new JSONArray();
 

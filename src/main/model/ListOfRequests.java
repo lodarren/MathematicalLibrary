@@ -95,6 +95,14 @@ public class ListOfRequests {
         return entries.isEmpty();
     }
 
+    //MODIFIES: this
+    //EFFECTS: returns the number of entries in this list
+    public int numberOfRequests() {
+        return entries.size();
+    }
+
+
+
     public JSONArray listOfRequestsToJson() {
         JSONArray jsonArray = new JSONArray();
 

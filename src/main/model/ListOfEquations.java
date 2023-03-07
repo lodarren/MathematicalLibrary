@@ -95,6 +95,15 @@ public class ListOfEquations {
         return entries.get(i);
     }
 
+    //MODIFIES: this
+    //EFFECTS: returns the number of entries in this list
+    public int numberOfEquations() {
+        return entries.size();
+    }
+
+
+
+
     public JSONArray listOfEquationsToJson() {
         JSONArray jsonArray = new JSONArray();
 

@@ -1,11 +1,13 @@
 package ui;
 
-import model.exceptions.JsonNotFound;
-
 import java.io.FileNotFoundException;
 
 public class Main {
     public static void main(String[] args) {
-        new Library();
+        try {
+            new Library();
+        } catch (FileNotFoundException e) {
+            System.out.print("Unable to load application, JSON file cannot be found!");
+        }
     }
 }

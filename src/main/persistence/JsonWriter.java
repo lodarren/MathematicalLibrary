@@ -1,7 +1,6 @@
 package persistence;
 
 import model.*;
-import model.exceptions.JsonNotFound;
 import org.json.JSONArray;
 
 import java.io.*;

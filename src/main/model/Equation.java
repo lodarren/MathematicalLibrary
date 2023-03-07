@@ -115,6 +115,19 @@ public class Equation extends Entry {
         }
     }
 
+
+    //MODIFIES: this
+    //EFFECTS: returns the number of practiceProblems in this list
+    public int numberOfPracticeProblems() {
+        return practiceProblems.size();
+    }
+
+    //MODIFIES: this
+    //EFFECTS: returns the number of practiceProblemAnswers in this list
+    public int numberOfAnswers() {
+        return practiceProblemsAnswer.size();
+    }
+
     public JSONObject equationToJson() {
         JSONObject json = new JSONObject();
         json.put("name", name);
