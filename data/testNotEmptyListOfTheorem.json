@@ -1,0 +1,16 @@
+{"theorems": [
+    {
+        "theoremproof": "Grass = green",
+        "theoremcourse": "Calculus 4",
+        "theoremexplanation": "The grass looks green to me",
+        "theoremname": "Green's theorem",
+        "theoremtheorem": "The grass is green"
+    },
+    {
+        "theoremproof": "Proof by contradiction",
+        "theoremcourse": "Pre-school",
+        "theoremexplanation": "There is a relationship between the sides of a triangle",
+        "theoremname": "Pythagorean theorem",
+        "theoremtheorem": "a^2+b^2=c^2"
+    }
+]}

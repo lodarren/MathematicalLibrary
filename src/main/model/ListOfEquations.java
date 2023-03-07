@@ -2,6 +2,7 @@ package model;
 
 import model.exceptions.NameAlreadyExists;
 import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -104,7 +105,13 @@ public class ListOfEquations {
 
 
 
-    public JSONArray listOfEquationsToJson() {
+    public JSONObject listOfEquationsToJson() {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("equations", equationsToJson());
+        return jsonObject;
+    }
+
+    public JSONArray equationsToJson() {
         JSONArray jsonArray = new JSONArray();
 
         for (Equation e : entries) {
@@ -113,4 +120,5 @@ public class ListOfEquations {
 
         return jsonArray;
     }
+
 }

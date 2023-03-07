@@ -2,6 +2,7 @@ package model;
 
 import model.exceptions.NameAlreadyExists;
 import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -101,16 +102,19 @@ public class ListOfRequests {
         return entries.size();
     }
 
+    public JSONObject listOfRequestsToJson() {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("requests", requestsToJson());
+        return jsonObject;
+    }
 
-
-    public JSONArray listOfRequestsToJson() {
+    public JSONArray requestsToJson() {
         JSONArray jsonArray = new JSONArray();
 
-        for (Request r : entries) {
-            jsonArray.put(r.requestToJson());
+        for (Request e : entries) {
+            jsonArray.put(e.requestToJson());
         }
 
         return jsonArray;
     }
-
 }

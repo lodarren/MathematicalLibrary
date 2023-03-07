@@ -2,6 +2,7 @@ package persistence;
 
 import model.*;
 import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.io.*;
 
@@ -19,17 +20,17 @@ public class JsonWriter {
     }
 
     public void writeListOfTheorem(ListOfTheorems lot) {
-        JSONArray json = lot.listOfTheoremsToJson();
+        JSONObject json = lot.listOfTheoremsToJson();
         saveToFile(json.toString(TAB));
     }
 
     public void writeListOfEquation(ListOfEquations loe) {
-        JSONArray json = loe.listOfEquationsToJson();
+        JSONObject json = loe.listOfEquationsToJson();
         saveToFile(json.toString(TAB));
     }
 
     public void writeListOfRequests(ListOfRequests lor) {
-        JSONArray json = lor.listOfRequestsToJson();
+        JSONObject json = lor.listOfRequestsToJson();
         saveToFile(json.toString(TAB));
     }
 

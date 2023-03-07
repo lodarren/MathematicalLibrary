@@ -1,0 +1,26 @@
+{"equations": [
+    {
+        "theorem": "sin(x) = x",
+        "practice problems": [
+            "What is sine of 11",
+            "What is sine of 30"
+        ],
+        "practice problem answers": [
+            "11",
+            "30"
+        ],
+        "name": "Fundamental theorem of engineering",
+        "course": "All of university",
+        "proof": "sin(0) = 0 QED",
+        "explanation": "The most useful formula in engineering"
+    },
+    {
+        "theorem": "cos(x) = 1",
+        "practice problems": [],
+        "practice problem answers": [],
+        "name": "The cosine law",
+        "course": "Grade school",
+        "proof": "cos(0) = 1",
+        "explanation": "All cosines are equal to 1. "
+    }
+]}

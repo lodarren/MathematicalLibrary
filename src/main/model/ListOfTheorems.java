@@ -2,6 +2,7 @@ package model;
 
 import model.exceptions.NameAlreadyExists;
 import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -101,11 +102,17 @@ public class ListOfTheorems {
     }
 
 
-    public JSONArray listOfTheoremsToJson() {
+    public JSONObject listOfTheoremsToJson() {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("theorems", theoremsToJson());
+        return jsonObject;
+    }
+
+    public JSONArray theoremsToJson() {
         JSONArray jsonArray = new JSONArray();
 
-        for (Theorem t : entries) {
-            jsonArray.put(t.theoremToJson());
+        for (Theorem e : entries) {
+            jsonArray.put(e.theoremToJson());
         }
 
         return jsonArray;

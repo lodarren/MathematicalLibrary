@@ -97,13 +97,13 @@ public class Request extends Entry {
 
     public JSONObject requestToJson() {
         JSONObject json = new JSONObject();
-        json.put("requestname", name);
-        json.put("requesttheorem", theorem);
-        json.put("requesttype", type);
+        json.put("name", name);
+        json.put("theorem", theorem);
+        json.put("type", type);
         json.put("request estimated completion", estimatedCompletion);
-        json.put("requestcourse", course);
-        json.put("requestproof", proof);
-        json.put("requestexplanation", explanations);
+        json.put("course", course);
+        json.put("proof", proof);
+        json.put("explanation", explanations);
         return json;
     }
 

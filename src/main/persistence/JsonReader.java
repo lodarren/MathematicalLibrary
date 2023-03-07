@@ -91,34 +91,35 @@ public class JsonReader {
     }
 
     private void addEquation(ListOfEquations loe, JSONObject jsonObject) {
-        String name = jsonObject.getString("equationname");
-        String theoremstatement = jsonObject.getString("equationtheorem");
-        String proof = jsonObject.getString("equationproof");
-        String explanation = jsonObject.getString("equationexplanation");
-        String course = jsonObject.getString("equationcourse");
+        String name = jsonObject.getString("name");
+        String theoremstatement = jsonObject.getString("theorem");
+        String proof = jsonObject.getString("proof");
+        String explanation = jsonObject.getString("explanation");
+        String course = jsonObject.getString("course");
         Equation equation;
         equation = new Equation(name, theoremstatement, course, proof, explanation);
 
         ArrayList<String> practiceProblems;
         ArrayList<String> practiceProblemAnswers;
+        JSONArray jsonArray = new JSONArray();
+        //might duplicate problems and answers
 
-        practiceProblems = parsePracticeProblems(jsonObject);
-        practiceProblemAnswers = parsePracticeProblemAnswers(jsonObject);
+        practiceProblems = parsePracticeProblems(jsonArray);
+        practiceProblemAnswers = parsePracticeProblemAnswers(jsonArray);
         equation.addAllPracticeAndAnswers(practiceProblems, practiceProblemAnswers);
 
         loe.addEquation(equation);
     }
 
-    private ArrayList<String> parsePracticeProblems(JSONObject jsonObject) {
+    private ArrayList<String> parsePracticeProblems(JSONArray jsonArray) {
         ArrayList<String> practiceProblems;
         practiceProblems = new ArrayList<>();
-        this.addPracticeProblems(practiceProblems, jsonObject);
+        this.addPracticeProblems(practiceProblems, jsonArray);
         return practiceProblems;
     }
 
 
-    private void addPracticeProblems(ArrayList<String> practiceProblems, JSONObject jsonObject) {
-        JSONArray jsonArray = jsonObject.getJSONArray("practice problems");
+    private void addPracticeProblems(ArrayList<String> practiceProblems, JSONArray jsonArray) {
         Iterator var4 = jsonArray.iterator();
 
         while (var4.hasNext()) {
@@ -129,19 +130,18 @@ public class JsonReader {
     }
 
     private void addPracticeProblem(ArrayList<String> practiceProblems, JSONObject jsonObject) {
-        String practiceProblem = jsonObject.getString("practice problem");
+        String practiceProblem = jsonObject.getString("practice problems");
         practiceProblems.add(practiceProblem);
     }
 
-    private ArrayList<String> parsePracticeProblemAnswers(JSONObject jsonObject) {
+    private ArrayList<String> parsePracticeProblemAnswers(JSONArray jsonArray) {
         ArrayList<String> practiceProblemsAnswers;
         practiceProblemsAnswers = new ArrayList<>();
-        this.addPracticeProblemAnswers(practiceProblemsAnswers, jsonObject);
+        this.addPracticeProblemAnswers(practiceProblemsAnswers, jsonArray);
         return practiceProblemsAnswers;
     }
 
-    private void addPracticeProblemAnswers(ArrayList<String> practiceProblemsAnswers, JSONObject jsonObject) {
-        JSONArray jsonArray = jsonObject.getJSONArray("practice problems answers");
+    private void addPracticeProblemAnswers(ArrayList<String> practiceProblemsAnswers, JSONArray jsonArray) {
         Iterator var4 = jsonArray.iterator();
 
         while (var4.hasNext()) {
@@ -182,15 +182,15 @@ public class JsonReader {
     }
 
     private void addRequest(ListOfRequests lor, JSONObject jsonObject) {
-        String name = jsonObject.getString("requestname");
-        String theoremstatement = jsonObject.getString("requesttheorem");
-        String type = jsonObject.getString("requesttype");
-        String proof = jsonObject.getString("requestproof");
-        String explanation = jsonObject.getString("requestexplanation");
-        String course = jsonObject.getString("requestcourse");
+        String name = jsonObject.getString("name");
+        String theoremstatement = jsonObject.getString("theorem");
+        String type = jsonObject.getString("type");
+        String proof = jsonObject.getString("proof");
+        String explanation = jsonObject.getString("explanation");
+        String course = jsonObject.getString("course");
         Request request;
         request = new Request(name, theoremstatement, type, course, proof, explanation);
-        request.updateEstimatedCompletion(jsonObject.getString("request estimated completion"));
+        request.updateEstimatedCompletion(Integer.toString(jsonObject.getInt("request estimated completion")));
         lor.addRequest(request);
     }
 

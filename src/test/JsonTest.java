@@ -20,7 +20,7 @@ public class JsonTest {
         assertEquals(course, e.getCourse());
         assertEquals(proof, e.getProof());
         assertEquals(explanation, e.getExplanations());
-        assertEquals(e.numberOfPracticeProblems(), practiceProblemNum);
+        assertEquals(practiceProblemNum, e.numberOfPracticeProblems());
         assertEquals(practiceProblemNum, e.numberOfAnswers());
     }
 
