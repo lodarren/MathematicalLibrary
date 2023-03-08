@@ -258,7 +258,6 @@ public class Library {
     //EFFECTS: Prompts the user if they would like to view practice problems. It then prompts them to either change
     //         the entry or to change the practice problems. Returns a NameAlreadyExists exception if the name of the
     //         suggested name change already exists.
-
     private void viewPracticeOrChangeEntry(String previousCommand) {
         String nextCommand = input.next();
         if (nextCommand.equalsIgnoreCase("p")) {
@@ -403,7 +402,6 @@ public class Library {
     }
 
     //EFFECTS: Shows the requests so far in text form. If "u" is selected, the user is then prompted to change requests.
-
     private void viewAllRequests() {
         System.out.print("Here are all the requests so far:\n");
         System.out.print(listOfRequests.printAllRequests() + "\n");

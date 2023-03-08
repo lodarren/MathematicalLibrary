@@ -174,7 +174,6 @@ public class Equation extends Entry {
 
     //MODIFIES: this
     //EFFECTS: turns a single practice problem string into a JSONObject
-
     public JSONObject answerToJson(String answer) {
         JSONObject json = new JSONObject();
         json.put("answer", answer);

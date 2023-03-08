@@ -119,8 +119,6 @@ public class ListOfEquations {
         for (Equation e : entries) {
             jsonArray.put(e.equationToJson());
         }
-
         return jsonArray;
     }
-
 }

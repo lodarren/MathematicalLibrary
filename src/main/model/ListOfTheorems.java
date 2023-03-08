@@ -117,7 +117,6 @@ public class ListOfTheorems {
         for (Theorem e : entries) {
             jsonArray.put(e.theoremToJson());
         }
-
         return jsonArray;
     }
 }

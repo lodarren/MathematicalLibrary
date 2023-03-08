@@ -1,23 +1,30 @@
 {"theorems": [
     {
-        "theoremproof": "Grass = green",
-        "theoremcourse": "Calculus 4",
-        "theoremexplanation": "The grass looks green to me",
-        "theoremname": "Green's theorem",
-        "theoremtheorem": "The grass is green"
+        "theorem": "The grass is green",
+        "name": "Green's theorem",
+        "course": "Calculus 4",
+        "proof": "Grass = green",
+        "explanation": "The grass looks green to me"
     },
     {
-        "theoremproof": "Proof by contradiction",
-        "theoremcourse": "Pre-school",
-        "theoremexplanation": "There is a relationship between the sides of a triangle",
-        "theoremname": "My favourite theorem",
-        "theoremtheorem": "a^2+b^2=c^2"
+        "theorem": "a^2+b^2=c^2",
+        "name": "My favourite theorem",
+        "course": "Pre-school",
+        "proof": "Proof by contradiction",
+        "explanation": "There is a relationship between the sides of a triangle"
     },
     {
-        "theoremproof": "I would like to know this too. ",
-        "theoremcourse": "???",
-        "theoremexplanation": "Relationship between the zeta function and the prime numbers",
-        "theoremname": "Riemann Hypothesis",
-        "theoremtheorem": "Something about prime numbers"
+        "theorem": "Something about prime numbers",
+        "name": "Riemann Hypothesis",
+        "course": "???",
+        "proof": "I would like to know this too. ",
+        "explanation": "Relationship between the zeta function and the prime numbers"
+    },
+    {
+        "theorem": "2",
+        "name": "my favourite theorme 2",
+        "course": "2",
+        "proof": "2",
+        "explanation": "2"
     }
 ]}

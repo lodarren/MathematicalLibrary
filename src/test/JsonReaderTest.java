@@ -134,7 +134,7 @@ public class JsonReaderTest extends JsonTest{
             assertEquals("11", practiceProblemAnswerTest.get(0));
             assertEquals("30", practiceProblemAnswerTest.get(1));
         } catch (IOException e) {
-        fail("File couldn't be read!");
+            fail("File couldn't be read!");
         }
     }
 }

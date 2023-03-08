@@ -63,11 +63,11 @@ public class JsonReader {
 
     //EFFECTS: Creates a Theorem object as per the JSON file's instructions.
     private void addTheorem(ListOfTheorems lot, JSONObject jsonObject) {
-        String name = jsonObject.getString("theoremname");
-        String theoremstatement = jsonObject.getString("theoremtheorem");
-        String proof = jsonObject.getString("theoremproof");
-        String explanation = jsonObject.getString("theoremexplanation");
-        String course = jsonObject.getString("theoremcourse");
+        String name = jsonObject.getString("name");
+        String theoremstatement = jsonObject.getString("theorem");
+        String proof = jsonObject.getString("proof");
+        String explanation = jsonObject.getString("explanation");
+        String course = jsonObject.getString("course");
         Theorem theorem;
         theorem = new Theorem(name, theoremstatement, course, proof, explanation);
         lot.addTheorem(theorem);
