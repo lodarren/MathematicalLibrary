@@ -24,5 +24,14 @@
         "course": "Grade school",
         "proof": "cos(0) = 1",
         "explanation": "All cosines are equal to 1. "
+    },
+    {
+        "theorem": "b",
+        "practice problems": [],
+        "practice problem answers": [],
+        "name": "a",
+        "course": "c",
+        "proof": "d",
+        "explanation": "e"
     }
 ]}

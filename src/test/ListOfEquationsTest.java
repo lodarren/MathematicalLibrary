@@ -131,4 +131,5 @@ public class ListOfEquationsTest {
         listOfEquationsTest.addEquation(equationEntry2);
         assertEquals(2, listOfEquationsTest.numberOfEquations());
     }
+
 }
