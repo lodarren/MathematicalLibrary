@@ -1,11 +1,6 @@
 package ui;
 
-import model.ListOfEquations;
-import model.ListOfRequests;
-import model.ListOfTheorems;
-import model.Equation;
-import model.Request;
-import model.Theorem;
+import model.*;
 import model.exceptions.IndexNotThere;
 import model.exceptions.NameAlreadyExists;
 import persistence.JsonReader;
@@ -23,7 +18,7 @@ import java.util.Scanner;
 // Represents the full list of finished mathematical entries in the library. There are three sections of the library
 // That the user can explore, one containing equations, one containing theorems and the last one containing requests.
 
-public class Library extends JFrame implements ActionListener {
+public class TemporaryGUIMain extends JFrame implements ActionListener {
     ListOfTheorems listOfTheorems;
     ListOfEquations listOfEquations;
     ListOfRequests listOfRequests;
@@ -43,6 +38,7 @@ public class Library extends JFrame implements ActionListener {
 
     JPanel loadPanel;
     JPanel loadPanelButtons;
+    JLabel loadPanelInstructions;
     JButton loadButton;
     JButton declineLoadButton;
 
@@ -52,12 +48,13 @@ public class Library extends JFrame implements ActionListener {
     JButton openListOfTheorem;
     JButton openListOfEquation;
     JButton openListOfRequest;
+    JButton leaveButton;
     JLabel welcomeText;
     JLabel instructionsText;
 
 
     //EFFECTS: Creates a new library object, throws the FileNotFoundException if it occurs
-    public Library() throws FileNotFoundException {
+    public TemporaryGUIMain() throws FileNotFoundException {
         runLibrary();
     }
 
@@ -113,6 +110,8 @@ public class Library extends JFrame implements ActionListener {
         loadPanelButtons = new JPanel();
         loadButton = new JButton();
         declineLoadButton = new JButton();
+        loadPanelInstructions = new JLabel();
+        leaveButton = new JButton();
     }
 
     //EFFECTS: Displays the options Theorem, Equation and Request and the option to leave for the user:
@@ -126,25 +125,56 @@ public class Library extends JFrame implements ActionListener {
 
     //EFFECTS: loads the JSON file if the user selects a key other than n
     private void doYouWantToLoadLibrary() {
-        System.out.print("Do you want to load the library save? Click any key for yes, and n for no.\n");
-        String command = input.next();
-        if (!command.equals("n")) {
-            try {
-                listOfTheorems = jsonReaderTheorem.readTheorems();
-                listOfEquations = jsonReaderEquation.readEquations();
-                listOfRequests = jsonReaderRequest.readRequests();
-                System.out.print("Loaded the library!\n");
-            } catch (IOException e) {
-                System.out.print("Unable to read from file!");
-            }
+        //Code quote
+        String[] buttonTexts = {"Load save", "don't load save"};
+        int userDecision = JOptionPane.showOptionDialog(null, "Do you want to load the save?",
+                "Do you want to load the save file?", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
+                null, buttonTexts,
+                buttonTexts[0]);
+        if (userDecision == 0) {
+            loadButtonAction();
+        } else if (userDecision == 1) {
+            instantiateMainMenu();
+        } else {
+            instantiateMainMenu();
         }
+    }
+
+    //MIGHT NOT NEED THIS!
+    private void instantiateLoadScreen() {
+        loadPanel.setBackground(Color.gray);
+        loadPanel.setBounds(0, 0, 1024,768);
+        loadPanel.setLayout(new GridLayout(2,1,0,0));
+
+        loadPanelInstructions.setFont(new Font("Computer Modern", Font.PLAIN, 60));
+        loadPanelInstructions.setBorder(border);
+        loadPanelInstructions.setVerticalTextPosition(JLabel.TOP);
+        loadPanelInstructions.setHorizontalAlignment(JLabel.CENTER);
+        loadPanelInstructions.setBackground(Color.white);
+        loadPanelInstructions.setOpaque(true);
+        loadPanelInstructions.setText("Do you want to load the library save? Click any key for yes, and n for no.\n");
+
+        loadButton.setText("Load the save!");
+        declineLoadButton.setText("No thanks.");
+
+        loadPanelButtons.setLayout(new GridLayout(1, 2));
+        loadPanelButtons.add(loadButton);
+        loadPanelButtons.add(declineLoadButton);
+
+        loadPanel.add(loadPanelInstructions);
+        loadPanel.add(loadPanelButtons);
     }
 
     //EFFECTS: saves the JSON file if the user selects a key other than n
     private void doYouWantToSaveLibrary() {
-        System.out.print("Before you leave, do you want to save the library? Click any key for yes, and n for no. \n");
-        String command = input.next();
-        if (!command.equals("n")) {
+        //Code quote
+        String[] buttonTexts = {"Save Entries"};
+        int userDecision = JOptionPane.showOptionDialog(null,
+                "Before you leave, do you want to save the library?",
+                "Do you want to save?", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
+                null, buttonTexts,
+                buttonTexts[0]);
+        if (userDecision == 0) {
             try {
                 jsonWriterTheorem.open();
                 jsonWriterEquation.open();
@@ -155,10 +185,12 @@ public class Library extends JFrame implements ActionListener {
                 jsonWriterTheorem.close();
                 jsonWriterEquation.close();
                 jsonWriterRequest.close();
-                System.out.print("Saved the library!");
+                JOptionPane.showMessageDialog(mainFrame, "Library has been saved!");
             } catch (FileNotFoundException e) {
-                System.out.print("Unable to write to file: ");
+                JOptionPane.showMessageDialog(mainFrame, "Unable to write to file");
             }
+        } else {
+            //Close
         }
     }
 
@@ -644,7 +676,7 @@ public class Library extends JFrame implements ActionListener {
         mainFrame.setTitle("LibraryApplication");
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         mainFrame.setResizable(false);
-        mainFrame.setLayout(null);
+        mainFrame.setLayout(new GridLayout(1,1,0,0));
         mainFrame.setSize(1024,768);
         mainFrame.setVisible(true);
     }
@@ -653,40 +685,41 @@ public class Library extends JFrame implements ActionListener {
         welcomeText.setText("Welcome To The Library!");
         welcomeText.setFont(new Font("Computer Modern", Font.PLAIN, 60));
         welcomeText.setBorder(border);
-        welcomeText.setVerticalAlignment(JLabel.TOP);
+        welcomeText.setVerticalAlignment(JLabel.CENTER);
         welcomeText.setHorizontalAlignment(JLabel.CENTER);
-        welcomeText.setBounds(0,0,1024, 768);
         welcomeText.setBackground(Color.white);
         welcomeText.setOpaque(true);
     }
 
-    void makeWelcomeButtions() {
+    void makeWelcomeButtons() {
         openListOfTheorem = new JButton();
-        openListOfTheorem.setBounds(0, 384, 341, 192);
         openListOfTheorem.addActionListener(this);
         openListOfTheorem.setText("Open Theorem Library!");
         openListOfTheorem.setFocusable(true);
 
         openListOfEquation = new JButton();
-        openListOfEquation.setBounds(342, 384, 341, 192);
         openListOfEquation.addActionListener(this);
         openListOfEquation.setText("Open Equation Library!");
         openListOfEquation.setFocusable(true);
 
         openListOfRequest = new JButton();
-        openListOfRequest.setBounds(683, 384, 341, 192);
         openListOfRequest.addActionListener(this);
         openListOfRequest.setText("Open Request Library!");
         openListOfRequest.setFocusable(true);
+
+        leaveButton = new JButton();
+        leaveButton.addActionListener(this);
+        leaveButton.setText("Goodbye!");
+        leaveButton.setFocusable(true);
     }
 
     void buttonsToPanel() {
         buttons.setBackground(Color.gray);
-        buttons.setBounds(0, 0, 1024,768);
-        buttons.setLayout(new GridLayout(1,3,0,0));
+        buttons.setLayout(new GridLayout(1,4,0,0));
         buttons.add(openListOfTheorem);
         buttons.add(openListOfEquation);
         buttons.add(openListOfRequest);
+        buttons.add(leaveButton);
     }
 
     void instantiateInstructionText() {
@@ -695,9 +728,8 @@ public class Library extends JFrame implements ActionListener {
         instructionsText.setVerticalTextPosition(JLabel.CENTER);
         instructionsText.setHorizontalTextPosition(JLabel.CENTER);
         instructionsText.setBorder(border);
-        instructionsText.setVerticalAlignment(JLabel.TOP);
+        instructionsText.setVerticalAlignment(JLabel.CENTER);
         instructionsText.setHorizontalAlignment(JLabel.CENTER);
-        instructionsText.setBounds(0,192,1024, 768);
         instructionsText.setBackground(Color.white);
         instructionsText.setOpaque(true);
     }
@@ -705,24 +737,52 @@ public class Library extends JFrame implements ActionListener {
     void addingToWelcomeScreen() {
         welcomeScreen.setLayout(new GridLayout(3,1,0,0));
         welcomeScreen.setBackground(Color.gray);
-        welcomeScreen.setBounds(0, 0, 1024,768);
         welcomeScreen.add(welcomeText);
         welcomeScreen.add(instructionsText);
         welcomeScreen.add(buttons);
+        welcomeScreen.setVisible(true);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == openListOfTheorem) {
             System.out.print("opening list of theorems");
-        }
-
-        if (e.getSource() == openListOfEquation) {
+        } else if (e.getSource() == openListOfEquation) {
             System.out.print("opening list of equations");
-        }
-
-        if (e.getSource() == openListOfRequest) {
+        } else if (e.getSource() == openListOfRequest) {
             System.out.print("opening list of requests");
+        } else if (e.getSource() == declineLoadButton) {
+            startMainMenu();
+        } else if (e.getSource() == loadButton) {
+            loadButtonAction();
         }
+    }
+
+    public void loadButtonAction() {
+        try {
+            listOfTheorems = jsonReaderTheorem.readTheorems();
+            listOfEquations = jsonReaderEquation.readEquations();
+            listOfRequests = jsonReaderRequest.readRequests();
+            System.out.print("Loaded the library!\n");
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(mainFrame, "No save file found!");
+        } finally {
+            startMainMenu();
+        }
+    }
+
+    public void startMainMenu() {
+        mainFrame.remove(loadPanel);
+        instantiateMainMenu();
+    }
+
+    private void instantiateMainMenu() {
+        makeWelcomeText();
+        makeWelcomeButtons();
+        instantiateInstructionText();
+        buttonsToPanel();
+        addingToWelcomeScreen();
+        mainFrame.add(welcomeScreen);
+        mainFrame.setVisible(true);
     }
 }
