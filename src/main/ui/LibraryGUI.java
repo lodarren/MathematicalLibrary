@@ -6,46 +6,98 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import static java.awt.Font.PLAIN;
+
 public class LibraryGUI extends JFrame implements ActionListener {
-    JButton button;
 
-    public LibraryGUI(String title) {
-        super(title);
+    Border border = BorderFactory.createLineBorder(Color.black,3);
+    JButton openListOfTheorem;
+    JButton openListOfEquation;
+    JButton openListOfRequest;
+
+    LibraryGUI() {
+
+        this.setTitle("LibraryApplication");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setResizable(false);
+        this.setLayout(null);
+        this.setSize(1024,768);
+        this.setVisible(true);
 
-        Border border = BorderFactory.createLineBorder(Color.black,3);
+        JLabel welcomeText = new JLabel();
+        welcomeText.setText("Welcome To The Library!");
+        welcomeText.setFont(new Font("Computer Modern", Font.PLAIN, 60));
+        welcomeText.setBorder(border);
+        welcomeText.setVerticalAlignment(JLabel.TOP);
+        welcomeText.setHorizontalAlignment(JLabel.CENTER);
+        welcomeText.setBounds(0,0,1024, 768);
+        welcomeText.setBackground(Color.white);
+        welcomeText.setOpaque(true);
 
-        JLabel label = new JLabel();
-        label.setText("Welcome To The Library");
-        label.setHorizontalTextPosition(JLabel.CENTER);
-        label.setVerticalTextPosition(JLabel.TOP);
-        label.setFont(new Font("Comic Sans", Font.PLAIN,20));
-        label.setOpaque(true); //Changes the background
-        label.setBorder(border);
+        JLabel instructionsText = new JLabel();
+        instructionsText.setText("Please click on the following library you would like to enter!");
+        instructionsText.setFont(new Font("Computer Modern", Font.PLAIN, 20));
+        instructionsText.setVerticalTextPosition(JLabel.CENTER);
+        instructionsText.setHorizontalTextPosition(JLabel.CENTER);
+        instructionsText.setBorder(border);
+        instructionsText.setVerticalAlignment(JLabel.TOP);
+        instructionsText.setHorizontalAlignment(JLabel.CENTER);
+        instructionsText.setBounds(0,192,1024, 768);
+        instructionsText.setBackground(Color.white);
+        instructionsText.setOpaque(true);
 
-        JPanel greetPanel = new JPanel();
-        greetPanel.setBackground(Color.white);
-        greetPanel.setBounds(0,0, 420, 50);
+        openListOfTheorem = new JButton();
+        openListOfTheorem.setBounds(0, 384, 341, 192);
+        openListOfTheorem.addActionListener(this);
+        openListOfTheorem.setText("Open Theorem Library!");
+        openListOfTheorem.setFocusable(true);
 
-        button = new JButton();
-        button.setBounds(200, 100, 50, 50);
+        openListOfEquation = new JButton();
+        openListOfEquation.setBounds(342, 384, 341, 192);
+        openListOfEquation.addActionListener(this);
+        openListOfEquation.setText("Open Equation Library!");
+        openListOfEquation.setFocusable(true);
 
-        JFrame frame = new LibraryGUI("My Library");
-        frame.setTitle("Main Menu");
-        frame.setVisible(true); //Make sure you do this
-        frame.setSize(420,420);
-        frame.setResizable(false); //Allows you to change the size of the program
-        frame.add(greetPanel);
-        frame.add(label);
-        frame.add(button);
+        openListOfRequest = new JButton();
+        openListOfRequest.setBounds(683, 384, 341, 192);
+        openListOfRequest.addActionListener(this);
+        openListOfRequest.setText("Open Request Library!");
+        openListOfRequest.setFocusable(true);
+
+        JPanel buttons = new JPanel();
+        buttons.setBackground(Color.gray);
+        buttons.setBounds(0, 0, 1024,768);
+        buttons.setLayout(new GridLayout(1,3,0,0));
+        buttons.add(openListOfTheorem);
+        buttons.add(openListOfEquation);
+        buttons.add(openListOfRequest);
 
 
-    }
+        JPanel welcomeScreen = new JPanel();
+        welcomeScreen.setLayout(new GridLayout(3,1,0,0));
+        welcomeScreen.setBackground(Color.gray);
+        welcomeScreen.setBounds(0, 0, 1024,768);
+        welcomeScreen.add(welcomeText);
+        welcomeScreen.add(instructionsText);
+        welcomeScreen.add(buttons);
+
+
+        this.add(welcomeScreen);
+   }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == button) {
-            System.out.print("wee");
+        if (e.getSource() == openListOfTheorem) {
+            System.out.print("opening list of theorems");
+        }
+
+        if (e.getSource() == openListOfEquation) {
+            System.out.print("opening list of equations");
+        }
+
+        if (e.getSource() == openListOfRequest) {
+            System.out.print("opening list of requests");
         }
     }
+
 }

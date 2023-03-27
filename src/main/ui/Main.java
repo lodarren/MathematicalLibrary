@@ -17,6 +17,8 @@ public class Main extends JFrame {
     This is the previous working program, we are going to change this to LibraryGUI for now for testing
          */
 
-        new LibraryGUI("Welcome to the Library");
+        JFrame mainMenu = new LibraryGUI();
+
+
     }
 }
