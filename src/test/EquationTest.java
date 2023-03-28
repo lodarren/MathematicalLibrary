@@ -148,8 +148,9 @@ public class EquationTest {
 
     @Test
     void viewEquationTest() {
-        assertEquals("\nName: name\nStatement: theorem\nCourse this is most relevant to: course\n"
-               + "Description: explanation\nDerivation: proof\n", testEquation.viewEquation());
+        assertEquals("<html><font size = '5'><br>Name: name<br>Statement: theorem<br>Course this is most "
+               + "relevant to: course<br>Description: explanation<br>Derivation: proof<br></font></html>",
+                testEquation.viewEquation());
     }
 
     @Test

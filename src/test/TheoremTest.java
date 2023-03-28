@@ -74,13 +74,15 @@ public class TheoremTest {
 
     @Test
     void viewTheorem() {
-        assertEquals("Name: name\nTheorem: theorem\nCourse this is most relevant to: course\n"
-                + "Description: explanation\nProof: proof\n", testTheorem.viewTheorem());
+        assertEquals("<html><font size = '5'>Name: name<br><br>Theorem: theorem<br><br>Course this is most "
+                + "relevant to: course<br><br>Description: explanation<br><br>Proof: proof<br></font></html>",
+                testTheorem.viewTheorem());
     }
 
     @Test
     void viewTheoremLessInfoProof() {
-        assertEquals("Name: name\nTheorem: theorem\nCourse this is most relevant to: course\n"
-                + "Description: explanation\n", testTheorem.viewTheoremLessInfo());
+        assertEquals("<html><font size = '5'>Name: name<br><br>Theorem: theorem<br><br>Course this is most "
+                + "relevant to: course<br><br>Description: explanation<br></font></html>",
+                testTheorem.viewTheoremLessInfo());
     }
 }

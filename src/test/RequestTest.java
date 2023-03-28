@@ -6,6 +6,8 @@ import model.Theorem;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class RequestTest {
@@ -130,7 +132,8 @@ public class RequestTest {
 
     @Test
     void viewRequestTest() {
-        assertEquals("Name: name\nType: Theorem\nTheorem: theorem\nCourse this is most relevant to: course\n"
-                + "Description: explanation\nCompletion: 0\nProof: proof\n", testRequest.viewRequest());
+        assertEquals("<html><font size = '5'>Name: name<br>Type: Theorem<br>Theorem: theorem<br>"
+                + "Course this is most relevant to: course<br>Description: explanation<br>Completion: 0<br>Proof: "
+                + "proof</font></html>", testRequest.viewRequest());
     }
 }

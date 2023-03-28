@@ -4,6 +4,8 @@ import model.exceptions.NameAlreadyExists;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class ListOfTheoremsTest {
@@ -127,5 +129,15 @@ public class ListOfTheoremsTest {
         assertEquals(1, listOfTheoremsTest.numberOfTheorems());
         listOfTheoremsTest.addTheorem(theoremEntry2);
         assertEquals(2, listOfTheoremsTest.numberOfTheorems());
+    }
+
+    @Test
+    void theoremsToStringTest() {
+        ArrayList<String> list = new ArrayList<>();
+        listOfTheoremsTest.addTheorem(theoremEntry1);
+        listOfTheoremsTest.addTheorem(theoremEntry2);
+        list.add("A");
+        list.add("F");
+        assertEquals(listOfTheoremsTest.theoremsToString(), list);
     }
 }

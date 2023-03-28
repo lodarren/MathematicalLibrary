@@ -4,6 +4,8 @@ import model.exceptions.NameAlreadyExists;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -131,5 +133,15 @@ public class ListOfRequestsTest {
         assertEquals(1, listOfRequestsTest.numberOfRequests());
         listOfRequestsTest.addRequest(requestEntry2);
         assertEquals(2, listOfRequestsTest.numberOfRequests());
+    }
+
+    @Test
+    void requestsToStringTest() {
+        ArrayList<String> list = new ArrayList<>();
+        listOfRequestsTest.addRequest(requestEntry1);
+        listOfRequestsTest.addRequest(requestEntry2);
+        list.add("A");
+        list.add("F");
+        assertEquals(listOfRequestsTest.requestsToString(), list);
     }
 }

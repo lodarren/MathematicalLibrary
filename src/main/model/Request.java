@@ -84,13 +84,13 @@ public class Request extends Entry {
     //EFFECTS: returns the fields of the request in text format in the form Field: field.
     public String viewRequest() {
         String text;
-        text = "Name: " + this.getName() + "\n";
-        text = text + "Type: " + this.getType() + "\n";
-        text = text + "Theorem: " + this.getTheorem() + "\n";
-        text = text + "Course this is most relevant to: " + this.getCourse() + "\n";
-        text = text + "Description: " + this.getExplanations() + "\n";
-        text = text + "Completion: " + this.getEstimatedCompletion() + "\n";
-        text = text + "Proof: " + this.getProof() + "\n";
+        text = "<html><font size = '5'>Name: " + this.getName() + "<br>";
+        text = text + "Type: " + this.getType() + "<br>";
+        text = text + "Theorem: " + this.getTheorem() + "<br>";
+        text = text + "Course this is most relevant to: " + this.getCourse() + "<br>";
+        text = text + "Description: " + this.getExplanations() + "<br>";
+        text = text + "Completion: " + this.getEstimatedCompletion() + "<br>";
+        text = text + "Proof: " + this.getProof() + "</font></html>";
         return text;
     }
 

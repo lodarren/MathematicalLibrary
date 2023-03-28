@@ -20,12 +20,13 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Scanner;
 
+//This is the old version of the UI!
+
 // Represents the full list of finished mathematical entries in the library. There are three sections of the library
 // That the user can explore, one containing equations, one containing theorems and the last one containing requests.
 
 public class Library extends JFrame implements ActionListener {
 
-    //OLD VERSION OF LIBRARY!
     ListOfTheorems listOfTheorems;
     ListOfEquations listOfEquations;
     ListOfRequests listOfRequests;

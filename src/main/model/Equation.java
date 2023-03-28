@@ -185,8 +185,9 @@ public class Equation extends Entry {
     public ArrayList questionsToList() {
         ArrayList<String> questions = new ArrayList<>();
         int counter = 1;
-        for (String s : questions) {
+        for (String s : practiceProblems) {
             String question = "Question" + counter;
+            counter++;
             questions.add(question);
         }
         return questions;
