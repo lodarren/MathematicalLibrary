@@ -121,4 +121,14 @@ public class ListOfEquations {
         }
         return jsonArray;
     }
+
+    //MODIFIES: this
+    //EFFECTS: returns the list of all the Equation names:
+    public ArrayList<String> equationsToString() {
+        ArrayList<String> listOfString = new ArrayList<>();
+        for (Equation e : entries) {
+            listOfString.add(e.getName());
+        }
+        return listOfString;
+    }
 }

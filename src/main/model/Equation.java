@@ -96,11 +96,11 @@ public class Equation extends Entry {
     //EFFECTS: returns the fields of the equation in text format in the form Field: field.
     public String viewEquation() {
         String text;
-        text = "\nName: " + this.getName();
-        text = text + "\nStatement: " + this.getTheorem();
-        text = text + "\nCourse this is most relevant to: " + this.getCourse();
-        text = text + "\nDescription: " + this.getExplanations();
-        text = text + "\nDerivation: " + this.getProof() + "\n";
+        text = "<html><font size = '5'><br>Name: " + this.getName();
+        text = text + "<br>Statement: " + this.getTheorem();
+        text = text + "<br>Course this is most relevant to: " + this.getCourse();
+        text = text + "<br>Description: " + this.getExplanations();
+        text = text + "<br>Derivation: " + this.getProof() + "<br></font></html>";
         return text;
     }
 
@@ -178,6 +178,18 @@ public class Equation extends Entry {
         JSONObject json = new JSONObject();
         json.put("answer", answer);
         return json;
+    }
+
+    //MODIFIES: this
+    //EFFECTS: returns the numbered list of questions in string format
+    public ArrayList questionsToList() {
+        ArrayList<String> questions = new ArrayList<>();
+        int counter = 1;
+        for (String s : questions) {
+            String question = "Question" + counter;
+            questions.add(question);
+        }
+        return questions;
     }
 }
 

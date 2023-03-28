@@ -119,4 +119,15 @@ public class ListOfTheorems {
         }
         return jsonArray;
     }
+
+    //MODIFIES: this
+    //EFFECTS: returns the list of all the theorem names:
+    public ArrayList<String> theoremsToString() {
+        ArrayList<String> listOfString = new ArrayList<>();
+        for (Theorem t : entries) {
+            listOfString.add(t.getName());
+        }
+
+        return listOfString;
+    }
 }

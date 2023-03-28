@@ -24,6 +24,8 @@ import java.util.Scanner;
 // That the user can explore, one containing equations, one containing theorems and the last one containing requests.
 
 public class Library extends JFrame implements ActionListener {
+
+    //OLD VERSION OF LIBRARY!
     ListOfTheorems listOfTheorems;
     ListOfEquations listOfEquations;
     ListOfRequests listOfRequests;

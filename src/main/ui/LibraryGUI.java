@@ -10,6 +10,9 @@ import static java.awt.Font.PLAIN;
 
 public class LibraryGUI extends JFrame implements ActionListener {
 
+    //This is currently all a test, this may very likely not be used.
+
+
     Border border = BorderFactory.createLineBorder(Color.black,3);
     JButton openListOfTheorem;
     JButton openListOfEquation;

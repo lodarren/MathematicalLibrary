@@ -9,7 +9,6 @@ import persistence.JsonWriter;
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -18,7 +17,7 @@ import java.util.Scanner;
 // Represents the full list of finished mathematical entries in the library. There are three sections of the library
 // That the user can explore, one containing equations, one containing theorems and the last one containing requests.
 
-public class TemporaryGUIMain extends JFrame implements ActionListener {
+public class TemporaryGUIMain extends JFrame {
     ListOfTheorems listOfTheorems;
     ListOfEquations listOfEquations;
     ListOfRequests listOfRequests;
@@ -33,15 +32,17 @@ public class TemporaryGUIMain extends JFrame implements ActionListener {
     private static final String JSON_STORE_REQUEST = "./data/ListOfRequestSave.json";
     private Scanner input;
 
-    //Related to GUI
+    //Related to GUI (SOME MAY STiLL NEED TO BE DELETED)
     JFrame mainFrame;
 
+    //Delete this
     JPanel loadPanel;
     JPanel loadPanelButtons;
     JLabel loadPanelInstructions;
     JButton loadButton;
     JButton declineLoadButton;
 
+    //Welcome Screen
     JPanel welcomeScreen;
     JPanel buttons;
     Border border;
@@ -52,6 +53,15 @@ public class TemporaryGUIMain extends JFrame implements ActionListener {
     JLabel welcomeText;
     JLabel instructionsText;
 
+    //ListOfTheoremScreen
+    JPanel theoremLibrary;
+    JComboBox theoremEntries;
+    JButton showProofButton;
+    JLabel theoremText;
+    JButton editTheorem;
+    JPanel theoremButtons;
+    JButton returnToMainMenuButton;
+    //Then from here editing the theorem will be a bunch of prompts
 
     //EFFECTS: Creates a new library object, throws the FileNotFoundException if it occurs
     public TemporaryGUIMain() throws FileNotFoundException {
@@ -112,6 +122,7 @@ public class TemporaryGUIMain extends JFrame implements ActionListener {
         declineLoadButton = new JButton();
         loadPanelInstructions = new JLabel();
         leaveButton = new JButton();
+        returnToMainMenuButton = new JButton();
     }
 
     //EFFECTS: Displays the options Theorem, Equation and Request and the option to leave for the user:
@@ -294,10 +305,10 @@ public class TemporaryGUIMain extends JFrame implements ActionListener {
         }
     }
 
-    //EFFECTS: Takes in a user input and returns it.
+    //EFFECTS: Takes in a user input and returns it. CHANGE
     private String whatIsTheChange() {
-        System.out.print("What were you planning to change the field to? Please type it in below.\n");
-        return input.next();
+        String change = JOptionPane.showInputDialog("What is the proposed change to the field?");
+        return change;
     }
 
     //EFFECTS: Introduces the user to the Equation section of the library and prompts them to select a choice.
@@ -676,7 +687,6 @@ public class TemporaryGUIMain extends JFrame implements ActionListener {
         mainFrame.setTitle("LibraryApplication");
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         mainFrame.setResizable(false);
-        mainFrame.setLayout(new GridLayout(1,1,0,0));
         mainFrame.setSize(1024,768);
         mainFrame.setVisible(true);
     }
@@ -693,23 +703,23 @@ public class TemporaryGUIMain extends JFrame implements ActionListener {
 
     void makeWelcomeButtons() {
         openListOfTheorem = new JButton();
-        openListOfTheorem.addActionListener(this);
         openListOfTheorem.setText("Open Theorem Library!");
+        openListOfTheorem.addActionListener(e -> makeTheoremMenu());
         openListOfTheorem.setFocusable(true);
 
         openListOfEquation = new JButton();
-        openListOfEquation.addActionListener(this);
         openListOfEquation.setText("Open Equation Library!");
+        openListOfEquation.addActionListener(e -> makeEquationMenu());
         openListOfEquation.setFocusable(true);
 
         openListOfRequest = new JButton();
-        openListOfRequest.addActionListener(this);
         openListOfRequest.setText("Open Request Library!");
+        openListOfRequest.addActionListener(e -> System.out.print("Opening List Of Theorems"));
         openListOfRequest.setFocusable(true);
 
         leaveButton = new JButton();
-        leaveButton.addActionListener(this);
         leaveButton.setText("Goodbye!");
+        leaveButton.addActionListener(e -> doYouWantToSaveLibrary());
         leaveButton.setFocusable(true);
     }
 
@@ -743,21 +753,6 @@ public class TemporaryGUIMain extends JFrame implements ActionListener {
         welcomeScreen.setVisible(true);
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == openListOfTheorem) {
-            System.out.print("opening list of theorems");
-        } else if (e.getSource() == openListOfEquation) {
-            System.out.print("opening list of equations");
-        } else if (e.getSource() == openListOfRequest) {
-            System.out.print("opening list of requests");
-        } else if (e.getSource() == declineLoadButton) {
-            startMainMenu();
-        } else if (e.getSource() == loadButton) {
-            loadButtonAction();
-        }
-    }
-
     public void loadButtonAction() {
         try {
             listOfTheorems = jsonReaderTheorem.readTheorems();
@@ -765,7 +760,8 @@ public class TemporaryGUIMain extends JFrame implements ActionListener {
             listOfRequests = jsonReaderRequest.readRequests();
             System.out.print("Loaded the library!\n");
         } catch (IOException e) {
-            JOptionPane.showMessageDialog(mainFrame, "No save file found!");
+            JOptionPane.showMessageDialog(mainFrame, "No save file found!",
+                    "ERROR", JOptionPane.ERROR_MESSAGE);
         } finally {
             startMainMenu();
         }
@@ -785,4 +781,337 @@ public class TemporaryGUIMain extends JFrame implements ActionListener {
         mainFrame.add(welcomeScreen);
         mainFrame.setVisible(true);
     }
+    //    JPanel theoremLibrary;
+    //    JComboBox<String> theoremEntries;
+    //    JButton showProofButton;
+    //    JLabel theoremText;
+    //    JButton editTheorem;
+    //    //Then from here editing the theorem will be a bunch of prompts
+
+    private void makeTheoremMenu() {
+        instantiateTheoremMenu();
+        theoremLibrary.setLayout(new GridLayout(1,2,0,0));
+
+        theoremLibrary.add(theoremText);
+        addingTheoremButtons();
+        theoremLibrary.add(theoremButtons);
+
+        welcomeScreen.setVisible(false);
+        mainFrame.add(theoremLibrary);
+    }
+
+    JLabel theoremLibraryTextInstructions;
+
+    private void addingTheoremButtons() {
+        theoremButtons.add(theoremEntries);
+        theoremButtons.add(showProofButton);
+        theoremButtons.add(editTheorem);
+        theoremButtons.add(returnToMainMenuButton);
+        theoremButtons.setBackground(new java.awt.Color(51,204,255));
+        theoremButtons.setOpaque(true);
+    }
+
+
+    private void instantiateTheoremMenu() {
+        theoremLibrary = new JPanel();
+        theoremButtons = new JPanel();
+        theoremEntries = new JComboBox(listOfTheorems.theoremsToString().toArray());
+        instantiateTheoremEntries();
+
+        showProofButton = new JButton();
+        showProofButton.setText("Display Additional Info");
+        showProofButton.addActionListener(e -> showAdditionalInfoMethod());
+        showProofButton.setFocusable(true);
+
+        theoremText = new JLabel();
+        theoremText.setBounds(0, 0, 768,576);
+        theoremText.setBackground(Color.white);
+        theoremText.setOpaque(true);
+
+        editTheorem = new JButton();
+        editTheorem.setText("Edit Theorem");
+        editTheorem.addActionListener(e ->
+                changeTheoremPrompt(listOfTheorems.getTheorem(theoremEntries.getSelectedIndex())));
+        editTheorem.setFocusable(true);
+
+        returnToMainMenuButton = new JButton();
+        returnToMainMenuButton.addActionListener(e -> theoremToMainMenu());
+        returnToMainMenuButton.setText("Return to main menu");
+        returnToMainMenuButton.setFocusable(true);
+    }
+
+    private void theoremToMainMenu() {
+        theoremLibrary.setVisible(false);
+        welcomeScreen.setVisible(true);
+    }
+
+    //"Press 1 to change the name of the entry.\nPress 2 to change the theorem.\nPress 3"
+    //        + " to change the course it is most useful for.\nPress 4 to change the description."
+    //       + "\nPress 5 to change the Proof.\nPress 6 to delete this entry.\n"
+
+    private void changeTheoremPrompt(Theorem theorem) {
+        String[] buttonTexts = {"Change Name", "Change theorem", "Change course", "Change description", "Change proof",
+                "Delete entry"};
+        int userDecision = JOptionPane.showOptionDialog(null, "Choose the theorem field you would"
+                        + "like to change. ", "Change Theorem?", JOptionPane.DEFAULT_OPTION,
+                JOptionPane.PLAIN_MESSAGE,null, buttonTexts,buttonTexts[0]);
+        if (userDecision == 0) {
+            String answer = whatIsTheChange();
+            try {
+                listOfTheorems.changeTheoremNameAndCheckExistence(theorem, answer);
+                JOptionPane.showMessageDialog(null, "Field Successfully Changed!", "Success!", JOptionPane.PLAIN_MESSAGE);
+            } catch (NameAlreadyExists e) {
+                JOptionPane.showMessageDialog(null, "Name already exists!", "Error", JOptionPane.WARNING_MESSAGE);
+            }
+        } else if (userDecision == 1) {
+            theorem.changeTheorem(whatIsTheChange());
+            JOptionPane.showMessageDialog(null, "Field Successfully Changed!", "Success!", JOptionPane.PLAIN_MESSAGE);
+        } else if (userDecision == 2) {
+            theorem.changeCourse(whatIsTheChange());
+            JOptionPane.showMessageDialog(null, "Field Successfully Changed!", "Success!", JOptionPane.PLAIN_MESSAGE);
+        } else if (userDecision == 3) {
+            theorem.changeExplanation(whatIsTheChange());
+            JOptionPane.showMessageDialog(null, "Field Successfully Changed!", "Success!", JOptionPane.PLAIN_MESSAGE);
+        } else if (userDecision == 4) {
+            theorem.changeProof(whatIsTheChange());
+            JOptionPane.showMessageDialog(null, "Field Successfully Changed!", "Success!", JOptionPane.PLAIN_MESSAGE);
+        } else if (userDecision == 5) {
+            String[] deleteButton = {"Yes", "No"};
+            int deleteOption = JOptionPane.showOptionDialog(null, "Are you sure you want to delete the theorem?", "Delete Theorem?", JOptionPane.DEFAULT_OPTION,
+                    JOptionPane.PLAIN_MESSAGE,null, deleteButton,deleteButton[0]);
+            if (deleteOption == 0) {
+                theoremEntries.removeItemAt(theoremEntries.getSelectedIndex());
+                listOfTheorems.removeTheorem(theorem);
+                JOptionPane.showMessageDialog(null, "Theorem Deleted", "Success!", JOptionPane.PLAIN_MESSAGE);
+            }
+        }
+    }
+
+
+    private void showAdditionalInfoMethod() {
+        theoremText.setText(listOfTheorems.getTheorem(theoremEntries.getSelectedIndex()).viewTheorem());
+    }
+
+    private void instantiateTheoremEntries() {
+        theoremEntries.addActionListener(e -> theoremEntriesAction());
+        theoremEntries.setSize(40, 20);
+    }
+
+    private void theoremEntriesAction() {
+        theoremText.setText(listOfTheorems.getTheorem(theoremEntries.getSelectedIndex()).viewTheoremLessInfo());
+    }
+
+
+    //Starting here is the list of equations section
+
+    JComboBox<String> equationEntries;
+    JPanel equationLibrary;
+    JPanel equationButtons;
+    JLabel equationText;
+    JButton equationToMainMenu;
+    JButton editEquation;
+    JButton viewQuestionButton;
+
+
+    private void makeEquationMenu() {
+        instantiateEquationMenu();
+        equationLibrary.setBackground(new java.awt.Color(102,255,102));
+        equationLibrary.setLayout(new GridLayout(1,2,0,0));
+
+        addingEquationButtons();
+        equationLibrary.add(equationText);
+        equationLibrary.add(equationButtons);
+
+        welcomeScreen.setVisible(false);
+        mainFrame.add(equationLibrary);
+    }
+
+    private void addingEquationButtons() {
+        equationButtons.add(equationEntries);
+        equationButtons.add(editEquation);
+        equationButtons.add(viewQuestionButton);
+        equationButtons.add(equationToMainMenu);
+        equationButtons.setBackground(new java.awt.Color(102,255,102));
+        equationButtons.setOpaque(true);
+    }
+
+    private void equationToMainMenu() {
+        equationLibrary.setVisible(false);
+        welcomeScreen.setVisible(true);
+    }
+
+
+    private void instantiateEquationMenu() {
+        equationLibrary = new JPanel();
+        equationButtons = new JPanel();
+        equationEntries = new JComboBox(listOfEquations.equationsToString().toArray());
+        instantiateEquationEntries();
+
+        equationText = new JLabel();
+        equationText.setBounds(0, 0, 768,576);
+        equationText.setBackground(Color.white);
+        equationText.setOpaque(true);
+
+        editEquation = new JButton();
+        editEquation.setText("Edit Equation");
+        editEquation.addActionListener(e ->
+                changeEquationPrompt(listOfEquations.getEquation(equationEntries.getSelectedIndex())));
+        editEquation.setFocusable(true);
+
+        equationToMainMenu = new JButton();
+        equationToMainMenu.addActionListener(e -> equationToMainMenu());
+        equationToMainMenu.setText("Return to main menu");
+        equationToMainMenu.setFocusable(true);
+
+        viewQuestionButton = new JButton();
+        viewQuestionButton.addActionListener(e -> startQuestionPanel());
+        viewQuestionButton.setText("View Practice Problems");
+        viewQuestionButton.setFocusable(true);
+    }
+
+
+    /*
+    "Press 1 to change the name of the entry.\nPress 2 to change the theorem.\nPress 3"
+            + " to change the course it is most useful for.\nPress 4 to change the description.\nPress 5 to"
+            + " change the Proof.\nPress 6 to add practice problems.\nPress 7 to delete specific practice "
+            + "problems.\nPress 8 to delete this entry.\n"
+
+     */
+
+
+    private void changeEquationPrompt(Equation equation) {
+        String[] buttonTexts = {"Change Name", "Change theorem", "Change course", "Change description",
+                "Change Derivation", "Add practice problems", "Delete practice problems", "Delete entry"};
+        int userDecision = JOptionPane.showOptionDialog(null, "Choose the equation field you would"
+                        + "like to change. ", "Change Equation?", JOptionPane.DEFAULT_OPTION,
+                JOptionPane.PLAIN_MESSAGE,null, buttonTexts,buttonTexts[0]);
+        if (userDecision == 0) {
+            String answer = whatIsTheChange();
+            try {
+                listOfEquations.changeEquationNameAndCheckExistence(equation, answer);
+                JOptionPane.showMessageDialog(null, "Field Successfully Changed!", "Success!", JOptionPane.PLAIN_MESSAGE);
+            } catch (NameAlreadyExists e) {
+                JOptionPane.showMessageDialog(null, "Name already exists!", "Error", JOptionPane.WARNING_MESSAGE);
+            }
+        } else if (userDecision == 1) {
+            equation.changeTheorem(whatIsTheChange());
+            JOptionPane.showMessageDialog(null, "Field Successfully Changed!", "Success!", JOptionPane.PLAIN_MESSAGE);
+        } else if (userDecision == 2) {
+            equation.changeCourse(whatIsTheChange());
+            JOptionPane.showMessageDialog(null, "Field Successfully Changed!", "Success!", JOptionPane.PLAIN_MESSAGE);
+        } else if (userDecision == 3) {
+            equation.changeExplanation(whatIsTheChange());
+            JOptionPane.showMessageDialog(null, "Field Successfully Changed!", "Success!", JOptionPane.PLAIN_MESSAGE);
+        } else if (userDecision == 4) {
+            equation.changeProof(whatIsTheChange());
+            JOptionPane.showMessageDialog(null, "Field Successfully Changed!", "Success!", JOptionPane.PLAIN_MESSAGE);
+        } else if (userDecision == 5) {
+            String question = JOptionPane.showInputDialog("What is your example practice problem?");
+            String answer = JOptionPane.showInputDialog("What is the answer to your practice problem?");
+            equation.addPracticeProblem(question, answer);
+            JOptionPane.showMessageDialog(null, "Thank You! Question Added!", "Success!", JOptionPane.PLAIN_MESSAGE);
+        } else if (userDecision == 6) {
+            try {
+                String answer = JOptionPane.showInputDialog("What problems would you like to delete? Type the number "
+                        + "below.\n" + equation.showNumberOfPracticeProblems() + "\n");
+                int newInput;
+                newInput = Integer.parseInt(answer) - 1;
+                equation.removePracticeProblem(newInput);
+                JOptionPane.showMessageDialog(null, "Removed the practice problem!", "Success!", JOptionPane.PLAIN_MESSAGE);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "There are no problems to delete!", "Error!", JOptionPane.ERROR_MESSAGE);
+            }
+        } else if (userDecision == 7) {
+            String[] deleteButton = {"Yes", "No"};
+            int deleteOption = JOptionPane.showOptionDialog(null, "Are you sure you want to delete the Equation?", "Delete Equation?", JOptionPane.DEFAULT_OPTION,
+                    JOptionPane.PLAIN_MESSAGE,null, deleteButton,deleteButton[0]);
+            if (deleteOption == 0) {
+                equationEntries.removeItemAt(equationEntries.getSelectedIndex());
+                listOfEquations.removeEquation(equation);
+                JOptionPane.showMessageDialog(null, "Equation Deleted", "Success!", JOptionPane.PLAIN_MESSAGE);
+            }
+        }
+    }
+
+
+
+    private void instantiateEquationEntries() {
+        equationEntries.addActionListener(e -> equationEntriesAction());
+        equationEntries.setSize(40, 20);
+    }
+
+    private void equationEntriesAction() {
+        equationText.setText(listOfEquations.getEquation(equationEntries.getSelectedIndex()).viewEquation());
+    }
+
+    //Quesitons Menu:
+
+    JPanel questionPanel;
+    JPanel questionAnswerArea;
+    JLabel questionText;
+    JLabel answerText;
+    JComboBox<String> listOfQuestions;
+    JButton showAnswerButton;
+    JButton returnToEquationsButton;
+    JPanel questionButtons;
+
+    private void startQuestionPanel() {
+        instantiateQuestionPanel();
+        questionPanel.setBackground(new java.awt.Color(255,255,104));
+        questionPanel.setLayout(new GridLayout(1,2,0,0));
+
+        addingQuestionButtons();
+        addingQuestionAnswerTextArea();
+        questionPanel.add(questionAnswerArea);
+        questionPanel.add(questionButtons);
+
+
+        equationLibrary.setVisible(false);
+        mainFrame.add(questionPanel);
+    }
+
+    private void addingQuestionAnswerTextArea() {
+        questionPanel.setLayout(new GridLayout(2,1,0,0));
+        questionPanel.add(questionText);
+        questionPanel.add(answerText);
+    }
+
+    private void addingQuestionButtons() {
+        showAnswerButton.setText("Show Answer");
+        showAnswerButton.addActionListener(e -> revealAnswerToViewer());
+
+        returnToEquationsButton.setText("Return to equations library");
+        returnToEquationsButton.addActionListener(e -> returnToEquationsAction());
+
+        questionButtons.add(listOfQuestions);
+        questionButtons.add(showAnswerButton);
+        questionButtons.add(returnToEquationsButton);
+    }
+
+    private void returnToEquationsAction() {
+        questionPanel.setVisible(false);
+        equationLibrary.setVisible(true);
+    }
+
+    private void revealAnswerToViewer() {
+        answerText.setText(listOfEquations.getEquation(equationEntries.getSelectedIndex()).getThePracticeProblemAnswer(listOfQuestions.getSelectedIndex()));
+    }
+
+    private void instantiateQuestionPanel() {
+        questionPanel = new JPanel();
+        questionText = new JLabel();
+        answerText = new JLabel();
+        listOfQuestions = new JComboBox(listOfEquations.getEquation(equationEntries.getSelectedIndex()).questionsToList().toArray());
+        listOfQuestions.addActionListener(e -> selectQuestionAction());
+        showAnswerButton = new JButton();
+        returnToEquationsButton = new JButton();
+        questionButtons = new JPanel();
+        questionAnswerArea = new JPanel();
+    }
+
+    private void selectQuestionAction() {
+        answerText.setText(null);
+        questionText.setText(listOfEquations.getEquation(equationEntries.getSelectedIndex()).getThePracticeProblem(listOfQuestions.getSelectedIndex()));
+    }
+
 }

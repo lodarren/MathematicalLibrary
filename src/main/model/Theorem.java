@@ -15,11 +15,11 @@ public class Theorem extends Entry {
     //EFFECTS: returns the fields of the equation in text format in the form Field: field.
     public String viewTheorem() {
         String text;
-        text = "Name: " + this.getName();
-        text = text +  "\nTheorem: " + this.getTheorem();
-        text = text + "\nCourse this is most relevant to: " + this.getCourse();
-        text = text + "\nDescription: " + this.getExplanations();
-        text = text + "\nProof: " + this.getProof() + "\n";
+        text = "<html><font size = '5'>Name: " + this.getName();
+        text = text +  "<br><br>Theorem: " + this.getTheorem();
+        text = text + "<br><br>Course this is most relevant to: " + this.getCourse();
+        text = text + "<br><br>Description: " + this.getExplanations();
+        text = text + "<br><br>Proof: " + this.getProof() + "<br></font></html>";
         return text;
     }
 
@@ -27,10 +27,10 @@ public class Theorem extends Entry {
     //EFFECTS: returns the fields of the equation in text format in the form Field: field. without the proof
     public String viewTheoremLessInfo() {
         String text;
-        text = "Name: " + this.getName();
-        text = text +  "\nTheorem: " + this.getTheorem();
-        text = text + "\nCourse this is most relevant to: " + this.getCourse();
-        text = text + "\nDescription: " + this.getExplanations() + "\n";
+        text = "<html><font size = '5'>Name: " + this.getName();
+        text = text +  "<br><br>Theorem: " + this.getTheorem();
+        text = text + "<br><br>Course this is most relevant to: " + this.getCourse();
+        text = text + "<br><br>Description: " + this.getExplanations() + "<br></font></html>";
         return text;
     }
 
