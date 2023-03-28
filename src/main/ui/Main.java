@@ -7,16 +7,16 @@ import java.io.FileNotFoundException;
 public class Main extends JFrame {
 
     public static void main(String[] args) {
-
         try {
             new LibraryGraphicalInterface();
         } catch (FileNotFoundException e) {
             System.out.print("Unable to load application, JSON file cannot be found!");
         }
+        /*
+        This is the previous working program, one can uncomment this to return back to the old UI
+        (which is still functional)
 
-    //This is the previous working program, we are going to change this to LibraryGUI for now for testing
-
-
-        //new LibraryGUI();
+        //new Library();
+        */
     }
 }

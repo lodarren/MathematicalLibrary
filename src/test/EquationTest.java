@@ -5,6 +5,7 @@ import model.exceptions.IndexNotThere;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -178,6 +179,27 @@ public class EquationTest {
         testEquation.addAllPracticeAndAnswers(problems, answers);
         assertEquals(2, testEquation.numberOfPracticeProblems());
         assertEquals(2, testEquation.numberOfAnswers());
+    }
+
+    @Test
+    void questionToStringListTest() {
+        ArrayList<String> realProblems = new ArrayList<>();
+        ArrayList<String> realAnswers = new ArrayList<>();
+        realProblems.add("A");
+        realProblems.add("B");
+        realAnswers.add("C");
+        realAnswers.add("D");
+        testEquation.addAllPracticeAndAnswers(realProblems, realAnswers);
+
+        ArrayList<String> problems = new ArrayList<>();
+        problems.add("Question 1");
+        problems.add("Question 2");
+
+        assertEquals(testEquation.questionsToList(), problems);
+        testEquation.removePracticeProblem(1);
+
+        problems.remove("Question 2");
+        assertEquals(testEquation.questionsToList(), problems);
     }
 
 
