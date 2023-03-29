@@ -205,12 +205,12 @@ public class LibraryGraphicalInterface extends JFrame {
     //EFFECTS: checks if the request is a Theorem, if it is, then it adds it to listOfTheorem, otherwise adds it
     //         to ListOfEquation.
     private void convertingRequest(Request request) {
-        listOfRequests.removeRequest(request);
         if (request.isItATheorem()) {
             listOfTheorems.addTheorem(request.requestToTheorem());
         } else {
             listOfEquations.addEquation(request.requestToEquation());
         }
+        listOfRequests.removeRequest(request);
     }
 
     //EFFECTS: Creates the screen for the library application.
@@ -782,7 +782,9 @@ public class LibraryGraphicalInterface extends JFrame {
     //EFFECTS: makes the text of requestText display the properties of the request selected by the listOfRequests
     //         ComboBox.
     private void requestEntriesAction() {
-        requestText.setText(listOfRequests.getRequest(requestEntries.getSelectedIndex()).viewRequest());
+        if (requestEntries.getSelectedIndex() > -1) {
+            requestText.setText(listOfRequests.getRequest(requestEntries.getSelectedIndex()).viewRequest());
+        }
     }
 
     //EFFECTS: sets up the fields to addingRequestButtons.
@@ -922,11 +924,13 @@ public class LibraryGraphicalInterface extends JFrame {
         Request request = listOfRequests.getRequest(requestEntries.getSelectedIndex());
         if (request.getEstimatedCompletion() != 100) {
             if (submitIfNotCompletePrompt()) {
-                convertingRequest(request);
                 requestEntries.removeItem(request.getName());
+                convertingRequest(request);
                 JOptionPane.showMessageDialog(null, "Request submitted to main library!!!",
                         "Success!", JOptionPane.PLAIN_MESSAGE);
                 if (listOfRequests.isListEmpty()) {
+                    JOptionPane.showMessageDialog(null, "There are no more requests, returning to "
+                            + "Main Menu!", "Thank you for clearing the requests!", JOptionPane.PLAIN_MESSAGE);
                     requestToMainMenu();
                 }
             }
