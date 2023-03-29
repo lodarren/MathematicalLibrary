@@ -37,8 +37,20 @@ as given the option to start from an empty library.
 
 # Instructions for Grader
 
-- You can generate the first required action related to adding Xs to a Y by...
-- You can generate the second required action related to adding Xs to a Y by...
-- You can locate my visual component by...
-- You can save the state of my application by...
-- You can reload the state of my application by...
+- You can generate the first required action related to adding a Request to the TheoremLibrary or EquationLibrary by
+first entering the "Open Request Library!", selecting "View Requests", and then by clicking on "Submit Request" (if the 
+entry is not completed, it will ask if you want to submit the entry, select "Submit" for the time being.). Upon completion, 
+if this entry was an equation then it will be in the "Equation Library", and if the entry was a theorem then it will be 
+in the "Theorem Library". To access either one of these libraries, simply click on "Return to Main Menu" on the right of
+the screen and enter the designated library. Your theorem/equation will be in the dropdown menu in the top right corner. 
+- You can generate the second required action related to adding a Request to the Request Library by starting the 
+program, clicking on the button that says "Make Requests", and specify the request name, type, derivation etc. Upon 
+completion, you will be returned to the main menu. Please click on "Open Request Library!" and click on "View Requests". 
+Your request you just entered will be on the drop-down menu in the top right corner. 
+- You can locate the visual component of the program when loading entering the main menu of the program. You will be 
+prompted with a picture of multiple math equations in the center of the screen. 
+- You can save the state of my application by clicking the button "Goodbye!". You will be prompted if you would like to
+save the application. Click "Save Entries", if you would like to save the application (other options will result in no \
+saves). 
+- When loading the application, you will be prompted if you would like to load the previous save file. If "Load save" is 
+selected, then the previous save file will be loaded (other options will result in no entries added to any library). 
