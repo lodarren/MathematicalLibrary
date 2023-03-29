@@ -149,8 +149,8 @@ public class EquationTest {
 
     @Test
     void viewEquationTest() {
-        assertEquals("<html><font size = '5'><br>Name: name<br>Statement: theorem<br>Course this is most "
-               + "relevant to: course<br>Description: explanation<br>Derivation: proof<br></font></html>",
+        assertEquals("<html><font size = '5'><br><br>Name: name<br><br>Statement: theorem<br><br>Course this is most "
+               + "relevant to: course<br><br>Description: explanation<br><br>Derivation: proof<br><br></font></html>",
                 testEquation.viewEquation());
     }
 
@@ -201,6 +201,4 @@ public class EquationTest {
         problems.remove("Question 2");
         assertEquals(testEquation.questionsToList(), problems);
     }
-
-
 }

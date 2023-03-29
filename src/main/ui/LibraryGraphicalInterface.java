@@ -12,15 +12,16 @@ import java.awt.*;
 import java.awt.event.WindowEvent;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.Scanner;
 
 // Represents the full list of finished mathematical entries in the library. There are three sections of the library
 // That the user can explore, one containing equations, one containing theorems and the last one containing requests.
 
 public class LibraryGraphicalInterface extends JFrame {
+    //These fields represent the libraries one can enter and view entries from.
     ListOfTheorems listOfTheorems;
     ListOfEquations listOfEquations;
     ListOfRequests listOfRequests;
+    //These fields are all related to saving and loading the library
     private JsonWriter jsonWriterTheorem;
     private JsonReader jsonReaderTheorem;
     private JsonWriter jsonWriterEquation;
@@ -30,13 +31,13 @@ public class LibraryGraphicalInterface extends JFrame {
     private static final String JSON_STORE_THEOREM = "./data/ListOfTheoremSave.json";
     private static final String JSON_STORE_EQUATION = "./data/ListOfEquationSave.json";
     private static final String JSON_STORE_REQUEST = "./data/ListOfRequestSave.json";
-    private Scanner input;
 
+    //This is the main window where the application takes place
     JFrame mainFrame;
 
-    //Welcome Screen
+    //These fields are all related to the welcome screen that appears when the user starts the application
     JPanel welcomeScreen;
-    JPanel buttons;
+    JPanel welcomeButtons;
     Border border;
     JButton openListOfTheorem;
     JButton openListOfEquation;
@@ -45,7 +46,7 @@ public class LibraryGraphicalInterface extends JFrame {
     JLabel welcomeText;
     JLabel instructionsText;
 
-    //ListOfTheoremScreen
+    //These fields are all related to the Theorem Library.
     JPanel theoremLibrary;
     JComboBox<String> theoremEntries;
     JButton showProofButton;
@@ -54,7 +55,7 @@ public class LibraryGraphicalInterface extends JFrame {
     JPanel theoremButtons;
     JButton returnToMainMenuButton;
 
-    //ListOfEquationScreen
+    //These fields are all related to the Equation Library.
     JComboBox<String> equationEntries;
     JPanel equationLibrary;
     JPanel equationButtons;
@@ -63,7 +64,7 @@ public class LibraryGraphicalInterface extends JFrame {
     JButton editEquation;
     JButton viewQuestionButton;
 
-    //ListOfRequest Screen
+    //These fields are all related to the request Library.
     JPanel requestPanel;
     JLabel requestText;
     JComboBox<String> requestEntries;
@@ -72,7 +73,7 @@ public class LibraryGraphicalInterface extends JFrame {
     JButton requestToMainMenuButton;
     JPanel requestButtons;
 
-    //Questions Screen
+    //These fields are all related to the Practice Problem section of a Equation.
     JPanel questionPanel;
     JPanel questionAnswerArea;
     JLabel questionText;
@@ -81,7 +82,6 @@ public class LibraryGraphicalInterface extends JFrame {
     JButton showAnswerButton;
     JButton returnToEquationsButton;
     JPanel questionButtons;
-
 
 
     //EFFECTS: Creates a new library object, throws the FileNotFoundException if it occurs
@@ -96,7 +96,7 @@ public class LibraryGraphicalInterface extends JFrame {
         System.out.println("\nSee You Next Time!\n");
     }
 
-    //EFFECTS: used to instantiate listOfEquation, listOfTheorem and listOfRequests
+    //EFFECTS: used to instantiate listOfEquation, listOfTheorem and listOfRequests and the GUI
     public void setup() {
         mainFrame = new JFrame();
         makeScreen();
@@ -109,13 +109,13 @@ public class LibraryGraphicalInterface extends JFrame {
         jsonReaderEquation = new JsonReader(JSON_STORE_EQUATION);
         jsonWriterRequest = new JsonWriter(JSON_STORE_REQUEST);
         jsonReaderRequest = new JsonReader(JSON_STORE_REQUEST);
-
         instantiateGUI();
     }
 
+    //Instantiates the GUI components that are related to the welcome screen.
     void instantiateGUI() {
         welcomeScreen = new JPanel();
-        buttons = new JPanel();
+        welcomeButtons = new JPanel();
         border = BorderFactory.createLineBorder(Color.black,3);
         openListOfTheorem = new JButton();
         openListOfEquation = new JButton();
@@ -127,7 +127,7 @@ public class LibraryGraphicalInterface extends JFrame {
     }
 
 
-    //EFFECTS: loads the JSON file if the user selects a key other than n
+    //EFFECTS: loads the JSON file if the user selects yes on the window pop up
     private void doYouWantToLoadLibrary() {
         //Code quote
         String[] buttonTexts = {"Load save", "don't load save"};
@@ -144,7 +144,22 @@ public class LibraryGraphicalInterface extends JFrame {
         }
     }
 
-    //EFFECTS: saves the JSON file if the user selects a key other than n
+    //EFFECTS: Attempts to load the JSON file. Returns an error if there is no save file found. Loads the program after.
+    public void loadButtonAction() {
+        try {
+            listOfTheorems = jsonReaderTheorem.readTheorems();
+            listOfEquations = jsonReaderEquation.readEquations();
+            listOfRequests = jsonReaderRequest.readRequests();
+            System.out.print("Loaded the library!\n");
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(mainFrame, "No save file found!",
+                    "ERROR", JOptionPane.ERROR_MESSAGE);
+        } finally {
+            instantiateMainMenu();
+        }
+    }
+
+    //EFFECTS: Saves to the JSON file when the user clicks yes, afterwards closes the program.
     private void doYouWantToSaveLibrary() {
         //Code quote
         String[] buttonTexts = {"Save Entries"};
@@ -173,14 +188,21 @@ public class LibraryGraphicalInterface extends JFrame {
     }
 
 
-    //EFFECTS: Takes in a user input and returns it. CHANGE
-    private String whatIsTheChange() {
-        return JOptionPane.showInputDialog("What is the proposed change to the field?");
+    //EFFECTS: Displays a pop-up window and returns the input that the user puts in. If the input is cancelled then it
+    //         returns the old input.
+    private String whatIsTheChange(String oldInput) {
+        String change =  JOptionPane.showInputDialog("What is the proposed change to the field?");
+        if (change == null) {
+            return oldInput;
+        }
+        JOptionPane.showMessageDialog(
+                null, "Field Successfully Changed!", "Success!", JOptionPane.PLAIN_MESSAGE);
+        return change;
     }
 
 
-    //EFFECTS: checks if the request is a Theorem, if it is, then it adds it to theorem, otherwise adds it
-    //         to equation.
+    //EFFECTS: checks if the request is a Theorem, if it is, then it adds it to listOfTheorem, otherwise adds it
+    //         to ListOfEquation.
     private void convertingRequest(Request request) {
         listOfRequests.removeRequest(request);
         if (request.getType().equals("Theorem")) {
@@ -190,16 +212,15 @@ public class LibraryGraphicalInterface extends JFrame {
         }
     }
 
-    //Starting here is the new piece of code I'm going to add
-
+    //EFFECTS: Creates the screen for the library application.
     void makeScreen() {
         mainFrame.setTitle("LibraryApplication");
-        //mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         mainFrame.setResizable(false);
         mainFrame.setSize(1024,768);
         mainFrame.setVisible(true);
     }
 
+    //EFFECTS: Sets up the welcome text for the welcome screen of the library.
     void makeWelcomeText() {
         welcomeText.setText("Welcome To The Library!");
         welcomeText.setFont(new Font("Computer Modern", Font.PLAIN, 60));
@@ -210,6 +231,7 @@ public class LibraryGraphicalInterface extends JFrame {
         welcomeText.setOpaque(true);
     }
 
+    //EFFECTS: Creates the welcome buttons for the library and sets their required actions.
     void makeWelcomeButtons() {
         openListOfTheorem = new JButton();
         openListOfTheorem.setText("Open Theorem Library!");
@@ -232,6 +254,8 @@ public class LibraryGraphicalInterface extends JFrame {
         leaveButton.setFocusable(true);
     }
 
+    //EFFECTS: Opens the theorem library. If there are no entries in the theorem library then it prompts the user to
+    //         make some requests.
     void openListOfTheoremAction() {
         try {
             makeTheoremMenu();
@@ -240,6 +264,8 @@ public class LibraryGraphicalInterface extends JFrame {
         }
     }
 
+    //EFFECTS: Opens the equation library. If there are no entries in the theorem library then it prompts the user to
+    //         make some requests.
     void openListOfEquationAction() {
         try {
             makeEquationMenu();
@@ -248,15 +274,17 @@ public class LibraryGraphicalInterface extends JFrame {
         }
     }
 
-    void buttonsToPanel() {
-        buttons.setBackground(Color.gray);
-        buttons.setLayout(new GridLayout(1,4,0,0));
-        buttons.add(openListOfTheorem);
-        buttons.add(openListOfEquation);
-        buttons.add(openListOfRequest);
-        buttons.add(leaveButton);
+    //EFFECTS: Sets up the welcome buttons panel and adds the buttons to the panel.
+    void buttonsToWelcomeButtonsPanel() {
+        welcomeButtons.setBackground(Color.gray);
+        welcomeButtons.setLayout(new GridLayout(1,4,0,0));
+        welcomeButtons.add(openListOfTheorem);
+        welcomeButtons.add(openListOfEquation);
+        welcomeButtons.add(openListOfRequest);
+        welcomeButtons.add(leaveButton);
     }
 
+    //EFFECTS: Sets up the text for the instruction text in the library.
     void instantiateInstructionText() {
         instructionsText.setText("Please click on the following library you would like to enter!");
         instructionsText.setFont(new Font("Computer Modern", Font.PLAIN, 20));
@@ -269,68 +297,46 @@ public class LibraryGraphicalInterface extends JFrame {
         instructionsText.setOpaque(true);
     }
 
+    //EFFECTS: Adds the panels related to the welcome panel to the welcome panel
     void addingToWelcomeScreen() {
         welcomeScreen.setLayout(new GridLayout(3,1,0,0));
         welcomeScreen.setBackground(Color.gray);
         welcomeScreen.add(welcomeText);
         welcomeScreen.add(instructionsText);
-        welcomeScreen.add(buttons);
+        welcomeScreen.add(welcomeButtons);
         welcomeScreen.setVisible(true);
     }
 
-    public void loadButtonAction() {
-        try {
-            listOfTheorems = jsonReaderTheorem.readTheorems();
-            listOfEquations = jsonReaderEquation.readEquations();
-            listOfRequests = jsonReaderRequest.readRequests();
-            System.out.print("Loaded the library!\n");
-        } catch (IOException e) {
-            JOptionPane.showMessageDialog(mainFrame, "No save file found!",
-                    "ERROR", JOptionPane.ERROR_MESSAGE);
-        } finally {
-            startMainMenu();
-        }
-    }
-
-    public void startMainMenu() {
-        instantiateMainMenu();
-    }
-
+    //EFFECTS: Instantiates the welcome panel and then adds it to the mainFrame.
     private void instantiateMainMenu() {
         makeWelcomeText();
         makeWelcomeButtons();
         instantiateInstructionText();
-        buttonsToPanel();
+        buttonsToWelcomeButtonsPanel();
         addingToWelcomeScreen();
         mainFrame.add(welcomeScreen);
         mainFrame.setVisible(true);
     }
 
+    // EFFECTS: Tells the user to add requests if the theorem library is empty, otherwise instantiates the theorem
+    //          library.
     private void makeTheoremMenu() throws IndexNotThere {
         if (listOfTheorems.isListEmpty()) {
             throw new IndexNotThere();
         }
+
         instantiateTheoremMenu();
         theoremLibrary.setLayout(new GridLayout(1,2,0,0));
 
-        theoremLibrary.add(theoremText);
         addingTheoremButtons();
+        theoremLibrary.add(theoremText);
         theoremLibrary.add(theoremButtons);
 
         welcomeScreen.setVisible(false);
         mainFrame.add(theoremLibrary);
     }
 
-    private void addingTheoremButtons() {
-        theoremButtons.add(theoremEntries);
-        theoremButtons.add(showProofButton);
-        theoremButtons.add(editTheorem);
-        theoremButtons.add(returnToMainMenuButton);
-        theoremButtons.setBackground(new java.awt.Color(51,204,255));
-        theoremButtons.setOpaque(true);
-    }
-
-
+    //EFFECTS: Instantiates all the buttons related to the theorem library.
     private void instantiateTheoremMenu() {
         theoremLibrary = new JPanel();
         theoremButtons = new JPanel();
@@ -359,15 +365,41 @@ public class LibraryGraphicalInterface extends JFrame {
         returnToMainMenuButton.setFocusable(true);
     }
 
+    //EFFECTS: Adds the buttons related to the theoremButtons Panel to theoremButtons. It also sets its background
+    //         colour.
+    private void addingTheoremButtons() {
+        theoremButtons.add(theoremEntries);
+        theoremButtons.add(showProofButton);
+        theoremButtons.add(editTheorem);
+        theoremButtons.add(returnToMainMenuButton);
+        theoremButtons.setBackground(new java.awt.Color(51,204,255));
+        theoremButtons.setOpaque(true);
+    }
+
+    //EFFECTS: Switches from the welcome panel to the theoremLibrary panel.
     private void theoremToMainMenu() {
         theoremLibrary.setVisible(false);
         welcomeScreen.setVisible(true);
     }
 
-    //"Press 1 to change the name of the entry.\nPress 2 to change the theorem.\nPress 3"
-    //        + " to change the course it is most useful for.\nPress 4 to change the description."
-    //       + "\nPress 5 to change the Proof.\nPress 6 to delete this entry.\n"
+    //EFFECTS: Sets the text of the theoremText to show its other fields minus the proof.
+    private void theoremEntriesAction() {
+        theoremText.setText(listOfTheorems.getTheorem(theoremEntries.getSelectedIndex()).viewTheoremLessInfo());
+    }
 
+    //EFFECTS: Sets the text of theoremText to show the proof as well as its other fields in the theorem.
+    private void showAdditionalInfoMethod() {
+        theoremText.setText(listOfTheorems.getTheorem(theoremEntries.getSelectedIndex()).viewTheorem());
+    }
+
+    //EFFECTS: sets up the ComboBox related to viewing the theorem entries.
+    private void instantiateTheoremEntries() {
+        theoremEntries.addActionListener(e -> theoremEntriesAction());
+        theoremEntries.setSize(40, 20);
+    }
+
+    // EFFECTS: Prompts the user to choose which field of the theorem they would like to change. It then asks for the
+    //          suggested change, and then adds it if it is a valid change.
     private void changeTheoremPrompt(Theorem theorem) {
         String[] buttonTexts = {"Change Name", "Change theorem", "Change course", "Change description", "Change proof",
                 "Delete entry"};
@@ -375,57 +407,53 @@ public class LibraryGraphicalInterface extends JFrame {
                         + "like to change. ", "Change Theorem?", JOptionPane.DEFAULT_OPTION,
                 JOptionPane.PLAIN_MESSAGE,null, buttonTexts,buttonTexts[0]);
         if (userDecision == 0) {
-            String answer = whatIsTheChange();
+            changeTheoremNamePrompt(theorem);
+        } else if (userDecision == 1) {
+            theorem.changeTheorem(whatIsTheChange(theorem.getTheorem()));
+        } else if (userDecision == 2) {
+            theorem.changeCourse(whatIsTheChange(theorem.getCourse()));
+        } else if (userDecision == 3) {
+            theorem.changeExplanation(whatIsTheChange(theorem.getExplanations()));
+        } else if (userDecision == 4) {
+            theorem.changeProof(whatIsTheChange(theorem.getProof()));
+        } else if (userDecision == 5) {
+            deleteTheoremPrompt(theorem);
+        }
+    }
+
+    //EFFECTS: prompts the user to change the name of the theorem. If the change is not null, it then checks if the name
+    //         is already taken. If it is already taken, it tells the user the name already exists.
+    private void changeTheoremNamePrompt(Theorem theorem) {
+        String change = JOptionPane.showInputDialog("What is the proposed change to the field?");
+        if (change != null) {
             try {
-                listOfTheorems.changeTheoremNameAndCheckExistence(theorem, answer);
+                listOfTheorems.changeTheoremNameAndCheckExistence(theorem, change);
                 JOptionPane.showMessageDialog(null, "Field Successfully Changed!", "Success!",
                         JOptionPane.PLAIN_MESSAGE);
             } catch (NameAlreadyExists e) {
                 JOptionPane.showMessageDialog(null, "Name already exists!", "Error", JOptionPane.WARNING_MESSAGE);
             }
-        } else if (userDecision == 1) {
-            theorem.changeTheorem(whatIsTheChange());
-            JOptionPane.showMessageDialog(null, "Field Successfully Changed!", "Success!", JOptionPane.PLAIN_MESSAGE);
-        } else if (userDecision == 2) {
-            theorem.changeCourse(whatIsTheChange());
-            JOptionPane.showMessageDialog(null, "Field Successfully Changed!", "Success!", JOptionPane.PLAIN_MESSAGE);
-        } else if (userDecision == 3) {
-            theorem.changeExplanation(whatIsTheChange());
-            JOptionPane.showMessageDialog(null, "Field Successfully Changed!", "Success!", JOptionPane.PLAIN_MESSAGE);
-        } else if (userDecision == 4) {
-            theorem.changeProof(whatIsTheChange());
-            JOptionPane.showMessageDialog(null, "Field Successfully Changed!", "Success!", JOptionPane.PLAIN_MESSAGE);
-        } else if (userDecision == 5) {
-            String[] deleteButton = {"Yes", "No"};
-            int deleteOption = JOptionPane.showOptionDialog(null, "Are you sure you want to delete the theorem?",
-                    "Delete Theorem?", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,null,
-                    deleteButton,deleteButton[0]);
-            if (deleteOption == 0) {
-                theoremEntries.removeItemAt(theoremEntries.getSelectedIndex());
-                listOfTheorems.removeTheorem(theorem);
-                JOptionPane.showMessageDialog(null, "Theorem Deleted", "Success!", JOptionPane.PLAIN_MESSAGE);
-            }
         }
     }
 
-
-    private void showAdditionalInfoMethod() {
-        theoremText.setText(listOfTheorems.getTheorem(theoremEntries.getSelectedIndex()).viewTheorem());
+    //EFFECTS: Asks the user if they would like to delete the theorem. If yes, it tells the user that the deletion was
+    //         successful.
+    private void deleteTheoremPrompt(Theorem theorem) {
+        String[] deleteButton = {"Yes", "No"};
+        int deleteOption = JOptionPane.showOptionDialog(null, "Are you sure you want to delete the theorem?",
+                "Delete Theorem?", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null,
+                deleteButton, deleteButton[0]);
+        if (deleteOption == 0) {
+            theoremEntries.removeItemAt(theoremEntries.getSelectedIndex());
+            listOfTheorems.removeTheorem(theorem);
+            JOptionPane.showMessageDialog(null, "Theorem Deleted", "Success!", JOptionPane.PLAIN_MESSAGE);
+        }
     }
-
-    private void instantiateTheoremEntries() {
-        theoremEntries.addActionListener(e -> theoremEntriesAction());
-        theoremEntries.setSize(40, 20);
-    }
-
-    private void theoremEntriesAction() {
-        theoremText.setText(listOfTheorems.getTheorem(theoremEntries.getSelectedIndex()).viewTheoremLessInfo());
-    }
-
 
     //Starting here is the list of equations section
 
-
+    //EFFECTS: Sets up the equationPanel screen if listOfRequests is not empty. If it is empty, then it tells the user
+    //         to make some requests.
     private void makeEquationMenu() throws IndexNotThere {
         if (listOfRequests.isListEmpty()) {
             throw new IndexNotThere();
@@ -443,21 +471,7 @@ public class LibraryGraphicalInterface extends JFrame {
         mainFrame.add(equationLibrary);
     }
 
-    private void addingEquationButtons() {
-        equationButtons.add(equationEntries);
-        equationButtons.add(editEquation);
-        equationButtons.add(viewQuestionButton);
-        equationButtons.add(equationToMainMenu);
-        equationButtons.setBackground(new java.awt.Color(102,255,102));
-        equationButtons.setOpaque(true);
-    }
-
-    private void equationToMainMenu() {
-        equationLibrary.setVisible(false);
-        welcomeScreen.setVisible(true);
-    }
-
-
+    // EFFECTS: instantiates the equationMenu elements.
     private void instantiateEquationMenu() {
         equationLibrary = new JPanel();
         equationButtons = new JPanel();
@@ -487,15 +501,35 @@ public class LibraryGraphicalInterface extends JFrame {
     }
 
 
-    /*
-    "Press 1 to change the name of the entry.\nPress 2 to change the theorem.\nPress 3"
-            + " to change the course it is most useful for.\nPress 4 to change the description.\nPress 5 to"
-            + " change the Proof.\nPress 6 to add practice problems.\nPress 7 to delete specific practice "
-            + "problems.\nPress 8 to delete this entry.\n"
+    //EFFECTS: instantiates and sets up the equationEntries ComboBox.
+    private void instantiateEquationEntries() {
+        equationEntries.addActionListener(e -> equationEntriesAction());
+        equationEntries.setSize(40, 20);
+    }
 
-     */
+    //EFFECTS: sets the text of the equationText to the fields of the equation currently selected by equationEntries.
+    private void equationEntriesAction() {
+        equationText.setText(listOfEquations.getEquation(equationEntries.getSelectedIndex()).viewEquation());
+    }
 
+    //EFFECTS: adds the buttons related to the equation screen to equationButtons.
+    private void addingEquationButtons() {
+        equationButtons.add(equationEntries);
+        equationButtons.add(editEquation);
+        equationButtons.add(viewQuestionButton);
+        equationButtons.add(equationToMainMenu);
+        equationButtons.setBackground(new java.awt.Color(102,255,102));
+        equationButtons.setOpaque(true);
+    }
 
+    //EFFECTS: returns from the equation library panel to the welcome panel.
+    private void equationToMainMenu() {
+        equationLibrary.setVisible(false);
+        welcomeScreen.setVisible(true);
+    }
+
+    // EFFECTS: Prompts the user what field of the equation they would like to change, it prompts the user the change
+    //          was successful if the change was a valid change.
     private void changeEquationPrompt(Equation equation) {
         String[] buttonTexts = {"Change Name", "Change theorem", "Change course", "Change description",
                 "Change Derivation", "Add practice problems", "Delete practice problems", "Delete entry"};
@@ -503,71 +537,81 @@ public class LibraryGraphicalInterface extends JFrame {
                         + "like to change. ", "Change Equation?", JOptionPane.DEFAULT_OPTION,
                 JOptionPane.PLAIN_MESSAGE,null, buttonTexts,buttonTexts[0]);
         if (userDecision == 0) {
-            String answer = whatIsTheChange();
-            try {
-                listOfEquations.changeEquationNameAndCheckExistence(equation, answer);
-                JOptionPane.showMessageDialog(null, "Field Successfully Changed!",
-                        "Success!", JOptionPane.PLAIN_MESSAGE);
-            } catch (NameAlreadyExists e) {
-                JOptionPane.showMessageDialog(null, "Name already exists!",
-                        "Error", JOptionPane.WARNING_MESSAGE);
-            }
+            changeEquationNamePrompt(equation);
         } else if (userDecision == 1) {
-            equation.changeTheorem(whatIsTheChange());
-            JOptionPane.showMessageDialog(null, "Field Successfully Changed!", "Success!", JOptionPane.PLAIN_MESSAGE);
+            equation.changeTheorem(whatIsTheChange(equation.getTheorem()));
         } else if (userDecision == 2) {
-            equation.changeCourse(whatIsTheChange());
-            JOptionPane.showMessageDialog(null, "Field Successfully Changed!", "Success!", JOptionPane.PLAIN_MESSAGE);
+            equation.changeCourse(whatIsTheChange(equation.getCourse()));
         } else if (userDecision == 3) {
-            equation.changeExplanation(whatIsTheChange());
-            JOptionPane.showMessageDialog(null, "Field Successfully Changed!", "Success!", JOptionPane.PLAIN_MESSAGE);
+            equation.changeExplanation(whatIsTheChange(equation.getExplanations()));
         } else if (userDecision == 4) {
-            equation.changeProof(whatIsTheChange());
-            JOptionPane.showMessageDialog(null, "Field Successfully Changed!", "Success!", JOptionPane.PLAIN_MESSAGE);
+            equation.changeProof(whatIsTheChange(equation.getProof()));
         } else if (userDecision == 5) {
-            String question = JOptionPane.showInputDialog("What is your example practice problem?");
-            String answer = JOptionPane.showInputDialog("What is the answer to your practice problem?");
-            equation.addPracticeProblem(question, answer);
-            JOptionPane.showMessageDialog(null, "Thank You! Question Added!", "Success!", JOptionPane.PLAIN_MESSAGE);
+            addPracticeProblemPrompt(equation);
         } else if (userDecision == 6) {
-            try {
-                String answer = JOptionPane.showInputDialog("What problems would you like to delete? Type the number "
-                        + "below.\n" + equation.showNumberOfPracticeProblems() + "\n");
-                int newInput;
-                newInput = Integer.parseInt(answer) - 1;
-                equation.removePracticeProblem(newInput);
-                JOptionPane.showMessageDialog(null, "Removed the practice problem!",
-                        "Success!", JOptionPane.PLAIN_MESSAGE);
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, "There are no problems to delete!",
-                        "Error!", JOptionPane.ERROR_MESSAGE);
-            }
+            deletePracticeProblemPrompt(equation);
         } else if (userDecision == 7) {
-            String[] deleteButton = {"Yes", "No"};
-            int deleteOption = JOptionPane.showOptionDialog(null, "Are you sure you want to delete the Equation?",
-                    "Delete Equation?", JOptionPane.DEFAULT_OPTION,
-                    JOptionPane.PLAIN_MESSAGE,null, deleteButton,deleteButton[0]);
-            if (deleteOption == 0) {
-                equationEntries.removeItemAt(equationEntries.getSelectedIndex());
-                listOfEquations.removeEquation(equation);
-                JOptionPane.showMessageDialog(null, "Equation Deleted", "Success!", JOptionPane.PLAIN_MESSAGE);
+            deleteEquationPrompt(equation);
+        }
+    }
+
+    //EFFECTS: prompts the user to change the name of the equation. If the change is not null, then it changes the name
+    //         of the equation if it already hasn't been used by another equation.
+    private void changeEquationNamePrompt(Equation equation) {
+        String change = JOptionPane.showInputDialog("What is the proposed change to the field?");
+        if (change != null) {
+            try {
+                listOfEquations.changeEquationNameAndCheckExistence(equation, change);
+                JOptionPane.showMessageDialog(null, "Field Successfully Changed!", "Success!",
+                        JOptionPane.PLAIN_MESSAGE);
+            } catch (NameAlreadyExists e) {
+                JOptionPane.showMessageDialog(null, "Name already exists!", "Error", JOptionPane.WARNING_MESSAGE);
             }
         }
     }
 
-
-
-    private void instantiateEquationEntries() {
-        equationEntries.addActionListener(e -> equationEntriesAction());
-        equationEntries.setSize(40, 20);
+    //EFFECTS: prompts the user to delete the equation, if "yes" is selected, then it tells the user that the deletion
+    //         was successful.
+    private void deleteEquationPrompt(Equation equation) {
+        String[] deleteButton = {"Yes", "No"};
+        int deleteOption = JOptionPane.showOptionDialog(null, "Are you sure you want to delete the Equation?",
+                "Delete Equation?", JOptionPane.DEFAULT_OPTION,
+                JOptionPane.PLAIN_MESSAGE,null, deleteButton,deleteButton[0]);
+        if (deleteOption == 0) {
+            equationEntries.removeItemAt(equationEntries.getSelectedIndex());
+            listOfEquations.removeEquation(equation);
+            JOptionPane.showMessageDialog(null, "Equation Deleted", "Success!", JOptionPane.PLAIN_MESSAGE);
+        }
     }
 
-    private void equationEntriesAction() {
-        equationText.setText(listOfEquations.getEquation(equationEntries.getSelectedIndex()).viewEquation());
+    //EFFECTS: prompts the user to delete the practice problem. !!!
+    private void deletePracticeProblemPrompt(Equation equation) {
+        try {
+            String answer = JOptionPane.showInputDialog("What problems would you like to delete? Type the number "
+                    + "below.\n" + equation.showNumberOfPracticeProblems() + "\n");
+            int newInput;
+            newInput = Integer.parseInt(answer) - 1;
+            equation.removePracticeProblem(newInput);
+            JOptionPane.showMessageDialog(null, "Removed the practice problem!",
+                    "Success!", JOptionPane.PLAIN_MESSAGE);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "There are no problems to delete!",
+                    "Error!", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    //EFFECTS: prompts the user to add the question and the answer of their suggested practice problem. Tells the user
+    //         the addition was successful upon completion.
+    private void addPracticeProblemPrompt(Equation equation) {
+        String question = JOptionPane.showInputDialog("What is your example practice problem?");
+        String answer = JOptionPane.showInputDialog("What is the answer to your practice problem?");
+        equation.addPracticeProblem(question, answer);
+        JOptionPane.showMessageDialog(null, "Thank You! Question Added!", "Success!", JOptionPane.PLAIN_MESSAGE);
     }
 
     //Questions Menu:
 
+    //EFFECTS: sets up the elements that are related to questionPanel.
     private void startQuestionPanel() {
         instantiateQuestionPanel();
         questionPanel.setLayout(new GridLayout(1,2,0,0));
@@ -577,45 +621,12 @@ public class LibraryGraphicalInterface extends JFrame {
         questionPanel.add(questionAnswerArea);
         questionPanel.add(questionButtons);
 
-
         equationLibrary.setVisible(false);
         mainFrame.add(questionPanel);
     }
 
-    private void addingQuestionAnswerTextArea() {
-        questionAnswerArea.setLayout(new GridLayout(2,1,0,0));
-        questionAnswerArea.add(questionText);
-        questionText.setVerticalTextPosition(JLabel.TOP);
-        questionText.setHorizontalAlignment(JLabel.CENTER);
-        questionAnswerArea.add(answerText);
-        answerText.setVerticalTextPosition(JLabel.TOP);
-        answerText.setHorizontalAlignment(JLabel.CENTER);
-    }
 
-    private void addingQuestionButtons() {
-        showAnswerButton.setText("Show Answer");
-        showAnswerButton.addActionListener(e -> revealAnswerToViewer());
-
-        returnToEquationsButton.setText("Return to equations library");
-        returnToEquationsButton.addActionListener(e -> returnToEquationsAction());
-
-        questionButtons.setBackground(new java.awt.Color(255,255,104));
-        questionButtons.add(listOfQuestions);
-        questionButtons.add(showAnswerButton);
-        questionButtons.add(returnToEquationsButton);
-    }
-
-    private void returnToEquationsAction() {
-        questionPanel.setVisible(false);
-        equationLibrary.setVisible(true);
-    }
-
-    private void revealAnswerToViewer() {
-        int index = equationEntries.getSelectedIndex();
-        answerText.setText("Answer: "
-                + listOfEquations.getEquation(index).getThePracticeProblemAnswer(listOfQuestions.getSelectedIndex()));
-    }
-
+    //EFFECTS: instantiates the questionPanel elements.
     private void instantiateQuestionPanel() {
         int index = equationEntries.getSelectedIndex();
         questionPanel = new JPanel();
@@ -629,6 +640,45 @@ public class LibraryGraphicalInterface extends JFrame {
         questionAnswerArea = new JPanel();
     }
 
+    //EFFECTS: sets up the fields related to the panel displaying the practice problem and answer.
+    private void addingQuestionAnswerTextArea() {
+        questionAnswerArea.setLayout(new GridLayout(2,1,0,0));
+        questionAnswerArea.add(questionText);
+        questionText.setVerticalTextPosition(JLabel.TOP);
+        questionText.setHorizontalAlignment(JLabel.CENTER);
+        questionAnswerArea.add(answerText);
+        answerText.setVerticalTextPosition(JLabel.TOP);
+        answerText.setHorizontalAlignment(JLabel.CENTER);
+    }
+
+    //EFFECTS: adds all the buttons related to the questionPanel to questionPanel and sets up their fields.
+    private void addingQuestionButtons() {
+        showAnswerButton.setText("Show Answer");
+        showAnswerButton.addActionListener(e -> revealAnswerToViewer());
+
+        returnToEquationsButton.setText("Return to equations library");
+        returnToEquationsButton.addActionListener(e -> returnToEquationsAction());
+
+        questionButtons.setBackground(new java.awt.Color(255,255,104));
+        questionButtons.add(listOfQuestions);
+        questionButtons.add(showAnswerButton);
+        questionButtons.add(returnToEquationsButton);
+    }
+
+    //EFFECTS: returns from the questionPanel to the equationLibraryPanel.
+    private void returnToEquationsAction() {
+        questionPanel.setVisible(false);
+        equationLibrary.setVisible(true);
+    }
+
+    //EFFECTS: makes the text of answerText the answer to the selected equation in the listOfQuestions ComboBox.
+    private void revealAnswerToViewer() {
+        int index = equationEntries.getSelectedIndex();
+        answerText.setText("Answer: "
+                + listOfEquations.getEquation(index).getThePracticeProblemAnswer(listOfQuestions.getSelectedIndex()));
+    }
+
+    //EFFECTS: makes the text of questionText display the question that is selected by listOfQuestions.
     private void selectQuestionAction() {
         int indexEquation = equationEntries.getSelectedIndex();
         int indexQuestion = listOfQuestions.getSelectedIndex();
@@ -638,7 +688,6 @@ public class LibraryGraphicalInterface extends JFrame {
     }
 
     //Starting here is the GUI for requests
-
 
     private void enterRequests() {
         String[] buttonTexts = {"View Requests", "Make Requests"};
@@ -728,40 +777,50 @@ public class LibraryGraphicalInterface extends JFrame {
                 + "to perform.", "Change Request?", JOptionPane.DEFAULT_OPTION,
                 JOptionPane.PLAIN_MESSAGE,null, buttonTexts,buttonTexts[0]);
         if (userDecision == 0) {
-            String answer = whatIsTheChange();
+            changeRequestNamePrompt(request);
+        } else if (userDecision == 1) {
+            request.changeTheorem(whatIsTheChange(request.getTheorem()));
+        } else if (userDecision == 2) {
+            request.changeCourse(whatIsTheChange(request.getCourse()));
+        } else if (userDecision == 3) {
+            request.changeExplanation(whatIsTheChange(request.getExplanations()));
+        } else if (userDecision == 4) {
+            request.changeProof(whatIsTheChange(request.getProof()));
+        } else if (userDecision == 5) {
+            changeRequestCompletion(request);
+        } else if (userDecision == 6) {
+            deleteRequestPrompt(request);
+        }
+    }
+
+    private void deleteRequestPrompt(Request request) {
+        if (areYouSureYouWantToDeleteRequest()) {
+            listOfRequests.removeRequest(request);
+            requestEntries.removeItemAt(requestEntries.getSelectedIndex());
+            JOptionPane.showMessageDialog(null, "Successfully removed the request.",
+                    "Success!", JOptionPane.PLAIN_MESSAGE);
+        }
+    }
+
+    private void changeRequestCompletion(Request request) {
+        String completion = JOptionPane.showInputDialog("How far along is this entry completed? "
+                + "(Pick a number between 0 and 100)");
+        try {
+            request.updateEstimatedCompletion(completion);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Not between 0 and 100!", "Error!", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void changeRequestNamePrompt(Request request) {
+        String change = JOptionPane.showInputDialog("What is the proposed change to the field?");
+        if (change != null) {
             try {
-                listOfRequests.changeRequestNameAndCheckExistence(request, answer);
+                listOfRequests.changeRequestNameAndCheckExistence(request, change);
                 JOptionPane.showMessageDialog(null, "Field Successfully Changed!", "Success!",
                         JOptionPane.PLAIN_MESSAGE);
             } catch (NameAlreadyExists e) {
                 JOptionPane.showMessageDialog(null, "Name already exists!", "Error", JOptionPane.WARNING_MESSAGE);
-            }
-        } else if (userDecision == 1) {
-            request.changeTheorem(whatIsTheChange());
-            JOptionPane.showMessageDialog(null, "Field Successfully Changed!", "Success!", JOptionPane.PLAIN_MESSAGE);
-        } else if (userDecision == 2) {
-            request.changeCourse(whatIsTheChange());
-            JOptionPane.showMessageDialog(null, "Field Successfully Changed!", "Success!", JOptionPane.PLAIN_MESSAGE);
-        } else if (userDecision == 3) {
-            request.changeExplanation(whatIsTheChange());
-            JOptionPane.showMessageDialog(null, "Field Successfully Changed!", "Success!", JOptionPane.PLAIN_MESSAGE);
-        } else if (userDecision == 4) {
-            request.changeProof(whatIsTheChange());
-            JOptionPane.showMessageDialog(null, "Field Successfully Changed!", "Success!", JOptionPane.PLAIN_MESSAGE);
-        } else if (userDecision == 5) {
-            String completion = JOptionPane.showInputDialog("How far along is this entry completed? "
-                    + "(Pick a number between 0 and 100)");
-            try {
-                request.updateEstimatedCompletion(completion);
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, "Not between 0 and 100!", "Error!", JOptionPane.ERROR_MESSAGE);
-            }
-        } else if (userDecision == 6) {
-            if (areYouSureYouWantToDeleteRequest()) {
-                listOfRequests.removeRequest(request);
-                requestEntries.removeItemAt(requestEntries.getSelectedIndex());
-                JOptionPane.showMessageDialog(null, "Successfully removed the request.",
-                        "Success!", JOptionPane.PLAIN_MESSAGE);
             }
         }
     }

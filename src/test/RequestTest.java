@@ -132,8 +132,8 @@ public class RequestTest {
 
     @Test
     void viewRequestTest() {
-        assertEquals("<html><font size = '5'>Name: name<br>Type: Theorem<br>Theorem: theorem<br>"
-                + "Course this is most relevant to: course<br>Description: explanation<br>Completion: 0<br>Proof: "
+        assertEquals("<html><font size = '5'>Name: name<br><br>Type: Theorem<br><br>Theorem: theorem<br><br>"
+                + "Course this is most relevant to: course<br><br>Description: explanation<br><br>Completion: 0<br><br>Proof: "
                 + "proof</font></html>", testRequest.viewRequest());
     }
 }

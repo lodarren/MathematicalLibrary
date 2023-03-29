@@ -96,11 +96,11 @@ public class Equation extends Entry {
     //EFFECTS: returns the fields of the equation in text format in the form Field: field.
     public String viewEquation() {
         String text;
-        text = "<html><font size = '5'><br>Name: " + this.getName();
-        text = text + "<br>Statement: " + this.getTheorem();
-        text = text + "<br>Course this is most relevant to: " + this.getCourse();
-        text = text + "<br>Description: " + this.getExplanations();
-        text = text + "<br>Derivation: " + this.getProof() + "<br></font></html>";
+        text = "<html><font size = '5'><br><br>Name: " + this.getName();
+        text = text + "<br><br>Statement: " + this.getTheorem();
+        text = text + "<br><br>Course this is most relevant to: " + this.getCourse();
+        text = text + "<br><br>Description: " + this.getExplanations();
+        text = text + "<br><br>Derivation: " + this.getProof() + "<br><br></font></html>";
         return text;
     }
 
