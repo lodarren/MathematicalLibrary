@@ -13,10 +13,14 @@ public class Main extends JFrame {
             System.out.print("Unable to load application, JSON file cannot be found!");
         }
         /*
-        This is the previous working program, one can uncomment this to return back to the old UI
+        This is the previous working program, one can uncomment this to return to the old UI
         (which is still functional)
 
-        //new Library();
+        try {
+            new Library();
+        } catch (FileNotFoundException e) {
+            System.out.print("Unable to load application, JSON file cannot be found!");
+        }
         */
     }
 }

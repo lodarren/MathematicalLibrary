@@ -181,7 +181,7 @@ public class Equation extends Entry {
     }
 
     //MODIFIES: this
-    //EFFECTS: returns the numbered list of questions in string format
+    //EFFECTS: returns the numbered list of questions in String format
     public ArrayList questionsToList() {
         ArrayList<String> questions = new ArrayList<>();
         int counter = 1;

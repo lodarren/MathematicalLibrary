@@ -43,5 +43,14 @@
         "proof": "this",
         "type": "Equation",
         "explanation": "going"
+    },
+    {
+        "request estimated completion": 0,
+        "theorem": "yipee",
+        "name": "Yippee ",
+        "course": "test",
+        "proof": "test",
+        "type": "Theorem",
+        "explanation": "test"
     }
 ]}

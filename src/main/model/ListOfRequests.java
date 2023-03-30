@@ -122,7 +122,7 @@ public class ListOfRequests {
     }
 
     //MODIFIES: this
-    //EFFECTS: returns the list of all the request names:
+    //EFFECTS: returns the String list of all the request names:
     public ArrayList<String> requestsToString() {
         ArrayList<String> listOfString = new ArrayList<>();
         for (Request r : entries) {

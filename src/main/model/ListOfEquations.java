@@ -123,7 +123,7 @@ public class ListOfEquations {
     }
 
     //MODIFIES: this
-    //EFFECTS: returns the list of all the Equation names:
+    //EFFECTS: returns the String list of all the Equation names:
     public ArrayList<String> equationsToString() {
         ArrayList<String> listOfString = new ArrayList<>();
         for (Equation e : entries) {

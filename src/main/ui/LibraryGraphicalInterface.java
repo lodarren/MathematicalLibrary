@@ -162,30 +162,35 @@ public class LibraryGraphicalInterface extends JFrame {
 
     //EFFECTS: Saves to the JSON file when the user clicks yes, afterwards closes the program.
     private void doYouWantToSaveLibrary() {
-        //Code quote
         String[] buttonTexts = {"Save Entries"};
         int userDecision = JOptionPane.showOptionDialog(null, "Before you leave, do you want to save the library?",
                 "Do you want to save?",
-                JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, buttonTexts,
-                buttonTexts[0]);
+                JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, buttonTexts, buttonTexts[0]);
         if (userDecision == 0) {
             try {
-                jsonWriterTheorem.open();
-                jsonWriterEquation.open();
-                jsonWriterRequest.open();
-                jsonWriterTheorem.writeListOfTheorem(listOfTheorems);
-                jsonWriterEquation.writeListOfEquation(listOfEquations);
-                jsonWriterRequest.writeListOfRequests(listOfRequests);
-                jsonWriterTheorem.close();
-                jsonWriterEquation.close();
-                jsonWriterRequest.close();
+                attemptSave();
                 JOptionPane.showMessageDialog(mainFrame, "Library has been saved!");
             } catch (FileNotFoundException e) {
                 JOptionPane.showMessageDialog(mainFrame, "Unable to write to file");
+            } finally {
+                mainFrame.dispatchEvent(new WindowEvent(mainFrame, WindowEvent.WINDOW_CLOSING));
             }
         } else {
             mainFrame.dispatchEvent(new WindowEvent(mainFrame, WindowEvent.WINDOW_CLOSING));
         }
+    }
+
+    //EFFECTS: Attempts to save the file and throws a FileNotFoundException if not successful.
+    private void attemptSave() throws FileNotFoundException {
+        jsonWriterTheorem.open();
+        jsonWriterEquation.open();
+        jsonWriterRequest.open();
+        jsonWriterTheorem.writeListOfTheorem(listOfTheorems);
+        jsonWriterEquation.writeListOfEquation(listOfEquations);
+        jsonWriterRequest.writeListOfRequests(listOfRequests);
+        jsonWriterTheorem.close();
+        jsonWriterEquation.close();
+        jsonWriterRequest.close();
     }
 
 
@@ -640,6 +645,8 @@ public class LibraryGraphicalInterface extends JFrame {
 
     //Starting here is all the code related to the QuestionsScreen section of the GUI.
 
+    //EFFECTS: Opens the question panel. If there are no entries in the question panel, it prompts the user to make
+    //         questions.
     private void viewQuestionButtonAction() {
         try {
             startQuestionPanel();
@@ -665,7 +672,6 @@ public class LibraryGraphicalInterface extends JFrame {
         equationLibrary.setVisible(false);
         mainFrame.add(questionPanel);
     }
-
 
     //EFFECTS: instantiates the questionPanel elements.
     private void instantiateQuestionPanel() {
@@ -841,10 +847,9 @@ public class LibraryGraphicalInterface extends JFrame {
     private int getChangeRequested() {
         String[] buttonTexts = {"Change Name", "Change theorem", "Change course", "Change description",
                 "Change proof", "Change estimated completion", "Delete entry"};
-        int userDecision = JOptionPane.showOptionDialog(null, "Choose the action you would like "
+        return JOptionPane.showOptionDialog(null, "Choose the action you would like "
                         + "to perform.", "Change Request?", JOptionPane.DEFAULT_OPTION,
                 JOptionPane.PLAIN_MESSAGE, null, buttonTexts, buttonTexts[0]);
-        return userDecision;
     }
 
     //EFFECTS: First prompts the user if they would like to delete the request if it is not the last one, if yes then
