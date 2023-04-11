@@ -76,12 +76,14 @@ public class ListOfRequests {
     //EFFECTS: adds the request to the last index of the entries list.
     public void addRequest(Request request) {
         entries.add(request);
+        EventLog.getInstance().logEvent(new Event("Added " + request.getName() + " to the Request library."));
     }
 
     //MODIFIES: this
     //EFFECTS: removes the request whose identity matches that in the list.
     public void removeRequest(Request request) {
         entries.remove(request);
+        EventLog.getInstance().logEvent(new Event("Removed " + request.getName() + " from the Request library."));
     }
 
     //MODIFIES this:
@@ -118,6 +120,7 @@ public class ListOfRequests {
         for (Request e : entries) {
             jsonArray.put(e.requestToJson());
         }
+        EventLog.getInstance().logEvent(new Event("Saved Request Library"));
         return jsonArray;
     }
 

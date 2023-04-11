@@ -1,7 +1,6 @@
-package ca.ubc.cpsc210.alarm.test;
 
-import ca.ubc.cpsc210.alarm.model.Event;
-import ca.ubc.cpsc210.alarm.model.EventLog;
+import model.Event;
+import model.EventLog;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -13,9 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-/**
- * Unit tests for the EventLog class
- */
+//These tests were borrowed from https://github.students.cs.ubc.ca/CPSC210/AlarmSystem
 public class EventLogTest {
     private Event e1;
     private Event e2;

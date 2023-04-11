@@ -1,6 +1,4 @@
-package ca.ubc.cpsc210.alarm.test;
-
-import ca.ubc.cpsc210.alarm.model.Event;
+import model.Event;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -9,9 +7,7 @@ import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-/**
- * Unit tests for the Event class
- */
+//These tests were borrowed from https://github.students.cs.ubc.ca/CPSC210/AlarmSystem
 public class EventTest {
     private Event e;
     private Date d;
@@ -22,18 +18,19 @@ public class EventTest {
 
     @BeforeEach
     public void runBefore() {
-        e = new Event("Sensor open at door");   // (1)
+        e = new Event("Sample Text");   // (1)
         d = Calendar.getInstance().getTime();   // (2)
     }
 
+    //This may be removed
     @Test
     public void testEvent() {
-        assertEquals("Sensor open at door", e.getDescription());
+        assertEquals("Sample Text", e.getDescription());
         assertEquals(d, e.getDate());
     }
 
     @Test
     public void testToString() {
-        assertEquals(d.toString() + "\n" + "Sensor open at door", e.toString());
+        assertEquals(d.toString() + "\n" + "Sample Text", e.toString());
     }
 }

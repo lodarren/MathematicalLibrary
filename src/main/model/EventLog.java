@@ -1,59 +1,43 @@
-package ca.ubc.cpsc210.alarm.model;
+package model;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 
-/**
- * Represents a log of alarm system events.
- * We use the Singleton Design Pattern to ensure that there is only
- * one EventLog in the system and that the system has global access
- * to the single instance of the EventLog.
- */
-public class EventLog implements Iterable<ca.ubc.cpsc210.alarm.model.Event> {
-    /** the only EventLog in the system (Singleton Design Pattern) */
+//This code was borrowed from https://github.students.cs.ubc.ca/CPSC210/AlarmSystem
+public class EventLog implements Iterable<Event> {
+    // The only Eventlog in the system (using the Singleton Design Pattern)
     private static EventLog theLog;
-    private Collection<ca.ubc.cpsc210.alarm.model.Event> events;
+    private Collection<Event> events;
 
-    /**
-     * Prevent external construction.
-     * (Singleton Design Pattern).
-     */
+    //EFFECTS: Constructor for the EventLog, does not allow external construction.
     private EventLog() {
-        events = new ArrayList<ca.ubc.cpsc210.alarm.model.Event>();
+        events = new ArrayList<Event>();
     }
 
-    /**
-     * Gets instance of EventLog - creates it
-     * if it doesn't already exist.
-     * (Singleton Design Pattern)
-     * @return  instance of EventLog
-     */
+    //EFFECTS: Returns the instance of EventLog if it exists, creates an Eventlog if it does not exist.
     public static EventLog getInstance() {
-        if (theLog == null)
+        if (theLog == null) {
             theLog = new EventLog();
+        }
 
         return theLog;
     }
 
-    /**
-     * Adds an event to the event log.
-     * @param e the event to be added
-     */
-    public void logEvent(ca.ubc.cpsc210.alarm.model.Event e) {
+    //EFFECTS: Adds an Event to Eventlog.
+    public void logEvent(Event e) {
         events.add(e);
     }
 
-    /**
-     * Clears the event log and logs the event.
-     */
+    //EFFECTS: Clears the Eventlog and logs the event.
     public void clear() {
         events.clear();
-        logEvent(new ca.ubc.cpsc210.alarm.model.Event("Event log cleared."));
+        logEvent(new Event("Event log cleared."));
     }
 
+    //Custom Iterator
     @Override
-    public Iterator<ca.ubc.cpsc210.alarm.model.Event> iterator() {
+    public Iterator<Event> iterator() {
         return events.iterator();
     }
 }
@@ -61,4 +45,10 @@ public class EventLog implements Iterable<ca.ubc.cpsc210.alarm.model.Event> {
 /*
 make calls to the logEvent method of the EventLog class from code in your model package but from nowhere else.
 In particular, you must not call this method from anywhere in your ui package.
+
+To complete:
+- Implement the classes in model
+- Create UML diagram
+- Create proper name for the commit "Phase 4 task 2"
+- Put UML into project
  */

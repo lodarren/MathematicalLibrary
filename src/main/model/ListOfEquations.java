@@ -64,6 +64,7 @@ public class ListOfEquations {
             throw new NameAlreadyExists();
         }
         entries.add(equation);
+        EventLog.getInstance().logEvent(new Event("Added " + equation.getName() + " to the Equation library."));
     }
 
     //MODIFIES: this
@@ -88,6 +89,7 @@ public class ListOfEquations {
     //EFFECTS: removes the equation whose identity matches that in the list.
     public void removeEquation(Equation equation) {
         entries.remove(equation);
+        EventLog.getInstance().logEvent(new Event("Removed " + equation.getName() + " from the Equation library."));
     }
 
     //MODIFIES: this
@@ -108,6 +110,7 @@ public class ListOfEquations {
     public JSONObject listOfEquationsToJson() {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("equations", equationsToJson());
+        EventLog.getInstance().logEvent(new Event("Saved Equation Library"));
         return jsonObject;
     }
 

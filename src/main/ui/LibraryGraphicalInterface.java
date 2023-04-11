@@ -3,6 +3,7 @@ package ui;
 import model.*;
 import model.exceptions.IndexNotThere;
 import model.exceptions.NameAlreadyExists;
+import model.Event;
 import persistence.JsonReader;
 import persistence.JsonWriter;
 
@@ -173,10 +174,18 @@ public class LibraryGraphicalInterface extends JFrame {
             } catch (FileNotFoundException e) {
                 JOptionPane.showMessageDialog(mainFrame, "Unable to write to file");
             } finally {
-                mainFrame.dispatchEvent(new WindowEvent(mainFrame, WindowEvent.WINDOW_CLOSING));
+                closeProgram();
             }
         } else {
-            mainFrame.dispatchEvent(new WindowEvent(mainFrame, WindowEvent.WINDOW_CLOSING));
+            closeProgram();
+        }
+    }
+
+    //EFFECTS: Closes the program and prints the EventLog to the system.
+    private void closeProgram() {
+        mainFrame.dispatchEvent(new WindowEvent(mainFrame, WindowEvent.WINDOW_CLOSING));
+        for (Event e : EventLog.getInstance()) {
+            System.out.println(e.toString());
         }
     }
 

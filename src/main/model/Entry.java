@@ -24,13 +24,15 @@ public abstract class Entry {
 
     public void changeName(String name) {
         this.name = name;
+        EventLog.getInstance().logEvent(new Event("Changed " + this.name + "'s name to " + name));
     }
 
     //MODIFIES: this
-    //EFFECTS: Changes name of the theorem.
+    //EFFECTS: Changes name of the entry.
 
     public void changeTheorem(String theorem) {
         this.theorem = theorem;
+        EventLog.getInstance().logEvent(new Event("Changed " + this.name + "'s theorem to " + theorem));
     }
 
     //MODIFIES: this
@@ -38,6 +40,7 @@ public abstract class Entry {
 
     public void changeCourse(String course) {
         this.course = course;
+        EventLog.getInstance().logEvent(new Event("Changed " + this.name + "'s course to " + course));
     }
 
     //MODIFIES: this
@@ -45,6 +48,7 @@ public abstract class Entry {
 
     public void changeProof(String proof) {
         this.proof = proof;
+        EventLog.getInstance().logEvent(new Event("Changed " + this.name + "'s proof to " + proof));
     }
 
     //MODIFIES: this
@@ -52,6 +56,7 @@ public abstract class Entry {
 
     public void changeExplanation(String explanation) {
         this.explanations = explanation;
+        EventLog.getInstance().logEvent(new Event("Changed " + this.name + "'s description to " + explanation));
     }
 
     //MODIFIES: this

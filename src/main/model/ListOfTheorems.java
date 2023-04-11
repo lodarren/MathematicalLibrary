@@ -75,12 +75,14 @@ public class ListOfTheorems {
     //EFFECTS: adds the Theorem to the last index of the entries list.
     public void addTheorem(Theorem theorem) {
         entries.add(theorem);
+        EventLog.getInstance().logEvent(new Event("Added " + theorem.getName() + " to the Theorem library."));
     }
 
     //MODIFIES: this
     //EFFECTS: removes the Theorem whose identity matches that in the list.
     public void removeTheorem(Theorem theorem) {
         entries.remove(theorem);
+        EventLog.getInstance().logEvent(new Event("Removed " + theorem.getName() + " from the Theorem library."));
     }
 
     //MODIFIES this:
@@ -117,6 +119,7 @@ public class ListOfTheorems {
         for (Theorem e : entries) {
             jsonArray.put(e.theoremToJson());
         }
+        EventLog.getInstance().logEvent(new Event("Saved Theorem Library."));
         return jsonArray;
     }
 

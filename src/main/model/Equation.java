@@ -27,6 +27,7 @@ public class Equation extends Entry {
     public void changePracticeProblem(String practiceProblem, String answer, int i) {
         practiceProblems.set(i, practiceProblem);
         practiceProblemsAnswer.set(i, answer);
+        EventLog.getInstance().logEvent(new Event("Changed the question in" + i + "'s practice problem"));
     }
 
     //MODIFIES: this
@@ -41,6 +42,7 @@ public class Equation extends Entry {
     public void removePracticeProblem(int i)  {
         practiceProblems.remove(i);
         practiceProblemsAnswer.remove(i);
+        EventLog.getInstance().logEvent(new Event("Deleted" + i + "'s practice problem"));
     }
 
     //MODIFIES: this
@@ -150,6 +152,7 @@ public class Equation extends Entry {
         for (String p : practiceProblems) {
             jsonArray.put(this.practiceProblemToJson(p));
         }
+        EventLog.getInstance().logEvent(new Event("Saved all practice problems for. " + this.name));
         return jsonArray;
     }
 

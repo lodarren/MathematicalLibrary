@@ -39,6 +39,7 @@ public class Request extends Entry {
     public void updateEstimatedCompletion(String completion) {
         int newCompletion = Integer.parseInt(completion);
         this.estimatedCompletion = newCompletion;
+        EventLog.getInstance().logEvent(new Event("Changed " + this.name + "'s completion to " + newCompletion));
     }
 
     //MODIFIES: this
@@ -67,6 +68,7 @@ public class Request extends Entry {
         Equation newEquation;
         newEquation = new Equation(this.getName(), this.getTheorem(), this.getCourse(), this.getProof(),
                 this.getExplanations());
+        EventLog.getInstance().logEvent(new Event("Moved " + this.name + "(request) to the main Equation Library!"));
         return newEquation;
     }
 
@@ -77,6 +79,7 @@ public class Request extends Entry {
         Theorem newTheorem;
         newTheorem = new Theorem(this.getName(), this.getTheorem(), this.getCourse(), this.getProof(),
                 this.getExplanations());
+        EventLog.getInstance().logEvent(new Event("Moved " + this.name + "(request) to the main Theorem Library!"));
         return newTheorem;
     }
 

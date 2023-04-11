@@ -20,6 +20,7 @@ public class Theorem extends Entry {
         text = text + "<br><br>Course this is most relevant to: " + this.getCourse();
         text = text + "<br><br>Description: " + this.getExplanations();
         text = text + "<br><br>Proof: " + this.getProof() + "<br></font></html>";
+        EventLog.getInstance().logEvent(new Event("Viewed the proof of " + this.name + "'s theorem."));
         return text;
     }
 

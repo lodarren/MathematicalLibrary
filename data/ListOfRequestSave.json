@@ -1,15 +1,6 @@
 {"requests": [
     {
         "request estimated completion": 0,
-        "theorem": "c^2 = a^2 + b^2 - 2abcos(C)",
-        "name": "The REAL law of cosines",
-        "course": "Grade 11",
-        "proof": "Use geometry.",
-        "type": "Equation",
-        "explanation": "Relationship between sides of a triangle that are not always right."
-    },
-    {
-        "request estimated completion": 0,
         "theorem": "prime numbers are odd",
         "name": "riemann hypothesis v2",
         "course": "idk grade school",
@@ -52,5 +43,23 @@
         "proof": "test",
         "type": "Theorem",
         "explanation": "test"
+    },
+    {
+        "request estimated completion": 0,
+        "theorem": "a",
+        "name": "a",
+        "course": "a",
+        "proof": "a",
+        "type": "Theorem",
+        "explanation": "a"
+    },
+    {
+        "request estimated completion": 0,
+        "theorem": "asdf",
+        "name": "asdf",
+        "course": "asdf",
+        "proof": "asdf",
+        "type": "Equation",
+        "explanation": "asdf"
     }
 ]}
