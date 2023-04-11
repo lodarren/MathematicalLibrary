@@ -17,7 +17,7 @@ import java.io.IOException;
 // Represents the full list of finished mathematical entries in the library. There are three sections of the library
 // That the user can explore, one containing equations, one containing theorems and the last one containing requests.
 
-public class Library extends JFrame {
+public class Library {
     //These fields represent the libraries one can enter and view entries from.
     ListOfTheorems listOfTheorems;
     ListOfEquations listOfEquations;
