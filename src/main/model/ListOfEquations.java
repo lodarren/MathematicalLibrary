@@ -83,6 +83,7 @@ public class ListOfEquations {
     //EFFECTS: adds the equation to the last index of the entries list.
     public void addEquation(Equation equation) {
         entries.add(equation);
+        EventLog.getInstance().logEvent(new Event("Added " + equation.getName() + " to the Equation library."));
     }
 
     //MODIFIES: this

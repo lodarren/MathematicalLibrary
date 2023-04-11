@@ -17,7 +17,7 @@ import java.io.IOException;
 // Represents the full list of finished mathematical entries in the library. There are three sections of the library
 // That the user can explore, one containing equations, one containing theorems and the last one containing requests.
 
-public class LibraryGraphicalInterface extends JFrame {
+public class Library extends JFrame {
     //These fields represent the libraries one can enter and view entries from.
     ListOfTheorems listOfTheorems;
     ListOfEquations listOfEquations;
@@ -87,7 +87,7 @@ public class LibraryGraphicalInterface extends JFrame {
 
 
     //EFFECTS: Creates a new library object, throws the FileNotFoundException if it occurs
-    public LibraryGraphicalInterface() throws FileNotFoundException {
+    public Library() throws FileNotFoundException {
         runLibrary();
     }
 
@@ -932,22 +932,29 @@ public class LibraryGraphicalInterface extends JFrame {
     }
 
     //EFFECTS: Checks if the request is completed before submitting the entry to its designated library. If it is not
-    //         complete then it prompts the user with another prompt. Returns you back to the main menu if this is the
-    //         last entry in ListOfRequests.
+    //         complete then it prompts the user with another prompt.
     private void submitRequestPrompt() {
         Request request = listOfRequests.getRequest(requestEntries.getSelectedIndex());
         if (request.getEstimatedCompletion() != 100) {
             if (submitIfNotCompletePrompt()) {
-                requestEntries.removeItem(request.getName());
-                convertingRequest(request);
-                JOptionPane.showMessageDialog(null, "Request submitted to main library!!!",
-                        "Success!", JOptionPane.PLAIN_MESSAGE);
-                if (listOfRequests.isListEmpty()) {
-                    JOptionPane.showMessageDialog(null, "There are no more requests, returning to "
-                            + "Main Menu!", "Thank you for clearing the requests!", JOptionPane.PLAIN_MESSAGE);
-                    requestToMainMenu();
-                }
+                submitRequestAction(request);
             }
+        } else {
+            submitRequestAction(request);
+        }
+    }
+
+    //EFFECTS: Removes the request from listOfRequests and adds the entry to the designated library.
+    //         Returns you back to the main menu if this is the last entry in ListOfRequests.
+    private void submitRequestAction(Request request) {
+        requestEntries.removeItem(request.getName());
+        convertingRequest(request);
+        JOptionPane.showMessageDialog(null, "Request submitted to main library!!!",
+                "Success!", JOptionPane.PLAIN_MESSAGE);
+        if (listOfRequests.isListEmpty()) {
+            JOptionPane.showMessageDialog(null, "There are no more requests, returning to "
+                    + "Main Menu!", "Thank you for clearing the requests!", JOptionPane.PLAIN_MESSAGE);
+            requestToMainMenu();
         }
     }
 

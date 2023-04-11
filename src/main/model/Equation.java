@@ -152,7 +152,7 @@ public class Equation extends Entry {
         for (String p : practiceProblems) {
             jsonArray.put(this.practiceProblemToJson(p));
         }
-        EventLog.getInstance().logEvent(new Event("Saved all practice problems for. " + this.name));
+        EventLog.getInstance().logEvent(new Event("Saved all practice problems for " + this.name));
         return jsonArray;
     }
 

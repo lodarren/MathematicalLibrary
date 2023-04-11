@@ -53,4 +53,40 @@ prompted with a picture of multiple math equations in the center of the screen.
 save the application. Click "Save Entries", if you would like to save the application (other options will result in no 
 saves).  
 - When loading the application, you will be prompted if you would like to load the previous save file. If "Load save" is 
-selected, then the previous save file will be loaded (other options will result in no entries added to any library). 
+selected, then the previous save file will be loaded (other options will result in no entries added to any library).
+
+# Phase 4: Task 2:
+
+Sample:\
+Tue Apr 11 02:29:36 PDT 2023\
+Added This is a new theorem to the Request library.\
+Tue Apr 11 02:29:46 PDT 2023\
+Changed This is a new theorem's completion to 100\
+Tue Apr 11 02:29:52 PDT 2023\
+Moved This is a new theorem(request) to the main Theorem Library!\
+Tue Apr 11 02:29:52 PDT 2023\
+Added This is a new theorem to the Theorem library.\
+Tue Apr 11 02:29:52 PDT 2023\
+Removed This is a new theorem from the Request library.\
+Tue Apr 11 02:30:05 PDT 2023\
+Changed This is the real name of the theorem's name to This is the real name of the theorem\
+Tue Apr 11 02:30:10 PDT 2023\
+Removed This is the real name of the theorem from the Theorem library.\
+Tue Apr 11 02:30:14 PDT 2023\
+Saved Theorem Library.\
+Tue Apr 11 02:30:14 PDT 2023\
+Saved all practice problems for Fundamental theorem of engineering\
+Tue Apr 11 02:30:14 PDT 2023\
+Saved all practice problems for The cosine law\
+Tue Apr 11 02:30:14 PDT 2023
+
+
+# Phase 4: Task 3:
+If I had more time to work on the project, I would like to factor out the ListOfPracticeProblems and the
+ListOfPracticeProblemAnswers into a separate class. Currently, the Equation class has to take care of the functionality 
+of the specific Equation entry, as well as viewing problems, saving problems, and managing problems and answers. I believe
+it would be a lot more efficient to have this be split into two separate classes instead (One "Equation" class, 
+and a second class called "Problems", in which Equation would have a field "Problems"). This way the program is less coupled,
+and can allow for easier changes in regard to just editing the PracticeProblem/PracticeProblemAnswer functionality without
+having to change the entire Equation class. 
+

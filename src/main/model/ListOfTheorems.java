@@ -63,6 +63,7 @@ public class ListOfTheorems {
             throw new NameAlreadyExists();
         }
         entries.add(theorem);
+        EventLog.getInstance().logEvent(new Event("Added " + theorem.getName() + " to the Theorem library."));
     }
 
     //MODIFIES: this

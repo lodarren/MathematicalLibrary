@@ -64,6 +64,7 @@ public class ListOfRequests {
             throw new NameAlreadyExists();
         }
         entries.add(request);
+        EventLog.getInstance().logEvent(new Event("Added " + request.getName() + " to the Request library."));
     }
 
     //MODIFIES: this

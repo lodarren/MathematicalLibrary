@@ -8,7 +8,7 @@ public class Main extends JFrame {
 
     public static void main(String[] args) {
         try {
-            new LibraryGraphicalInterface();
+            new Library();
         } catch (FileNotFoundException e) {
             System.out.print("Unable to load application, JSON file cannot be found!");
         }
