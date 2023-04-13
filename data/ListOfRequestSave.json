@@ -16,50 +16,5 @@
         "proof": "sin(x)/cos(x) = tan(x)",
         "type": "Equation",
         "explanation": "t times a times a times ( times x times )"
-    },
-    {
-        "request estimated completion": 0,
-        "theorem": "what",
-        "name": "hi",
-        "course": "are",
-        "proof": "you",
-        "type": "Theorem",
-        "explanation": "doing"
-    },
-    {
-        "request estimated completion": 0,
-        "theorem": "what",
-        "name": "yay",
-        "course": "is",
-        "proof": "this",
-        "type": "Equation",
-        "explanation": "going"
-    },
-    {
-        "request estimated completion": 0,
-        "theorem": "yipee",
-        "name": "Yippee ",
-        "course": "test",
-        "proof": "test",
-        "type": "Theorem",
-        "explanation": "test"
-    },
-    {
-        "request estimated completion": 0,
-        "theorem": "a",
-        "name": "a",
-        "course": "a",
-        "proof": "a",
-        "type": "Theorem",
-        "explanation": "a"
-    },
-    {
-        "request estimated completion": 0,
-        "theorem": "asdf",
-        "name": "asdf",
-        "course": "asdf",
-        "proof": "asdf",
-        "type": "Equation",
-        "explanation": "asdf"
     }
 ]}
