@@ -13,4 +13,4 @@ yet.). Users will be able to navigate through these menus and view, modify and a
 libraries. 
 
 This project is aimed towards anyone who is interested in studying mathematics, and will attempt to be made in a way
-to be as user-friendly as possible.    
+to be as user-friendly as possible.      
